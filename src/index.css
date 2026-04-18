@@ -1,13 +1,9 @@
-@import "tailwindcss/preflight";
+@import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 
-@tailwind base;
-
 @custom-variant dark (&:is(.dark *));
-@tailwind components;
-@tailwind utilities;
 
 @theme inline {
     --font-heading: var(--font-sans);
@@ -53,18 +49,18 @@
 }
 
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
+    --background: #FEFAF5;
+    --foreground: #00121D;
+    --card: #FEFAF5;
+    --card-foreground: #00121D;
+    --popover: #FEFAF5;
+    --popover-foreground: #00121D;
+    --primary: #274662;
+    --primary-foreground: #FEFAF5;
+    --secondary: #FEFAF5;
+    --secondary-foreground: #4e7489;
+    --muted: #FEFAF5;
+    --muted-foreground: #BBC0C3;
     --accent: oklch(0.97 0 0);
     --accent-foreground: oklch(0.205 0 0);
     --destructive: oklch(0.577 0.245 27.325);
