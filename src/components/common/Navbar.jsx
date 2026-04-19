@@ -9,14 +9,22 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { Button } from "../ui/button"
+import safespace_logo from "../../assets/safespace_logo.svg"
+import { Link } from "react-router-dom"
 
 export function Navbar() {
     return (
         <header className="bg-primary-foreground flex items-center justify-between p-4 px-8 border-b">
-            <div className="text-2xl font-semibold">
-                SafeSpace
-            </div>
+
+            {/* Logo Section */}
+            <Link to="/" className="text-2xl font-semibold flex items-center gap-2">
+                <img src={safespace_logo} alt="Logo of Safespace" width={40} height={40}/>
+                Safespace
+            </Link>
+
             <div className="flex items-center gap-4">
+
+                {/* Navigation Section */}
                 <NavigationMenu>
                     <NavigationMenuList className="gap-4">
                         <NavigationMenuItem>
@@ -41,7 +49,10 @@ export function Navbar() {
                         </NavigationMenuItem>
                     </NavigationMenuList>
                 </NavigationMenu>
+
+                {/* Profile Section */}
                 <Button className="px-4">Login</Button>
+                
             </div>
         </header>
     )
