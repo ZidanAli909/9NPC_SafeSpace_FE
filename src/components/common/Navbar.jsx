@@ -21,6 +21,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import safespace_logo from "../../assets/safespace_logo.svg"
 import { Link } from "react-router-dom"
+import { Edit, History, LogIn, LogOut, Settings } from "lucide-react"
 
 function NavigationPublic() {
     return (
@@ -70,8 +71,10 @@ function NavigationAdmin() {
     )
 }
 
-export function Navbar() {
-    const [user, setUser] = React.useState("test")
+export function Navbar({
+    adminMode = false
+}) {
+    const [user, setUser] = React.useState(null)
 
     return (
         <header className="bg-primary-foreground flex items-center justify-between p-4 px-8 border-b">
@@ -85,7 +88,7 @@ export function Navbar() {
             <div className="flex items-center gap-4">
                 {/* Navigational Section */}
                 {/* TODO: User/Admin Logic needed! */}
-                <NavigationPublic />
+                {adminMode ? <NavigationAdmin /> : <NavigationPublic />}
 
                 {/* Profile Section */}
                 {user ? (
@@ -102,25 +105,33 @@ export function Navbar() {
                         <DropdownMenuContent className="w-fit">
                             <DropdownMenuGroup>
                                 <DropdownMenuItem className="text-sm px-4">
+                                    <History className="mr-2"/>
                                     Riwayat Pelaporan
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="text-sm px-4">
-                                    Edit Profile
+                                    <Edit className="mr-2"/>
+                                    Profil
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="text-sm px-4">
+                                    <Settings className="mr-2"/>
                                     Pengaturan
                                 </DropdownMenuItem>
                             </DropdownMenuGroup>
                             <DropdownMenuSeparator/>
                             <DropdownMenuItem variant="destructive" className="text-sm px-4">
+                                <LogOut className="mr-2"/>
                                 Logout
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 ) : (
                     <div>
-                        <Button className="px-4">Login</Button>
-                        <Button className="px-4" variant="secondary">Sign Up</Button>
+                        <Button className="px-4">
+                            Login
+                        </Button>
+                        <Button className="px-4" variant="secondary">                            
+                            Sign Up
+                        </Button>
                     </div>
                 )}
             </div>
