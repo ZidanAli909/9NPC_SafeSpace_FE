@@ -11,7 +11,12 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Trash } from "lucide-react"
 
-export function ReportTableItem() {
+export function ReportTableItem({
+    id,
+    date,
+    type,
+    status
+}) {
     return (
         <TableRow>
             <TableCell className="font-medium">#SAFE24041006</TableCell>

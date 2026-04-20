@@ -22,7 +22,8 @@ export function DashboardTile({
         <Card className="flex flex-col align-middle items-center w-64">
             <div className={cn(
                 "flex items-center gap-2 py-1 px-3 rounded-full", // Base
-                titleStyle || defaultTitleStyle // Override || Default
+                defaultTitleStyle, // Default
+                titleStyle // Override
             )}>
                 {icon}
                 {title}
