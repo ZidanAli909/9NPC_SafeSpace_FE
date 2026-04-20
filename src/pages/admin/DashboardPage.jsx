@@ -10,21 +10,43 @@ import {
 import { DashboardTile } from "@/components/admin/DashboardTile";
 import { Button } from "@/components/ui/button";
 import { DashboardReportTableItem } from "@/components/admin/DashboardReportTable";
+import { ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export function DashboardPage() {
     return (
-        <div className="py-8 px-24">
+        <div className="py-8 px-24 max-md:px-16 max-sm:px-8">
 
             <div className="mb-8">
                 <p className="text-2xl font-semibold">Selamat pagi, Admin12345</p>
                 <p>Ada beberapa laporan baru yang menunggu direview hari ini...</p>
             </div>
 
-            <div className="grid grid-cols-4 gap-4 mb-8">
-                <DashboardTile />
-                <DashboardTile />
-                <DashboardTile />
-                <DashboardTile />
+            <div className="flex flex-wrap items-center justify-center gap-4 mb-8">
+                <DashboardTile
+                    titleStyle="bg-red-100 text-red-800 border border-red-500"
+                    title="Total Laporan"
+                    subtitle="sejak platform aktif"
+                    count="30"
+                />
+                <DashboardTile
+                    titleStyle="bg-blue-100 text-blue-800 border border-blue-500"
+                    title="Laporan Baru"
+                    subtitle="2 hari ini"
+                    count="6"
+                />
+                <DashboardTile
+                    titleStyle="bg-yellow-100 text-yellow-800 border border-yellow-500"
+                    title="Direview"
+                    subtitle="perlu tindakan"
+                    count="10"
+                />
+                <DashboardTile
+                    titleStyle="bg-green-100 text-green-800 border border-green-500"
+                    title="Selesai"
+                    subtitle="penyelesaian 67%"
+                    count="20"
+                />
             </div>
 
             <div className="flex flex-row gap-4">
@@ -33,7 +55,12 @@ export function DashboardPage() {
                     <CardHeader>
                         <div className="flex flex-row justify-between items-center pl-4">
                             <CardTitle>Riwayat Laporan</CardTitle>
-                            <Button>Lihat Semua</Button>
+                            <Button render={
+                                <Link to="/admin/report">
+                                    Lihat Semua
+                                    <ChevronRight />
+                                </Link>
+                            }/>
                         </div>
                     </CardHeader>
                     <CardContent>

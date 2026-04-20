@@ -18,13 +18,13 @@ export function ReportTableItem() {
             <TableCell>10 April 2026 15:45</TableCell>
             <TableCell>Kekerasan verbal</TableCell>
             <TableCell>
-                <Badge variant="primary">Laporan Diterima</Badge>
+                <Badge>Laporan Diterima</Badge>
             </TableCell>
             <TableCell className="flex flex-row gap-2">
-                <Button variant="secondary">
+                <Button variant="outline" size="sm">
                     Lihat Laporan
                 </Button>
-                <Button variant="destructive">
+                <Button variant="destructive" size="sm">
                     <Trash />
                 </Button>
             </TableCell>

@@ -7,20 +7,31 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { cn } from "@/lib/utils"
 
-export function DashboardTile(
-    
-) {
+export function DashboardTile({
+    titleStyle,
+    title = "Lorem Ipsum",
+    subtitle = "Lorem Ipsum Dolor Sit Amet",
+    count = "999.999",
+    icon
+}) {
+    const defaultTitleStyle = "bg-blue-100 text-blue-800 border border-blue-500"
+
     return (
-        <Card className="flex flex-col align-middle items-center">
-            <p className="py-1 px-3 rounded-full bg-green-200 text-green-700 border border-green-500">
-                Lorem Ipsum
-            </p>
+        <Card className="flex flex-col align-middle items-center w-64">
+            <div className={cn(
+                "flex items-center gap-2 py-1 px-3 rounded-full", // Base
+                titleStyle || defaultTitleStyle // Override || Default
+            )}>
+                {icon}
+                {title}
+            </div>
             <p className="text-2xl font-bold">
-                999.999.999
+                {count}
             </p>
             <p className="text-secondary-foreground">
-                Lorem Ipsum
+                {subtitle}
             </p>
         </Card>
     )

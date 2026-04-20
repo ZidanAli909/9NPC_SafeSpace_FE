@@ -23,7 +23,7 @@ import { Search } from "lucide-react"
 
 export function ReportPage() {
     return (
-        <div className="py-8 px-24">
+        <div className="py-8 px-24 max-md:px-16 max-sm:px-8">
             <div className="mb-8">
                 <p className="text-2xl font-semibold">Daftar Laporan</p>
             </div>
@@ -42,7 +42,7 @@ export function ReportPage() {
                     </InputGroup>
                 </div>
 
-                <Table>
+                <Table className="border">
                     <TableHeader>
                         <TableRow>
                             <TableHead className="w-32">ID Laporan</TableHead>

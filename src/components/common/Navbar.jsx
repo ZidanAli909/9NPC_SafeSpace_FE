@@ -28,24 +28,24 @@ function NavigationPublic() {
         < NavigationMenu >
             <NavigationMenuList className="gap-4">
                 <NavigationMenuItem>
-                    <NavigationMenuLink href="/" className="px-4">
-                        Home
-                    </NavigationMenuLink>
+                    <NavigationMenuLink render={
+                        <Link to="/">Beranda</Link>
+                    } className={navigationMenuTriggerStyle() + " px-4"}/>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <NavigationMenuLink href="/" className="px-4">
-                        Lapor
-                    </NavigationMenuLink>
+                    <NavigationMenuLink render={
+                        <Link to="/">Lapor</Link>
+                    } className={navigationMenuTriggerStyle() + " px-4"}/>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <NavigationMenuLink href="/" className="px-4">
-                        Bantuan
-                    </NavigationMenuLink>
+                    <NavigationMenuLink render={
+                        <Link to="/">Bantuan</Link>
+                    } className={navigationMenuTriggerStyle() + " px-4"}/>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <NavigationMenuLink href="/" className="px-4">
-                        FAQ
-                    </NavigationMenuLink>
+                    <NavigationMenuLink render={
+                        <Link to="/">FAQ</Link>
+                    } className={navigationMenuTriggerStyle() + " px-4"}/>
                 </NavigationMenuItem>
             </NavigationMenuList>
         </NavigationMenu >
@@ -57,14 +57,14 @@ function NavigationAdmin() {
         < NavigationMenu >
             <NavigationMenuList className="gap-4">
                 <NavigationMenuItem>
-                    <NavigationMenuLink href="/" className="px-4">
-                        Dashboard
-                    </NavigationMenuLink>
+                    <NavigationMenuLink render={
+                        <Link to="/admin">Dashboard</Link>
+                    } className={navigationMenuTriggerStyle() + " px-4"}/>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <NavigationMenuLink href="/" className="px-4">
-                        Laporan
-                    </NavigationMenuLink>
+                    <NavigationMenuLink render={
+                        <Link to="/admin/report">Laporan</Link>
+                    } className={navigationMenuTriggerStyle() + " px-4"}/>
                 </NavigationMenuItem>
             </NavigationMenuList>
         </NavigationMenu >
@@ -125,7 +125,7 @@ export function Navbar({
                         </DropdownMenuContent>
                     </DropdownMenu>
                 ) : (
-                    <div>
+                    <div className="flex items-center gap-4">
                         <Button className="px-4">
                             Login
                         </Button>
