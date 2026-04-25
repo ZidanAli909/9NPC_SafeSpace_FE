@@ -42,7 +42,7 @@ export function ReportPage() {
                     </InputGroup>
                 </div>
 
-                <Table className="border">
+                <Table className="">
                     <TableHeader>
                         <TableRow>
                             <TableHead className="w-32">ID Laporan</TableHead>
