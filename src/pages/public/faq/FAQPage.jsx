@@ -13,17 +13,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Mail } from "lucide-react"
-import { Link } from "react-router-dom"
 
 const items = [
   {
@@ -65,7 +54,7 @@ export function FAQPage() {
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
-                            <BreadcrumbLink render={<Link to="/"/>}>FAQ</BreadcrumbLink>
+                            <BreadcrumbPage>FAQ</BreadcrumbPage>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>

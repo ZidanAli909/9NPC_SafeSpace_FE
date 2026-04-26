@@ -9,6 +9,8 @@ import { PrivacyPage } from './pages/public/faq/PrivacyPage'
 import { ProfileDetailsPage } from './pages/public/profile/ProfileDetailsPage'
 import { ReportHistoryPage } from './pages/public/profile/ReportHistoryPage'
 import { ReportHistoryDetailsPage } from './pages/public/profile/ReportHistoryDetailsPage'
+import { SettingsPage } from './pages/public/profile/SettingsPage'
+import { ReportGuidePage } from './pages/public/faq/GuidePage'
 
 // Router Handler
 
@@ -21,11 +23,13 @@ function App() {
           <Route path="/faq">
             <Route index element={<FAQPage />} />
             <Route path="privacy" element={<PrivacyPage />} />
+            <Route path="guide" element={<ReportGuidePage />} />
           </Route>
           <Route path="profile">
             <Route index element={<ProfileDetailsPage />} />
             <Route path="history" element={<ReportHistoryPage />} />
             <Route path="history/:id" element={<ReportHistoryDetailsPage />} />
+            <Route path="settings" element={<SettingsPage />} />
           </Route>
         </Route>
         <Route path="/admin" element={<AdminLayout />}>

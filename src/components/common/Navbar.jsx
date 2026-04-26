@@ -21,7 +21,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import safespace_logo from "../../assets/safespace_logo.svg"
 import { Link } from "react-router-dom"
-import { Edit, History, LogIn, LogOut, Settings } from "lucide-react"
+import { Edit, History, LogIn, LogOut, Settings, User2 } from "lucide-react"
 
 function NavigationPublic() {
     return (
@@ -43,9 +43,18 @@ function NavigationPublic() {
                     } className={navigationMenuTriggerStyle() + " px-4"}/>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <NavigationMenuLink render={
-                        <Link to="/">FAQ</Link>
-                    } className={navigationMenuTriggerStyle() + " px-4"}/>
+                    <NavigationMenuTrigger>FAQ</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                        <NavigationMenuLink render={<Link to="/faq"/>}>
+                            Pusat Bantuan Teknis
+                        </NavigationMenuLink>
+                        <NavigationMenuLink render={<Link to="/faq/guide"/>}>
+                            Panduan Pelaporan
+                        </NavigationMenuLink>
+                        <NavigationMenuLink render={<Link to="/faq/privacy"/>}>
+                            Kebijakan Privasi
+                        </NavigationMenuLink>
+                    </NavigationMenuContent>
                 </NavigationMenuItem>
             </NavigationMenuList>
         </NavigationMenu >
@@ -94,8 +103,8 @@ export function Navbar({
                 {user ? (
                     <DropdownMenu>
                         <DropdownMenuTrigger render={
-                            <Button variant="ghost" className="rounded-full gap-4">
-                                <Avatar>
+                            <Button variant="outline" size="lg" className="rounded-full gap-2">
+                                <Avatar className="-ml-2">
                                     <AvatarImage src="https://github.com/shadcn.png" />
                                     <AvatarFallback>CN</AvatarFallback>
                                 </Avatar>
@@ -104,15 +113,15 @@ export function Navbar({
                         }/>
                         <DropdownMenuContent className="w-fit">
                             <DropdownMenuGroup>
-                                <DropdownMenuItem className="text-sm px-4">
+                                <DropdownMenuItem className="text-sm px-4" render={<Link to="/profile"/>}>
+                                    <User2 className="mr-2"/>
+                                    Profil
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="text-sm px-4" render={<Link to="/profile/history"/>}>
                                     <History className="mr-2"/>
                                     Riwayat Pelaporan
                                 </DropdownMenuItem>
-                                <DropdownMenuItem className="text-sm px-4">
-                                    <Edit className="mr-2"/>
-                                    Profil
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="text-sm px-4">
+                                <DropdownMenuItem className="text-sm px-4" render={<Link to="/profile/settings"/>}>
                                     <Settings className="mr-2"/>
                                     Pengaturan
                                 </DropdownMenuItem>
@@ -125,11 +134,11 @@ export function Navbar({
                         </DropdownMenuContent>
                     </DropdownMenu>
                 ) : (
-                    <div className="flex items-center gap-4">
-                        <Button className="px-4">
+                    <div className="flex items-center gap-2">
+                        <Button className={navigationMenuTriggerStyle() + "px-4"}>
                             Login
                         </Button>
-                        <Button className="px-4" variant="secondary">                            
+                        <Button className={navigationMenuTriggerStyle() + "px-4"} variant="secondary">                            
                             Sign Up
                         </Button>
                     </div>

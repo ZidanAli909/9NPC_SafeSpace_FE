@@ -7,8 +7,15 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import {
+  Alert,
+  AlertAction,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { Edit2, Info, Lock, LucideKeyRound } from "lucide-react"
 import { Link } from "react-router-dom"
 
 export function ProfileDetailsPage() {
@@ -45,15 +52,15 @@ export function ProfileDetailsPage() {
                     <div className="flex flex-col gap-4 max-w-64 mx-auto">
                         <Button variant="outline" size="lg">Ganti Foto Profil</Button>
                         <Button variant="outline" size="lg">Hapus Foto Profil</Button>
-                        <Button size="lg">Simpan Semua Perubahan</Button>
+                        <Button size="lg">Simpan Perubahan</Button>
                     </div>
                 </div>
 
                 {/* Main Page */}
                 <div className="flex-1 border rounded-lg p-8">
                     <div className="mb-4">
-                        <p className="font-medium text-xl">Informasi Akun</p>
-                        <div className="grid grid-cols-4 p-4">
+                        <p className="font-medium text-lg">Informasi Akun</p>
+                        <div className="text-sm grid grid-cols-4 gap-2 p-4">
                             <p className="font-semibold">ID Pengguna</p>
                             <p className="font-light">USR-240410-001</p>
                             <p className="font-semibold">Tanggal Bergabung</p>
@@ -62,8 +69,8 @@ export function ProfileDetailsPage() {
                     </div>
 
                     <div className="mb-4">
-                        <p className="font-medium text-xl">Data Pribadi</p>
-                        <div className="grid grid-cols-4 p-4">
+                        <p className="font-medium text-lg">Data Pribadi</p>
+                        <div className="text-sm grid grid-cols-4 gap-2 p-4">
                             <p className="font-semibold">Nama</p>
                             <p className="font-light col-span-3">John Doe Jane Doe</p>
                             <p className="font-semibold">Email</p>
@@ -81,14 +88,23 @@ export function ProfileDetailsPage() {
                         </div>
                     </div>
 
-                    <Card className="mb-4">
-                        <p>Notice</p>
-                        <p>Data akun wajib diisi untuk keperluan internal admin dan  komunikasi dengan Anda. Laporan yang dibuat akan otomatis bersifat  anonim. Identitas Anda tidak akan pernah kami bocorkan.</p>
-                    </Card>
+                    <Alert className="mb-4 bg-secondary text-secondary-foreground">
+                        <Info />
+                        <AlertTitle>Notice</AlertTitle>
+                        <AlertDescription>
+                            Data akun wajib diisi untuk keperluan internal admin dan  komunikasi dengan Anda. Laporan yang dibuat akan otomatis bersifat  anonim. Identitas Anda tidak akan pernah kami bocorkan.
+                        </AlertDescription>
+                    </Alert>
                     
                     <div className="flex flex-row gap-4">
-                        <Button size="lg" variant="outline">Ubah Data Pribadi</Button>
-                        <Button size="lg" variant="secondary">Ganti Password</Button>
+                        <Button size="lg" variant="outline">
+                            <Edit2 className="mr-2" />
+                            Ubah Data Pribadi
+                        </Button>
+                        <Button size="lg" variant="secondary">
+                            <LucideKeyRound className="mr-2" />
+                            Ganti Password
+                        </Button>
                     </div>
                 </div>
             </div>
