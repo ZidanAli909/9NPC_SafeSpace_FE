@@ -4,9 +4,9 @@ import { Footer } from "../common/Footer";
 
 export function AdminLayout() {
     return (
-        <div className="flex min-h-screen flex-col bg-background text-foreground">
+        <div className="min-h-screen flex flex-col bg-background text-foreground">
             <Navbar adminMode={true} />
-            <main>
+            <main className="flex-1">
                 <Outlet />
             </main>
             <Footer showFooterNav={false} />

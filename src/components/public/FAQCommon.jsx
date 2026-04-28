@@ -2,7 +2,7 @@ import { Mail } from "lucide-react"
 
 export function FAQContactCard() {
     return (
-        <div className="px-8 py-4 max-w-3xl mx-auto rounded-lg bg-secondary-foreground text-secondary text-sm">
+        <div className="px-8 max-md:p-4 py-4 max-w-2xl mx-auto rounded-lg bg-secondary-foreground text-secondary text-sm">
             <p className="text-lg font-semibold">Masih butuh bantuan teknis?</p>
             <p className="mb-4">Jika pertanyaanmu tidak terjawab di atas, silakan hubungi tim teknis kami melalui:</p>
             <div className="flex flex-row gap-2 items-center">

@@ -13,15 +13,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles"
 import { Link } from "react-router-dom"
 
 const items = [
@@ -59,28 +51,28 @@ const items = [
 
 export function PrivacyPage() {
     return (
-        <div className="py-8 px-24 max-md:px-16 max-sm:px-8">
-            <div className="mb-8">
+        <div className={commonStyle_Page}>
+            <div className={commonStyle_Section}>
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
-                            <BreadcrumbLink render={<Link to="/"/>}>FAQ</BreadcrumbLink>
+                            <BreadcrumbPage>FAQ</BreadcrumbPage>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
-                            <BreadcrumbPage>Kebijakan Privasi</BreadcrumbPage>
+                            <BreadcrumbPage>Pusat Bantuan Teknis</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
             </div>
 
-            <div className="mb-8">
+            <div className={commonStyle_Section + " max-w-4xl mx-auto"}>
                 <p className="text-2xl font-semibold mb-4">Kebijakan Privasi Pelapor</p>
                 <p className="text-sm">Kami memahami bahwa Anda mungkin memiliki kekhawatiran. Berikut jawaban atas pertanyaan yang paling sering diajukan.</p>
             </div>
             
-            <div className="mb-8">
-                <Accordion multiple className="max-w-3xl mx-auto rounded-lg border" defaultValue={["faq1"]}>
+            <div className={commonStyle_Section + " max-w-4xl mx-auto"}>
+                <Accordion multiple className="mx-auto rounded-lg border" defaultValue={["faq1"]}>
                     {items.map((item) => (
                         <AccordionItem key={item.value} value={item.value} className="border-b px-8 last:border-b-0">
                             <AccordionTrigger>{item.trigger}</AccordionTrigger>
