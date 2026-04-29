@@ -136,7 +136,6 @@ export function Navbar({
     adminMode = false
 }) {
     return (
-        <AuthProvider>
             <header className="bg-primary-foreground flex items-center justify-between p-4 px-8 border-b">
 
                 {/* Logo Section */}
@@ -148,9 +147,10 @@ export function Navbar({
                 <div className="flex items-center gap-4">
                     {adminMode ? <NavigationAdmin /> : <NavigationPublic />}
 
-                    <UserSection />
+                    <AuthProvider>
+                        <UserSection />
+                    </AuthProvider>
                 </div>
             </header>
-        </AuthProvider>
     )
 }

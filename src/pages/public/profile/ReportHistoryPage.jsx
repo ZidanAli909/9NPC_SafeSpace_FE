@@ -17,11 +17,12 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Link } from "react-router-dom"
 import { UserReportTableItem } from "@/components/public/UserReportTable"
+import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles"
 
 export function ReportHistoryPage() {
     return (
-        <div className="py-8 px-24 max-md:px-16 max-sm:px-8">
-            <div className="mb-8">
+        <div className={commonStyle_Page}>
+            <div className={commonStyle_Section}>
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
@@ -35,11 +36,11 @@ export function ReportHistoryPage() {
                 </Breadcrumb>
             </div>
 
-            <div className="mb-8">
+            <div className={commonStyle_Section + " max-w-4xl mx-auto"}>
                 <p className="text-2xl font-semibold mb-4">Riwayat Laporan</p>
             </div>
 
-            <div>
+            <div className="max-w-5xl mx-auto">
                 <Table className="">
                     <TableHeader>
                         <TableRow>

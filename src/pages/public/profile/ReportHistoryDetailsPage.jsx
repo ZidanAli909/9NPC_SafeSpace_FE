@@ -8,13 +8,14 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
+import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles"
 import { Download, History, Phone, Plus, X } from "lucide-react"
 import { Link } from "react-router-dom"
 
 export function ReportHistoryDetailsPage() {
     return (
-        <div className="py-8 px-24 max-md:px-16 max-sm:px-8">
-            <div className="mb-8">
+        <div className={commonStyle_Page}>
+            <div className={commonStyle_Section}>
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
@@ -32,7 +33,7 @@ export function ReportHistoryDetailsPage() {
                 </Breadcrumb>
             </div>
 
-            <div className="mb-8 flex flex-row justify-between">
+            <div className={commonStyle_Section + " flex flex-row justify-between"}>
 
                 {/* Title and Status Badge */}
                 <div>
@@ -63,10 +64,10 @@ export function ReportHistoryDetailsPage() {
                 </div>
             </div>
 
-            <div className="flex-1 border rounded-lg p-8">
-                <div className="mb-4">
+            <div className="flex-1 border rounded-lg p-8 max-md:py-4 max-md:px-6">
+                <div className="mb-4 max-mod:mb-2">
                     <p className="font-medium text-lg">Informasi Umum</p>
-                    <div className="text-sm grid grid-cols-4 gap-2 p-4">
+                    <div className="text-sm grid grid-cols-4 max-md:grid-cols-2 gap-2 max-md:gap-1 p-4 max-md:p-2">
                         <p className="font-semibold">Tanggal Pelaporan</p>
                         <p className="font-light">10 April 2026 15:45</p>
                         <p className="font-semibold">ID Laporan</p>
@@ -74,28 +75,28 @@ export function ReportHistoryDetailsPage() {
                     </div>
                 </div>
 
-                <div className="mb-4">
+                <div className="mb-4 max-mod:mb-2">
                     <p className="font-medium text-lg">Detil Kejadian </p>
-                    <div className="text-sm grid grid-cols-4 gap-2 p-4">
+                    <div className="text-sm grid grid-cols-4 max-md:grid-cols-2 gap-2 max-md:gap-1 p-4 max-md:p-2">
                         <p className="font-semibold">Jenis Kejadian</p>
                         <p className="font-light">Kekerasan verbal</p>
                         <p className="font-semibold">Tanggal Kejadian</p>
                         <p className="font-light">9 April 2026 17:25</p>
                         <p className="font-semibold">Lokasi Kejadian</p>
-                        <p className="font-light col-span-3">Ruang Baca Lantai 3, Gedung Perpustakaan Kampus</p>
+                        <p className="font-light md:col-span-3">Ruang Baca Lantai 3, Gedung Perpustakaan Kampus</p>
                         <p className="font-semibold">Deskripsi Kronologi</p>
-                        <p className="font-light col-span-3">Saat itu saya sedang mengerjakan tugas sendirian di ruang baca.  Tiba-tiba seorang mahasiswa laki-laki (tidak dikenal) duduk di seberang  saya dan mulai berkomentar tentang cara saya duduk. Ia mengatakan "kamu  tuh duduknya nggak sopan, mana berani pakai baju begini". Saya coba  diamkan, tapi ia terus mengucapkan kata-kata kasar seperti "dasar cewek  kurang ajar" dan "pantesan dilecehin orang". Saya merasa terintimidasi  dan segera meninggalkan ruangan.</p>
+                        <p className="font-light md:col-span-3">Saat itu saya sedang mengerjakan tugas sendirian di ruang baca.  Tiba-tiba seorang mahasiswa laki-laki (tidak dikenal) duduk di seberang  saya dan mulai berkomentar tentang cara saya duduk. Ia mengatakan "kamu  tuh duduknya nggak sopan, mana berani pakai baju begini". Saya coba  diamkan, tapi ia terus mengucapkan kata-kata kasar seperti "dasar cewek  kurang ajar" dan "pantesan dilecehin orang". Saya merasa terintimidasi  dan segera meninggalkan ruangan.</p>
                         <p className="font-semibold">Deskripsi Pelaku</p>
-                        <p className="font-light col-span-3">Laki-laki, tinggi sekitar 170 cm, rambut hitam pendek, memakai kemeja abu-abu. Tidak mengetahui nama atau NIM.</p>
+                        <p className="font-light md:col-span-3">Laki-laki, tinggi sekitar 170 cm, rambut hitam pendek, memakai kemeja abu-abu. Tidak mengetahui nama atau NIM.</p>
                     </div>
                 </div>
 
-                <div className="mb-4">
+                <div className="mb-4 max-mod:mb-2">
                     <p className="font-medium text-lg mb-4">Bukti Kejadian</p>
                     <div className="rounded-lg border p-4 min-h-32 mb-2">
                         <p className="text-sm italic text-muted-foreground">Tidak ada bukti...</p>
                     </div>
-                    <Button variant="outline" size="lg">
+                    <Button variant="outline" className="lg:h-9">
                         <Plus className="mr-2" />
                         Tambahkan Bukti
                     </Button>

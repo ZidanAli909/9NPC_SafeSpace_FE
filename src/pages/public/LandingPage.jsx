@@ -1,7 +1,9 @@
+import { commonStyle_Page } from "@/lib/commonStyles";
+
 export function LandingPage() {
     return (
         <>
-            <div className="py-8 px-24 max-md:px-16 max-sm:px-8 min-h-full">
+            <div className={commonStyle_Page}>
                 Ini adalah landing page
             </div>
         </>
