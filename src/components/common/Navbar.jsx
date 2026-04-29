@@ -17,10 +17,10 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import safespace_logo from "../../assets/safespace_logo.svg"
 import { Link } from "react-router-dom"
-import { History, LogOut, Settings, User2 } from "lucide-react"
+import { History, LoaderCircle, LogOut, Settings, User2 } from "lucide-react"
 import { AuthProvider, useAuth } from "@/contexts/AuthContext"
 
 function NavigationPublic() {
@@ -81,17 +81,24 @@ function NavigationAdmin() {
 }
 
 function UserSection() {
-    const { user, setUser } = useAuth();
+    const { user, loadingUser } = useAuth();
+    console.log("Current User:", user);
 
-    if (!user) {
+    if (loadingUser) {
+        return (
+            <>
+                <LoaderCircle className="animate-spin" />
+            </>
+        )
+    } else if (!user) {
         return (
             <div className="flex items-center gap-2">
-                <Button className={navigationMenuTriggerStyle() + "px-4"}>
-                    Login
-                </Button>
-                <Button className={navigationMenuTriggerStyle() + "px-4"} variant="secondary">
-                    Sign Up
-                </Button>
+                <Link to="/login" className={buttonVariants() + navigationMenuTriggerStyle() + "px-4"}>
+                    Masuk
+                </Link>
+                <Link to="/login" className={buttonVariants({ variant: "secondary" }) + navigationMenuTriggerStyle() + "px-4"}>
+                    Daftar
+                </Link>
             </div>
         );
     } else {
@@ -103,7 +110,7 @@ function UserSection() {
                             <AvatarImage src="https://github.com/shadcn.png" />
                             <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
-                        Username12345
+                        {user.name}
                     </Button>
                 } />
                 <DropdownMenuContent className="w-fit">
@@ -144,12 +151,10 @@ export function Navbar({
                     Safespace
                 </Link>
 
+                {/* Navigation Section */}
                 <div className="flex items-center gap-4">
                     {adminMode ? <NavigationAdmin /> : <NavigationPublic />}
-
-                    <AuthProvider>
-                        <UserSection />
-                    </AuthProvider>
+                    <UserSection />
                 </div>
             </header>
     )
