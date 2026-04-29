@@ -38,21 +38,14 @@ export function LoginPage() {
     });
 
     const onSubmit = async (data) => {
-        // Mock submit
-        // console.log(data);
-        // setTimeout(() => {
-        //     setLoading(false);
-        // }, 3000);
-
-        // Actual stuff
         setLoading(true);
         try {
             const responseData = await AuthService.login(data);
-            const token = responseData.data?.token || responseData.token || responseData.access_token;
-            const userData = responseData.data?.user || responseData.user; // Ambil data user untuk dicek role-nya
+            const token = responseData.data?.token || responseData.token;
+            const user = responseData.data?.user || responseData.user; // Ambil data user untuk cek role
 
             if (token) {
-                login(userData, token);
+                login(user, token);
                 navigate("/");
             } else {
                 console.error("Token tidak ditemukan.");

@@ -13,6 +13,7 @@ import { SettingsPage } from './pages/public/profile/SettingsPage'
 import { ReportGuidePage } from './pages/public/faq/GuidePage'
 import { LoginPage } from './pages/auth/LoginPage'
 import { AuthProvider } from './contexts/AuthContext'
+import { ProfileProvider } from './contexts/ProfileContext'
 
 // Router Handler
 
@@ -20,6 +21,7 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <ProfileProvider>
       <Routes>
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<LandingPage />} />
@@ -41,6 +43,7 @@ function App() {
           <Route path="report" element={<ReportPage />} />
         </Route>
       </Routes>
+      </ProfileProvider>
       </AuthProvider>
     </BrowserRouter>
   )
