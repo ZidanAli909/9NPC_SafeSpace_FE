@@ -34,9 +34,9 @@ export function Footer({
                 <div className="md:pl-8">
                     <p className="text-lg font-medium mb-4">Info</p>
                     <ul className="text-sm/6 font-light underline">
-                        <li><Link to="/">FAQ</Link></li>
-                        <li><Link to="/">Panduan Pelaporan</Link></li>
-                        <li><Link to="/">Kebijakan Privasi</Link></li>
+                        <li><Link to="/faq">FAQ</Link></li>
+                        <li><Link to="/faq/guide">Panduan Pelaporan</Link></li>
+                        <li><Link to="/faq/privacy">Kebijakan Privasi</Link></li>
                     </ul>
                 </div>
             </div>

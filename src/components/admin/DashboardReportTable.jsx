@@ -4,8 +4,8 @@ import { File } from "lucide-react";
 export function DashboardReportTableItem() {
     return (
         <div className="flex flex-row gap-4 items-center py-2 px-4 border-t">
-            <div className="w-10 aspect-square flex justify-center items-center bg-secondary-foreground text-white rounded-md">
-                <File />
+            <div className="w-10 aspect-square flex justify-center items-center bg-secondary text-white rounded-md">
+                <File className="text-secondary-foreground" />
             </div>
 
             <div className="flex-1">
@@ -22,7 +22,7 @@ export function DashboardReportTableItem() {
 
             <div className="flex flex-row gap-2">
                 <Badge variant="secondary">New</Badge>
-                <Badge variant="primary">Important</Badge>
+                <Badge>Important</Badge>
             </div>
         </div>
     )

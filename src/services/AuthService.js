@@ -1,17 +1,13 @@
 import { api } from "./API";
 
 export const AuthService = {
-  login: async (email, password) => {
-    const response = await api.post("/auth/sign-in", { email, password });
+  login: async (payload) => {
+    const response = await api.post("/auth/sign-in", payload);
     return response.data;
   },
-  
-  register: async (email, password, confirmPassword) => {
-    const response = await api.post("/auth/sign-up", { 
-      email, 
-      password, 
-      confirmPassword 
-    });
+
+  register: async (payload) => {
+    const response = await api.post("/auth/sign-up", payload);
     return response.data;
   }
 };

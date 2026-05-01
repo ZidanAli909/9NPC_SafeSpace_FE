@@ -9,9 +9,11 @@ import {
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Trash } from "lucide-react"
+import { Link } from "react-router-dom"
 
-export function ReportTableItem({
+// This is a placeholder! Will be deleted soon!
+
+export function UserReportTableItem({
     id,
     date,
     type,
@@ -26,11 +28,8 @@ export function ReportTableItem({
                 <Badge>Laporan Diterima</Badge>
             </TableCell>
             <TableCell className="flex flex-row gap-2">
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" render={<Link to="/profile/history/1"/>}>
                     Lihat Laporan
-                </Button>
-                <Button variant="destructive" size="sm">
-                    <Trash />
                 </Button>
             </TableCell>
         </TableRow>
