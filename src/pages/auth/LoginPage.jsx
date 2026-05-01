@@ -22,12 +22,15 @@ import { LoaderCircle } from "lucide-react";
 import { AuthService } from "@/services/AuthService";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { useAdmin } from "@/contexts/AdminContext";
+import { AdminService } from "@/services/AdminService";
 
 export function LoginPage() {
     // NOTE: Temporary page. @Jihan may replace this page!
     const navigate = useNavigate();
     
     const { login } = useAuth();
+    const { adminLogin } = useAdmin();
 
     const [loading, setLoading] = useState(false);
 
@@ -42,14 +45,22 @@ export function LoginPage() {
         try {
             const responseData = await AuthService.login(data);
             const token = responseData.data?.token || responseData.token;
-            const user = responseData.data?.user || responseData.user; // Ambil data user untuk cek role
+            const userData = responseData.data?.user || responseData.user; // Ambil data user untuk cek role
+            
+            localStorage.setItem("token", token);
 
-            if (token) {
-                login(user, token);
-                navigate("/");
-            } else {
-                console.error("Token tidak ditemukan.");
+            try {
+                const adminRes = await AdminService.getAdminProfile(token);
+                if (adminRes.success) {
+                    adminLogin(adminRes.data);
+                    navigate("/admin");
+                    return;
+                }
+            } catch (adminError) {
+                console.warn("User is not an admin, falling back to user login.");
             }
+            login(userData, token);
+            navigate("/");
         } catch (error) {
             console.error("Terjadi kesalahan:", error);
         } finally {

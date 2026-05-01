@@ -14,6 +14,7 @@ import { NavbarUser } from "./NavbarUser"
 import { Button } from "../ui/button"
 import { Menu } from "lucide-react"
 import { MobileNavigationDrawer } from "./NavbarMobile"
+import { NavbarAdmin } from "./NavbarAdmin"
 
 // NOTE: The Profile's/User's logic for Navbar has been moved into NavbarUser!
 
@@ -89,8 +90,8 @@ export function Navbar({
             {/* Navigation Section */}
             <div className="flex items-center gap-4">
                 {adminMode ? <NavigationAdmin /> : <NavigationPublic />}
-                <MobileNavigationDrawer />
-                <NavbarUser />
+                <MobileNavigationDrawer adminMode={adminMode} />
+                {adminMode ? <NavbarAdmin /> : <NavbarUser />}
             </div>
         </header>
     )
