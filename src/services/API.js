@@ -1,13 +1,15 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: "https://safespacebackend.vercel.app/api",
+  baseURL: "https://safespacebackend.vercel.app/api",
 });
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
 
-  if (token)config.headers.Authorization = `Bearer ${token}`;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
 
   return config;
 });
