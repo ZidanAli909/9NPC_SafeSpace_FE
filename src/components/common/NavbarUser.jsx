@@ -12,12 +12,14 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Link, useNavigate } from "react-router-dom"
-import { History, LoaderCircle, LogOut, Settings, User2 } from "lucide-react"
+import { History, Loader, LoaderCircle, LogOut, Settings, User2 } from "lucide-react"
 import { useAuth } from "@/contexts/AuthContext"
 import LogoutAlertDialog from "./LogoutAlertDialog"
 import { useProfile } from "@/contexts/ProfileContext"
 
-export function NavbarUser() {
+export function NavbarUser({
+    onNavigateAction = () => { },
+}) {
     const navigate = useNavigate();
     const { user, loadingUser } = useAuth();
     const { profile, loadingProfile } = useProfile();
@@ -25,6 +27,11 @@ export function NavbarUser() {
 
     // console.log("Dialog state:", showLogoutDialog);
     // console.log("Profile:", profile);
+
+    const handleNavigate = (path) => {
+        navigate(path);
+        if (onNavigateAction) onNavigateAction();
+    };
 
     if (loadingUser) {
         return (
@@ -35,12 +42,12 @@ export function NavbarUser() {
     } else if (!user) {
         return (
             <div className="flex items-center gap-2">
-                <Link to="/login" className={buttonVariants() + navigationMenuTriggerStyle() + "px-4"}>
+                <Button onClick={() => handleNavigate("/login")} className={navigationMenuTriggerStyle() + "px-4"}>
                     Masuk
-                </Link>
-                <Link to="/login" className={buttonVariants({ variant: "secondary" }) + navigationMenuTriggerStyle() + "px-4"}>
+                </Button>
+                <Button onClick={() => handleNavigate("/login")} variant="secondary" className={navigationMenuTriggerStyle() + "px-4"}>
                     Daftar
-                </Link>
+                </Button>
             </div>
         );
     } else {
@@ -48,26 +55,37 @@ export function NavbarUser() {
             <>
                 <DropdownMenu>
                     <DropdownMenuTrigger render={
-                        <Button variant="outline" size="lg" className="rounded-full gap-2">
+                        <Button variant="outline" size="lg" className="rounded-full gap-2 flex flex-row justify-between">
                             <Avatar className="-ml-2">
                                 <AvatarImage src="https://github.com/shadcn.png" />
-                                <AvatarFallback>CN</AvatarFallback>
+                                <AvatarFallback>
+                                    {profile
+                                        ? profile.name
+                                            .split(" ")
+                                            .map((n) => n[0])
+                                            .join("")
+                                            .substring(0, 2)
+                                            .toUpperCase()
+                                        : "?"}
+                                </AvatarFallback>
                             </Avatar>
-                            {profile?.name}
+                            {profile ?
+                                <p className="w-full">{profile.name}</p> :
+                                <Loader className="animate-spin" />}
                         </Button>
                     } />
                     <DropdownMenuContent className="w-fit">
                         <DropdownMenuGroup>
                             <DropdownMenuLabel>{profile?.email}</DropdownMenuLabel>
-                            <DropdownMenuItem className="text-sm px-4" render={<Link to="/profile" />}>
+                            <DropdownMenuItem className="text-sm px-4" onClick={() => handleNavigate("/profile")}>
                                 <User2 className="mr-2" />
                                 Profil
                             </DropdownMenuItem>
-                            <DropdownMenuItem className="text-sm px-4" render={<Link to="/profile/history" />}>
+                            <DropdownMenuItem className="text-sm px-4" onClick={() => handleNavigate("/profile/history")}>
                                 <History className="mr-2" />
                                 Riwayat Pelaporan
                             </DropdownMenuItem>
-                            <DropdownMenuItem className="text-sm px-4" render={<Link to="/profile/settings" />}>
+                            <DropdownMenuItem className="text-sm px-4" onClick={() => handleNavigate("/profile/settings")}>
                                 <Settings className="mr-2" />
                                 Pengaturan
                             </DropdownMenuItem>
@@ -90,7 +108,7 @@ export function NavbarUser() {
                 <LogoutAlertDialog
                     open={showLogoutDialog}
                     setOpen={setShowLogoutDialog}
-                    afterLogout={() => navigate("/")}
+                    afterLogout={() => handleNavigate("/")}
                 />
             </>
         );

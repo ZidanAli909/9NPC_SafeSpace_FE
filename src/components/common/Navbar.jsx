@@ -11,12 +11,15 @@ import {
 import safespace_logo from "../../assets/safespace_logo.svg"
 import { Link } from "react-router-dom"
 import { NavbarUser } from "./NavbarUser"
+import { Button } from "../ui/button"
+import { Menu } from "lucide-react"
+import { MobileNavigationDrawer } from "./NavbarMobile"
 
 // NOTE: The Profile's/User's logic for Navbar has been moved into NavbarUser!
 
 function NavigationPublic() {
     return (
-        <NavigationMenu>
+        <NavigationMenu className="max-md:hidden">
             <NavigationMenuList className="gap-4">
                 <NavigationMenuItem >
                     <NavigationMenuLink render={
@@ -54,7 +57,7 @@ function NavigationPublic() {
 
 function NavigationAdmin() {
     return (
-        <NavigationMenu>
+        <NavigationMenu className="max-md:hidden">
             <NavigationMenuList className="gap-4">
                 <NavigationMenuItem>
                     <NavigationMenuLink render={
@@ -86,6 +89,7 @@ export function Navbar({
             {/* Navigation Section */}
             <div className="flex items-center gap-4">
                 {adminMode ? <NavigationAdmin /> : <NavigationPublic />}
+                <MobileNavigationDrawer />
                 <NavbarUser />
             </div>
         </header>
