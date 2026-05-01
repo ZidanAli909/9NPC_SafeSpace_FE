@@ -7,12 +7,13 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
+import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles"
 import { ChevronRight, LogOut } from "lucide-react"
 
 export function SettingsPage() {
     return (
-        <div className="py-8 px-24 max-md:px-16 max-sm:px-8">
-            <div className="mb-8">
+        <div className={commonStyle_Page}>
+            <div className={commonStyle_Section}>
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
@@ -26,10 +27,10 @@ export function SettingsPage() {
                 </Breadcrumb>
             </div>
 
-            <div className="flex flex-row gap-8">
-                <div className="basis-64">
-                    <div className="mb-8">
-                        <p className="text-2xl font-semibold mb-4">Pengaturan</p>
+            <div className="flex flex-row gap-8 max-w-4xl mx-auto">
+                <div className="basis-64 max-lg:basis-48">
+                    <div className={commonStyle_Section}>
+                        <p className="text-2xl font-semibold">Pengaturan</p>
                     </div>
                     <div className="flex flex-col gap-1 mb-2">
                         <p className="font-medium text-lg">Sistem</p>
@@ -68,7 +69,7 @@ export function SettingsPage() {
                 </div>
 
                 <div className="flex-1">
-                    <div className="mb-8">
+                    <div className={commonStyle_Section}>
                         <p className="text-2xl font-semibold mb-4">Notifikasi</p>
                     </div>
 

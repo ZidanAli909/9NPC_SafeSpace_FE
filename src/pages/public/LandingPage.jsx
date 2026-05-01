@@ -1,7 +1,9 @@
+import { commonStyle_Page } from "@/lib/commonStyles";
+
 export function LandingPage() {
     return (
         <>
-            <div className="p-10">
+            <div className={commonStyle_Page}>
                 Ini adalah landing page
             </div>
         </>

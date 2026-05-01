@@ -11,32 +11,43 @@ import { ReportHistoryPage } from './pages/public/profile/ReportHistoryPage'
 import { ReportHistoryDetailsPage } from './pages/public/profile/ReportHistoryDetailsPage'
 import { SettingsPage } from './pages/public/profile/SettingsPage'
 import { ReportGuidePage } from './pages/public/faq/GuidePage'
+import { LoginPage } from './pages/auth/LoginPage'
+import { AuthProvider } from './contexts/AuthContext'
+import { ProfileProvider } from './contexts/ProfileContext'
+import { ReportScopeLayout } from './components/layout/Scopes'
 
 // Router Handler
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<PublicLayout />}>
-          <Route index element={<LandingPage />} />
-          <Route path="/faq">
-            <Route index element={<FAQPage />} />
-            <Route path="privacy" element={<PrivacyPage />} />
-            <Route path="guide" element={<ReportGuidePage />} />
-          </Route>
-          <Route path="profile">
-            <Route index element={<ProfileDetailsPage />} />
-            <Route path="history" element={<ReportHistoryPage />} />
-            <Route path="history/:id" element={<ReportHistoryDetailsPage />} />
-            <Route path="settings" element={<SettingsPage />} />
-          </Route>
-        </Route>
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<DashboardPage />} />
-          <Route path="report" element={<ReportPage />} />
-        </Route>
-      </Routes>
+      <AuthProvider>
+        <ProfileProvider>
+          <Routes>
+            <Route path="/" element={<PublicLayout />}>
+              <Route index element={<LandingPage />} />
+              <Route path="login" element={<LoginPage />} />
+              <Route path="faq">
+                <Route index element={<FAQPage />} />
+                <Route path="privacy" element={<PrivacyPage />} />
+                <Route path="guide" element={<ReportGuidePage />} />
+              </Route>
+              <Route path="profile">
+                <Route index element={<ProfileDetailsPage />} />
+                <Route path="history" element={<ReportScopeLayout />}>
+                  <Route index element={<ReportHistoryPage />} />
+                  <Route path=":id" element={<ReportHistoryDetailsPage />} />
+                </Route>
+                <Route path="settings" element={<SettingsPage />} />
+              </Route>
+            </Route>
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<DashboardPage />} />
+              <Route path="report" element={<ReportPage />} />
+            </Route>
+          </Routes>
+        </ProfileProvider>
+      </AuthProvider>
     </BrowserRouter>
   )
 }
