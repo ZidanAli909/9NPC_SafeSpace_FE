@@ -57,7 +57,7 @@ export function NavbarUser({
                     <DropdownMenuTrigger render={
                         <Button variant="outline" size="lg" className="rounded-full gap-2 flex flex-row justify-between">
                             <Avatar className="-ml-2">
-                                <AvatarImage src="https://github.com/shadcn.png" />
+                                <AvatarImage src={profile?.profilePictureUrl} alt={"Foto profil " + profile?.name} className="bg-black" />
                                 <AvatarFallback>
                                     {profile
                                         ? profile.name
