@@ -1,4 +1,28 @@
 import { api } from "./API";
+import axios from "axios";
+
+export const ReportService = {
+  uploadEvidence: async (file) => {
+    const signedUrlRes = await api.post("/report/evidence/upload-url", {
+      fileName: file.name,
+      fileSize: file.size,
+      fileType: file.type
+    });
+
+    const { uploadUrl, filePath } = signedUrlRes.data.data;
+
+    await axios.put(uploadUrl, file, {
+      headers: { "Content-Type": file.type }
+    });
+
+    return filePath;
+  },
+
+  createReport: async (reportData) => {
+    const response = await api.post("/report/create", reportData);
+    return response.data;
+  }
+};
 
 export const ReportService = {
     readAllUserReports: async () => {
