@@ -1,14 +1,13 @@
-import { useAdmin } from "@/contexts/AdminContext";
-import { useAuth } from "@/contexts/AuthContext";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { Card, CardContent } from "../ui/card";
 import { Loader2 } from "lucide-react";
+import { useProfile } from "@/contexts/ProfileContext";
 
 export const AdminRoute = () => {
-    const { isAdmin, loadingAdmin } = useAdmin();
+    const { role, loadingProfile } = useProfile();
     const location = useLocation();
 
-    if (loadingAdmin) {
+    if (loadingProfile) {
         return (
             <div className="h-screen flex items-center">
                 <Card className="w-32 mx-auto">
@@ -21,7 +20,7 @@ export const AdminRoute = () => {
         );
     }
 
-    if (!isAdmin) {
+    if (role !== "ADMIN") {
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 

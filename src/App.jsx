@@ -30,46 +30,44 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <ProfileProvider>
-          <AdminProvider>
-            <Routes>
-              {/* Public Routes */}
-              <Route path="/" element={<PublicLayout />}>
-                <Route index element={<LandingPage />} />
-                <Route path="login" element={<LoginPage />} />
-                <Route path="signup" element={<SignUpPage />} />
-                <Route path="report" element={<ReportFormPage />} />
-                <Route path="submitted" element={<SubmittedPage />} />
-                <Route path="artikel">
-                  <Route index element={<ArtikelDukunganPage />} />
-                  <Route path=":slug" element={<ReadArticlePage />} />
-                </Route>
-                <Route path="hukum" element={<InfoBantuanHukumPage />} />
-                <Route path="faq">
-                  <Route index element={<FAQPage />} />
-                  <Route path="privacy" element={<PrivacyPage />} />
-                  <Route path="guide" element={<ReportGuidePage />} />
-                </Route>
-                {/* Registered-only Routes */}
-                <Route element={<RegisteredRoute />}>
-                  <Route path="profile">
-                    <Route index element={<ProfileDetailsPage />} />
-                    <Route path="history" element={<ReportScopeLayout />}>
-                      <Route index element={<ReportHistoryPage />} />
-                      <Route path=":id" element={<ReportHistoryDetailsPage />} />
-                    </Route>
-                    <Route path="settings" element={<SettingsPage />} />
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<PublicLayout />}>
+              <Route index element={<LandingPage />} />
+              <Route path="login" element={<LoginPage />} />
+              <Route path="signup" element={<SignUpPage />} />
+              <Route path="report" element={<ReportFormPage />} />
+              <Route path="submitted" element={<SubmittedPage />} />
+              <Route path="artikel">
+                <Route index element={<ArtikelDukunganPage />} />
+                <Route path=":slug" element={<ReadArticlePage />} />
+              </Route>
+              <Route path="hukum" element={<InfoBantuanHukumPage />} />
+              <Route path="faq">
+                <Route index element={<FAQPage />} />
+                <Route path="privacy" element={<PrivacyPage />} />
+                <Route path="guide" element={<ReportGuidePage />} />
+              </Route>
+              {/* Registered-only Routes */}
+              <Route element={<RegisteredRoute />}>
+                <Route path="profile">
+                  <Route index element={<ProfileDetailsPage />} />
+                  <Route path="history" element={<ReportScopeLayout />}>
+                    <Route index element={<ReportHistoryPage />} />
+                    <Route path=":id" element={<ReportHistoryDetailsPage />} />
                   </Route>
+                  <Route path="settings" element={<SettingsPage />} />
                 </Route>
               </Route>
-              {/* Admin Routes */}
-              <Route element={<AdminRoute />}>
-                <Route path="/admin" element={<AdminLayout />}>
-                  <Route index element={<DashboardPage />} />
-                  <Route path="report" element={<ReportPage />} />
-                </Route>
+            </Route>
+            {/* Admin Routes */}
+            <Route element={<AdminRoute />}>
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route index element={<DashboardPage />} />
+                <Route path="report" element={<ReportPage />} />
               </Route>
-            </Routes>
-          </AdminProvider>
+            </Route>
+          </Routes>
         </ProfileProvider>
       </AuthProvider>
     </BrowserRouter>

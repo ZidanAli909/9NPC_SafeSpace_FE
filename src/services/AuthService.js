@@ -8,5 +8,9 @@ export const AuthService = {
     register: async (payload) => {
         const response = await api.post("/auth/register", payload);
         return response.data;
+    },
+    getSession: async () => {
+        const response = await api.get("/auth/session");
+        return response.data;
     }
 }

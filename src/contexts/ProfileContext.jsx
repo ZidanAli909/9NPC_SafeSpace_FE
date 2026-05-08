@@ -1,20 +1,23 @@
 import { ProfileService } from "@/services/ProfileService";
 import React, { createContext, useState, useContext, useEffect, useCallback } from "react";
 import { useAuth } from "./AuthContext";
+import { AdminService } from "@/services/AdminService";
 
 const ProfileContext = createContext(null);
 
 export const ProfileProvider = ({ children }) => {
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, user } = useAuth();
     const [profile, setProfile] = useState(null);
     const [loadingProfile, setLoadingProfile] = useState(false);
 
     const fetchProfile = useCallback(async () => {
-        if (!isAuthenticated) return;
-
+        if (!isAuthenticated || !user) return;
         setLoadingProfile(true);
         try {
-            const response = await ProfileService.getProfile();
+            const role = user.user_metadata?.role;
+            let response;
+            if (role === "ADMIN") response = await AdminService.getAdminProfile();
+            else response = await ProfileService.getProfile();
             setProfile(response.data);
         } catch (error) {
             console.error("Terjadi kesalahan:", error);
@@ -22,7 +25,7 @@ export const ProfileProvider = ({ children }) => {
         } finally {
             setLoadingProfile(false);
         }
-    }, [isAuthenticated]);
+    }, [isAuthenticated, user]);
 
     useEffect(() => {
         if (isAuthenticated) fetchProfile();
@@ -32,7 +35,8 @@ export const ProfileProvider = ({ children }) => {
     const value = {
         profile,
         loadingProfile,
-        refreshProfile: fetchProfile, // Export this so you can refresh after an update
+        refreshProfile: fetchProfile,
+        role: user?.user_metadata?.role // Easy access to role
     };
 
     return (

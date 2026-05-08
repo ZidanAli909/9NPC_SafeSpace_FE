@@ -14,13 +14,13 @@ import { Button, buttonVariants } from "@/components/ui/button"
 import { Link, useNavigate } from "react-router-dom"
 import { History, Loader, LoaderCircle, LogOut, Settings, User2 } from "lucide-react"
 import LogoutAlertDialog from "./LogoutAlertDialog"
-import { useAdmin } from "@/contexts/AdminContext"
+import { useProfile } from "@/contexts/ProfileContext"
 
 export function NavbarAdmin({
     onNavigateAction = () => { },
 }) {
     const navigate = useNavigate();
-    const { admin, loadingAdmin } = useAdmin();
+    const { profile, loadingProfile } = useProfile();
     const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 
     // console.log("Dialog state:", showLogoutDialog);
@@ -31,7 +31,7 @@ export function NavbarAdmin({
         if (onNavigateAction) onNavigateAction();
     };
 
-    if (loadingAdmin) {
+    if (loadingProfile) {
         return (
             <>
                 <LoaderCircle className="animate-spin" />
@@ -44,10 +44,10 @@ export function NavbarAdmin({
                     <DropdownMenuTrigger render={
                         <Button variant="outline" size="lg" className="rounded-full gap-2 flex flex-row justify-between">
                             <Avatar className="-ml-2">
-                                <AvatarImage src={admin?.profilePictureUrl} alt={"Foto profil " + admin?.name} className="bg-black" />
+                                <AvatarImage src={profile?.profilePictureUrl} alt={"Foto profil " + profile?.name} className="bg-black" />
                                 <AvatarFallback>
-                                    {admin
-                                        ? admin.admin.name
+                                    {profile && profile.admin
+                                        ? profile.admin.name
                                             .split(" ")
                                             .map((n) => n[0])
                                             .join("")
@@ -56,14 +56,14 @@ export function NavbarAdmin({
                                         : "?"}
                                 </AvatarFallback>
                             </Avatar>
-                            {admin ?
-                                <p className="w-full">{admin.admin.name}</p> :
+                            {profile ?
+                                <p className="w-full">{profile.admin.name ? profile.admin.name : "Admin"}</p> :
                                 <Loader className="animate-spin" />}
                         </Button>
                     } />
                     <DropdownMenuContent className="w-fit">
                         <DropdownMenuGroup>
-                            <DropdownMenuLabel>{admin?.admin.email}</DropdownMenuLabel>
+                            <DropdownMenuLabel>{profile?.admin.email}</DropdownMenuLabel>
                             <DropdownMenuItem className="text-sm px-4" onClick={() => handleNavigate("/profile")}>
                                 <User2 className="mr-2" />
                                 Profil

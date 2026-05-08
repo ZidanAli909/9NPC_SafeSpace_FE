@@ -72,9 +72,9 @@ function DetailsProfile({
                 <p className="font-medium text-lg">Informasi Akun</p>
                 <div className="text-sm grid grid-cols-4 max-lg:grid-cols-2 gap-2 p-4">
                     <p className="font-semibold">ID Pengguna</p>
-                    <p className="font-light lg:col-span-3">{profile?.id}</p>
+                    <p className="font-light lg:col-span-3">{profile.id ? profile.id : "-"}</p>
                     <p className="font-semibold">Tanggal Bergabung</p>
-                    <p className="font-light lg:col-span-3">{profile?.createdAt}</p>
+                    <p className="font-light lg:col-span-3">{profile.createdAt ? profile.createdAt : "-"}</p>
                 </div>
             </div>
 
@@ -82,19 +82,19 @@ function DetailsProfile({
                 <p className="font-medium text-lg">Data Akun</p>
                 <div className="text-sm grid grid-cols-4 max-lg:grid-cols-2 gap-2 p-4">
                     <p className="font-semibold">Nama</p>
-                    <p className="font-light lg:col-span-3">{profile?.name}</p>
+                    <p className="font-light lg:col-span-3">{profile.name ? profile.name : "-"}</p>
                     <p className="font-semibold">Email</p>
-                    <p className="font-light lg:col-span-3">{profile?.email}</p>
+                    <p className="font-light lg:col-span-3">{profile.email ? profile.email : "-"}</p>
                     <p className="font-semibold">Nomor Telepon</p>
-                    <p className="font-light lg:col-span-3">{profile?.phoneNumber}</p>
+                    <p className="font-light lg:col-span-3">{profile.phoneNumber ? profile.phoneNumber : "-"}</p>
                     <p className="font-semibold">NIM</p>
-                    <p className="font-light">{profile?.nim}</p>
+                    <p className="font-light">{profile.nim ? profile.nim : "-"}</p>
                     <p className="font-semibold">Tahun Masuk</p>
-                    <p className="font-light">{profile?.enrollmentYear}</p>
+                    <p className="font-light">{profile.enrollmentYear ? profile.enrollmentYear : "-"}</p>
                     <p className="font-semibold">Fakultas</p>
-                    <p className="font-light">{profile?.faculty}</p>
+                    <p className="font-light">{profile.faculty ? profile.faculty : "-"}</p>
                     <p className="font-semibold">Program Studi</p>
-                    <p className="font-light">{profile?.department}</p>
+                    <p className="font-light">{profile.department ? profile.department : "-"}</p>
                 </div>
                 <Button variant="outline" className="mb-4 lg:h-9">
                     <Edit2 className="mr-2" />
@@ -151,14 +151,14 @@ export function ProfileDetailsPage() {
                     <Avatar className="w-32 h-32 md:mx-auto">
                         <AvatarImage src={profile?.profilePictureUrl} alt={"Foto profil " + profile?.name} className="bg-black" />
                         <AvatarFallback className="text-6xl">
-                            {profile
-                                ? profile.name
-                                    .split(" ")
-                                    .map((n) => n[0])
-                                    .join("")
-                                    .substring(0, 2)
-                                    .toUpperCase()
-                                : "?"}
+                            {profile && profile.name != null
+                                        ? profile.name
+                                            .split(" ")
+                                            .map((n) => n[0])
+                                            .join("")
+                                            .substring(0, 2)
+                                            .toUpperCase()
+                                        : "?"}
                         </AvatarFallback>
                     </Avatar>
 
