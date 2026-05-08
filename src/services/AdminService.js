@@ -1,9 +1,9 @@
 import { api } from "./API";
 
-export const ProfileService = {
-    getProfile: async (token) => {
+export const AdminService = {
+    getAdminProfile: async (token) => {
         const headers = token ? { Authorization: `Bearer ${token}` } : {};
-        const response = await api.get("/user/profile/", { headers });
+        const response = await api.get("/admin/profile", { headers });
         return response.data;
     },
-};
+}

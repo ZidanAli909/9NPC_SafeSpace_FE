@@ -9,6 +9,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { useAdmin } from "@/contexts/AdminContext";
 import { useAuth } from "@/contexts/AuthContext"
 
 export default function LogoutAlertDialog({
@@ -17,8 +18,10 @@ export default function LogoutAlertDialog({
     afterLogout,
 }) {
     const { logout } = useAuth();
+    const { adminLogout } = useAdmin();
 
     const handleLogout = () => {
+        adminLogout();
         logout();
         if (afterLogout) afterLogout();
         setOpen(false);
