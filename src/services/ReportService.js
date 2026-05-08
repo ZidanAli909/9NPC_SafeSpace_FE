@@ -23,3 +23,14 @@ export const ReportService = {
     return response.data;
   }
 };
+
+export const ReportService = {
+    readAllUserReports: async () => {
+        const response = await api.get("/report");
+        return response.data;
+    },
+    readUserReport: async (id) => {
+        const response = await api.get(`/report/${id}`);
+        return response.data;
+    },
+}

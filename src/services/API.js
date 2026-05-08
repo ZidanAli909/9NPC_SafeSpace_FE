@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "https://safespacebackend.vercel.app/api",
+    baseURL: "https://safespacebackend.vercel.app/api",
 });
 
 api.interceptors.request.use((config) => {

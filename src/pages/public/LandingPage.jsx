@@ -1,3 +1,4 @@
+<<<<<<< jihan
 import HeroSection from "@/components/public/User-LandingPage/HeroSection";
 import AboutSection from "@/components/public/User-LandingPage/AboutSection";
 import ReportStepsSection from "@/components/public/User-LandingPage/ReportStepsSection";
@@ -17,3 +18,16 @@ export default function LandingPage() {
     </div>
   );
 }
+=======
+import { commonStyle_Page } from "@/lib/commonStyles";
+
+export function LandingPage() {
+    return (
+        <>
+            <div className={commonStyle_Page}>
+                Ini adalah landing page
+            </div>
+        </>
+    )
+}
+>>>>>>> dev
