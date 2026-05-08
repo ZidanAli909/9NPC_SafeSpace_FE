@@ -45,7 +45,7 @@ export function NavbarUser({
                 <Button onClick={() => handleNavigate("/login")} className={navigationMenuTriggerStyle() + "px-4"}>
                     Masuk
                 </Button>
-                <Button onClick={() => handleNavigate("/login")} variant="secondary" className={navigationMenuTriggerStyle() + "px-4"}>
+                <Button onClick={() => handleNavigate("/signup")} variant="secondary" className={navigationMenuTriggerStyle() + "px-4"}>
                     Daftar
                 </Button>
             </div>
@@ -59,7 +59,7 @@ export function NavbarUser({
                             <Avatar className="-ml-2">
                                 <AvatarImage src={profile?.profilePictureUrl} alt={"Foto profil " + profile?.name} className="bg-black" />
                                 <AvatarFallback>
-                                    {profile
+                                    {profile && profile.name != null
                                         ? profile.name
                                             .split(" ")
                                             .map((n) => n[0])
@@ -70,7 +70,7 @@ export function NavbarUser({
                                 </AvatarFallback>
                             </Avatar>
                             {profile ?
-                                <p className="w-full">{profile.name}</p> :
+                                <p className="w-full">{profile.name ? profile.name : "?"}</p> :
                                 <Loader className="animate-spin" />}
                         </Button>
                     } />

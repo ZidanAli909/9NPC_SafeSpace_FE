@@ -21,16 +21,14 @@ export const ReportService = {
   createReport: async (reportData) => {
     const response = await api.post("/report/create", reportData);
     return response.data;
-  }
-};
+  },
 
-export const ReportService = {
-    readAllUserReports: async () => {
-        const response = await api.get("/report");
-        return response.data;
-    },
-    readUserReport: async (id) => {
-        const response = await api.get(`/report/${id}`);
-        return response.data;
-    },
+  readAllUserReports: async () => {
+    const response = await api.get("/report");
+    return response.data;
+  },
+  readUserReport: async (id) => {
+    const response = await api.get(`/report/${id}`);
+    return response.data;
+  },
 }

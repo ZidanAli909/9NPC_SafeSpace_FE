@@ -7,23 +7,12 @@ export function PublicLayout() {
     const isAuthPage = location.pathname === "/login" || location.pathname === "/signup"
 
     return (
-<<<<<<< jihan
-        <div className="flex min-h-screen flex-col bg-background text-foreground">
-            <Navbar isAuthPage={isAuthPage} />
-            <main className="flex-1">
-=======
         <main className="min-h-screen bg-background text-foreground flex flex-col">
             <Navbar />
             <div className="flex-1">
->>>>>>> dev
                 <Outlet />
             </div>
             <Footer />
-<<<<<<< jihan
-        </div>
-    );
-=======
         </main>
     )
->>>>>>> dev
 }

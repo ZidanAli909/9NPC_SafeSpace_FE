@@ -27,9 +27,9 @@ export function Footer({
                         <div>
                             <p className="text-lg font-medium mb-4 max-lg:mb-2">Menu Utama</p>
                             <ul className="text-sm/6 max-lg:text-xs/5 font-light underline list-disc list-inside ml-1">
-                                <li>Buat Laporan</li>
-                                <li>Artikel Dukungan</li>
-                                <li>Info Bantuan Hukum</li>
+                                <li><Link to="/report">Buat Laporan</Link></li>
+                                <li><Link to="/artikel">Artikel Dukungan</Link></li>
+                                <li><Link to="/hukum">Info Bantuan Hukum</Link></li>
                             </ul>
                         </div>
                         <div>
@@ -42,32 +42,6 @@ export function Footer({
                         </div>
                     </div>
                 </div>
-                <div className="md:px-8">
-                    <p className="text-lg font-medium mb-4">Sumber Daya Kampus</p>
-                    <ul className="text-sm/6 font-light underline">
-                        <li><Link to="/">Unit Pengaduan Kampus</Link></li>
-                        <li><Link to="/">Layanan Konseling Mahasiswa</Link></li>
-                        <li><Link to="/">Keamanan Kampus</Link></li>
-                        <li><Link to="/">Hotline Kampus</Link></li>
-                    </ul>
-                </div>
-                <div className="md:px-8">
-                    <p className="text-lg font-medium mb-4">Menu Utama</p>
-                    <ul className="text-sm/6 font-light underline">
-                        <li><Link to="/report">Buat Laporan</Link></li>
-                        <li><Link to="/artikel">Artikel Dukungan</Link></li>
-                        <li><Link to="/hukum">Info Bantuan Hukum</Link></li>
-                    </ul>
-                </div>
-                <div className="md:pl-8">
-                    <p className="text-lg font-medium mb-4">Info</p>
-                    <ul className="text-sm/6 font-light underline">
-                        <li><Link to="/">FAQ</Link></li>
-                        <li><Link to="/">Panduan Pelaporan</Link></li>
-                        <li><Link to="/">Kebijakan Privasi</Link></li>
-                    </ul>
-                </div>
-            </div>
             )}
             <div id="footer-copyright" className="text-xs font-light flex justify-end">
                 © 2026 SafeSpace - UPN “Veteran” Jakarta. Platform ini bukan layanan darurat.

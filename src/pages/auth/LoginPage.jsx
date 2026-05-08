@@ -1,14 +1,6 @@
-<<<<<<< jihan
-import LoginForm from "@/components/public/User-Login/LoginForm";
+// import LoginForm from "@/components/public/User-Login/LoginForm";
 
-export default function LoginPage() {
-    return (
-        <main className="flex-1">
-            <LoginForm />
-        </main>
-    );
-}
-=======
+import { Button } from "@/components/ui/button";
 import {
     Field,
     FieldContent,
@@ -20,32 +12,23 @@ import {
     FieldSeparator,
     FieldSet,
     FieldTitle,
-} from "@/components/ui/field"
-import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles";
-import { loginFormDefault, loginFormSchema } from "@/data/schemas/AuthSchema";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { set } from "zod";
-import { LoaderCircle } from "lucide-react";
-import { AuthService } from "@/services/AuthService";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { useAdmin } from "@/contexts/AdminContext";
-import { AdminService } from "@/services/AdminService";
+import { loginFormDefault, loginFormSchema } from "@/data/schemas/AuthSchema";
+import { AuthService } from "@/services/AuthService";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoaderCircle } from "lucide-react";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
 
-export function LoginPage() {
-    // NOTE: Temporary page. @Jihan may replace this page!
+export default function LoginPage() {
     const navigate = useNavigate();
-    
+    const [ loading, setLoading ] = useState(false);
     const { login } = useAuth();
-    const { adminLogin } = useAdmin();
 
-    const [loading, setLoading] = useState(false);
-
-    const form = useForm({
+    const loginForm = useForm({
         resolver: zodResolver(loginFormSchema),
         defaultValues: loginFormDefault,
         mode: "onChange",
@@ -54,24 +37,14 @@ export function LoginPage() {
     const onSubmit = async (data) => {
         setLoading(true);
         try {
-            const responseData = await AuthService.login(data);
-            const token = responseData.data?.token || responseData.token;
-            const userData = responseData.data?.user || responseData.user; // Ambil data user untuk cek role
-            
+            const response = await AuthService.login(data);
+            const token = response.data?.token;
+            const userData = response.data?.user; // Juga untuk cek role
+            console.log(response);
             localStorage.setItem("token", token);
-
-            try {
-                const adminRes = await AdminService.getAdminProfile(token);
-                if (adminRes.success) {
-                    adminLogin(adminRes.data);
-                    navigate("/admin");
-                    return;
-                }
-            } catch (adminError) {
-                console.warn("User is not an admin, falling back to user login.");
-            }
             login(userData, token);
-            navigate("/");
+            if (response.data?.user.user_metadata.role === "ADMIN") navigate("/admin");
+            else navigate("/");
         } catch (error) {
             console.error("Terjadi kesalahan:", error);
         } finally {
@@ -80,17 +53,17 @@ export function LoginPage() {
     }
 
     return (
-        <div className={commonStyle_Page}>
-            <div className={commonStyle_Section}>
-                <p className="text-2xl font-semibold">Login</p>
-            </div>
+        <div className="py-8 px-24 max-md:px-16 max-sm:px-8 bg-[#ddeef7]">
+            <div className="max-w-md mx-auto p-8 bg-background rounded-2xl shadow-sm">
+                <h1 className="text-2xl font-semibold text-primary mb-6">
+                    Login to your account
+                </h1>
 
-            <div className={commonStyle_Section + " max-w-sm mx-auto"}>
-                <form id="login" onSubmit={form.handleSubmit(onSubmit)} className="mb-4">
+                <form id="login" onSubmit={loginForm.handleSubmit(onSubmit)} className="mb-4">
                     <FieldGroup>
                         <Controller
                             name="email"
-                            control={form.control}
+                            control={loginForm.control}
                             render={({ field, fieldState }) => (
                                 <Field data-invalid={fieldState.invalid}>
                                     <FieldLabel htmlFor="email">
@@ -111,7 +84,7 @@ export function LoginPage() {
                         />
                         <Controller
                             name="password"
-                            control={form.control}
+                            control={loginForm.control}
                             render={({ field, fieldState }) => (
                                 <Field data-invalid={fieldState.invalid}>
                                     <FieldLabel htmlFor="password">
@@ -124,6 +97,9 @@ export function LoginPage() {
                                         aria-invalid={fieldState.invalid}
                                         placeholder="••••••••"
                                     />
+                                    <Link to="/register" className="w-full text-right text-sm text-primary underline">
+                                        Lupa password?
+                                    </Link>
                                     {fieldState.invalid && (
                                         <FieldError errors={[fieldState.error]} />
                                     )}
@@ -132,12 +108,17 @@ export function LoginPage() {
                         />
                     </FieldGroup>
                 </form>
-                <Button form="login" type="submit" disabled={loading} size="lg">
+
+                <Button  form="login" type="submit" disabled={loading} size="lg" className="w-full mb-4">
                     Login
                     {loading && <LoaderCircle className="animate-spin" />}
                 </Button>
+                
+                <p className="w-full text-center text-sm text-muted-foreground">
+                    Tidak punya akun?
+                    <Link to="/register" className="text-primary underline ml-1">Daftar sekarang!</Link>
+                </p>
             </div>
         </div>
-    )
+    );
 }
->>>>>>> dev

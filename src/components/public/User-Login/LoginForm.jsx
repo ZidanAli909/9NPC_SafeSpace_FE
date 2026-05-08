@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthService } from "@/services/AuthService";
 
 export default function LoginForm() {
@@ -17,10 +17,7 @@ export default function LoginForm() {
         e.preventDefault();
         setError("")
         try {
-            const response = await axios.post(
-                "https://safespacebackend.vercel.app/api/auth/sign-in",
-                { email, password }
-            )
+            const response = await AuthService.login(email, password)
 
             if (response.data.success) {
                 localStorage.setItem("token", data.data.token)

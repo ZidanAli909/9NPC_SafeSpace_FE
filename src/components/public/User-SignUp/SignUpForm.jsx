@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router-dom";
 import { AuthService } from "@/services/AuthService";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUpForm() {
     const navigate = useNavigate()

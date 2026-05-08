@@ -18,7 +18,6 @@ import { ReportHistoryPage } from './pages/public/profile/ReportHistoryPage'
 import { ReportHistoryDetailsPage } from './pages/public/profile/ReportHistoryDetailsPage'
 import { SettingsPage } from './pages/public/profile/SettingsPage'
 import { ReportGuidePage } from './pages/public/faq/GuidePage'
-import { LoginPage } from './pages/auth/LoginPage'
 import { AuthProvider } from './contexts/AuthContext'
 import { ProfileProvider } from './contexts/ProfileContext'
 import { ReportScopeLayout } from './components/layout/Scopes'
@@ -40,8 +39,10 @@ function App() {
                 <Route path="signup" element={<SignUpPage />} />
                 <Route path="report" element={<ReportFormPage />} />
                 <Route path="submitted" element={<SubmittedPage />} />
-                <Route path="artikel" element={<ArtikelDukunganPage />} />
-                <Route path="artikel/:slug" element={<ReadArticlePage />} />
+                <Route path="artikel">
+                  <Route index element={<ArtikelDukunganPage />} />
+                  <Route path=":slug" element={<ReadArticlePage />} />
+                </Route>
                 <Route path="hukum" element={<InfoBantuanHukumPage />} />
                 <Route path="faq">
                   <Route index element={<FAQPage />} />
