@@ -42,10 +42,10 @@ function NavigationPublic() {
             <Button variant="outline" render={<Link to="/" />} onClick={() => setOpen(false)}>
                 Beranda
             </Button>
-            <Button variant="outline" render={<Link to="/" />} onClick={() => setOpen(false)}>
+            <Button variant="outline" render={<Link to="/report" />} onClick={() => setOpen(false)}>
                 Lapor
             </Button>
-            <Button variant="outline" render={<Link to="/" />} onClick={() => setOpen(false)}>
+            <Button variant="outline" render={<Link to="/artikel" />} onClick={() => setOpen(false)}>
                 Bantuan
             </Button>
             <Collapsible>

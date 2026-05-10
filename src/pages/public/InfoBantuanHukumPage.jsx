@@ -1,8 +1,8 @@
 import { useState } from "react";
-import BantuanHero from "@/components/public/User-Bantuan/BantuanHero";
-import BantuanSearch from "@/components/public/User-Bantuan/BantuanSearch";
-import LegalAccordion from "@/components/public/User-Bantuan/LegalAccordion";
-import LegalQuote from "@/components/public/User-Bantuan/LegalQuote";
+import BantuanHero from "@/components/public/help/BantuanHero";
+import BantuanSearch from "@/components/public/help/BantuanSearch";
+import LegalAccordion from "@/components/public/help/LegalAccordion";
+import LegalQuote from "@/components/public/help/LegalQuote";
 import { legalFAQ } from "@/data/articles";
 import hukumBg from "@/assets/safespace_hukumhero.png";
 

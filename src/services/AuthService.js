@@ -6,7 +6,7 @@ export const AuthService = {
         return response.data;
     },
     register: async (payload) => {
-        const response = await api.post("/auth/register", payload);
+        const response = await api.post("/auth/sign-up", payload);
         return response.data;
     },
     getSession: async () => {

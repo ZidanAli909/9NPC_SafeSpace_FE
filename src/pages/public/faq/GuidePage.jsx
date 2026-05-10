@@ -1,4 +1,4 @@
-import { FAQContactCard } from "@/components/public/FAQCommon"
+import { FAQContactCard } from "@/components/public/faq/FAQCommon"
 import {
   Breadcrumb,
   BreadcrumbItem,

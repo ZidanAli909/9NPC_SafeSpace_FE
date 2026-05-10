@@ -64,7 +64,9 @@ function App() {
             <Route element={<AdminRoute />}>
               <Route path="/admin" element={<AdminLayout />}>
                 <Route index element={<DashboardPage />} />
-                <Route path="report" element={<ReportPage />} />
+                <Route path="report">
+                  <Route index element={<ReportPage />} />
+                </Route>
               </Route>
             </Route>
           </Routes>

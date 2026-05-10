@@ -1,5 +1,5 @@
-import SignUpHero from "@/components/public/User-SignUp/SignUpHero";
-import SignUpForm from "@/components/public/User-SignUp/SignUpForm";
+import SignUpHero from "@/components/public/signup/SignUpHero";
+import SignUpForm from "@/components/public/signup/SignUpForm";
 
 export default function SignUpPage() {
     return (

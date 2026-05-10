@@ -1,8 +1,8 @@
 import { useState } from "react";
-import BantuanHero from "@/components/public/User-Bantuan/BantuanHero";
-import BantuanSearch from "@/components/public/User-Bantuan/BantuanSearch";
-import BantuanCategoryTabs from "@/components/public/User-Bantuan/BantuanCategoryTabs";
-import ArticleGrid from "@/components/public/User-Bantuan/ArticleGrid";
+import BantuanHero from "@/components/public/help/BantuanHero";
+import BantuanSearch from "@/components/public/help/BantuanSearch";
+import BantuanCategoryTabs from "@/components/public/help/BantuanCategoryTabs";
+import ArticleGrid from "@/components/public/help/ArticleGrid";
 import { articles, categories } from "@/data/articles";
 import bantuanBg from "@/assets/safespace_artikelhero.png";
 

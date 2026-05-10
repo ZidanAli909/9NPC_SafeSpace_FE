@@ -1,5 +1,5 @@
-import SubmittedHero from "@/components/public/User-FormSubmitted/SubmittedHero";
-import SubmittedActions from "@/components/public/User-FormSubmitted/SubmittedActions";
+import SubmittedHero from "@/components/public/report/SubmittedHero";
+import SubmittedActions from "@/components/public/report/SubmittedActions";
 
 export default function SubmittedPage() {
     return (

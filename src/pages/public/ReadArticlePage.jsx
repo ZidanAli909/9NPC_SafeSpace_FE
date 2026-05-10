@@ -1,7 +1,7 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
-import ArticleContent from "@/components/public/User-Bantuan/ArticleContent";
-import ArticleBacaJuga from "@/components/public/User-Bantuan/ArticleBacaJuga";
+import ArticleContent from "@/components/public/help/ArticleContent";
+import ArticleBacaJuga from "@/components/public/help/ArticleBacaJuga";
 import { articles } from "@/data/articles";
 
 export default function ReadArticlePage() {

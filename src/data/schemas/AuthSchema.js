@@ -15,9 +15,6 @@ export const loginFormDefault = {
 }
 
 export const registerFormSchema = z.object({
-  name: z
-    .string()
-    .min(1, "Nama wajib diisi"),
   email: z
     .email("Email tidak valid")
     .min(1, "Email wajib diisi"),
@@ -28,3 +25,9 @@ export const registerFormSchema = z.object({
     .string()
     .min(1, "Password wajib diisi"),
 })
+
+export const registerFormDefault = {
+    email: "",
+    password: "",
+    confirmPassword: "",
+}

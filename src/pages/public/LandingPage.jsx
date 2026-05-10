@@ -1,8 +1,8 @@
-import HeroSection from "@/components/public/User-LandingPage/HeroSection";
-import AboutSection from "@/components/public/User-LandingPage/AboutSection";
-import ReportStepsSection from "@/components/public/User-LandingPage/ReportStepsSection";
-import HelpSection from "@/components/public/User-LandingPage/HelpSection";
-import FAQSection from "@/components/public/User-LandingPage/FAQSection";
+import HeroSection from "@/components/public/landingPage/HeroSection";
+import AboutSection from "@/components/public/landingPage/AboutSection";
+import ReportStepsSection from "@/components/public/landingPage/ReportStepsSection";
+import HelpSection from "@/components/public/landingPage/HelpSection";
+import FAQSection from "@/components/public/landingPage/FAQSection";
 
 export default function LandingPage() {
   return (

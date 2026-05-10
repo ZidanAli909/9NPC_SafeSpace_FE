@@ -100,7 +100,7 @@ function ReportHistoryDetailsDetail({
                     <p className="font-medium text-lg mb-4">Bukti Kejadian</p>
                     <div className="rounded-lg border p-4 min-h-32 mb-2 bg-accent flex flex-row overflow-x-auto">
                         {report?.evidenceAssets.length > 0 ? report.evidenceAssets.map((evidence) => 
-                            <div key={evidence} className="w-64 h-64 border rounded-md p-2 bg-background flex flex-col relative mr-10">
+                            <div key={evidence} className="w-64 h-64 border rounded-md p-2 bg-background flex flex-col relative mr-12">
                                 <p className="text-xs">ID {evidence.id}</p>
                                 <p className="text-xs italic text-muted-foreground">Dibuat: {evidence.createdAt}</p>
                                 <div className="rounded-sm bg-muted flex-1 overflow-clip text-muted-foreground">
@@ -108,10 +108,10 @@ function ReportHistoryDetailsDetail({
                                     <img src={evidence.signedUrl} className="object-contain w-full h-full"/> :
                                     <ImageOff className="size-16 relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"/>}
                                 </div>
-                                <Button variant="outline" size="icon" className="absolute -right-10">
+                                <Button variant="outline" size="icon" className="absolute -right-10.5">
                                     <Edit2 />
                                 </Button>
-                                <Button variant="outline" size="icon" className="absolute -right-10 top-12 text-destructive">
+                                <Button variant="outline" size="icon" className="absolute -right-10.5 top-12 text-destructive">
                                     <X />
                                 </Button>
                             </div>

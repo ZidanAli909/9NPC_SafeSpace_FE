@@ -1,5 +1,5 @@
-import FormHero from "@/components/public/User-Form/FormHero";
-import ReportForm from "@/components/public/User-Form/ReportForm";
+import FormHero from "@/components/public/report/FormHero";
+import ReportForm from "@/components/public/report/ReportForm";
 
 export default function ReportFormPage() {
     return (

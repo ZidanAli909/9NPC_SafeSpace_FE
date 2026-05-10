@@ -3,15 +3,9 @@
 import { Button } from "@/components/ui/button";
 import {
     Field,
-    FieldContent,
-    FieldDescription,
     FieldError,
     FieldGroup,
     FieldLabel,
-    FieldLegend,
-    FieldSeparator,
-    FieldSet,
-    FieldTitle,
 } from "@/components/ui/field";
 import {
     InputGroup,
@@ -21,7 +15,6 @@ import {
 } from "@/components/ui/input-group"
 import {
     Alert,
-    AlertAction,
     AlertDescription,
     AlertTitle,
 } from "@/components/ui/alert"
@@ -58,7 +51,7 @@ export default function LoginPage() {
             const response = await AuthService.login(data);
             const token = response.data?.token;
             const userData = response.data?.user; // Juga untuk cek role
-            console.log(response);
+            // console.log(response);
             login(userData, token);
             if (response.data?.user.user_metadata.role === "ADMIN") navigate("/admin");
             else navigate("/");
@@ -87,7 +80,7 @@ export default function LoginPage() {
         <div className="py-8 px-24 max-md:px-16 max-sm:px-8 bg-[#ddeef7]">
             <div className="max-w-md mx-auto p-8 bg-background rounded-2xl shadow-sm">
                 <h1 className="text-2xl font-semibold text-primary mb-6">
-                    Login to your account
+                    Login ke SafeSpace
                 </h1>
 
                 <form id="login" onSubmit={handleSubmit(onSubmit)} className="mb-4">
@@ -143,7 +136,7 @@ export default function LoginPage() {
                                     {fieldState.invalid && (
                                         <FieldError errors={[fieldState.error]} />
                                     )}
-                                    <Link to="/register" className="text-sm text-primary underline">
+                                    <Link to="/signup" className="text-sm text-primary hover:underline hover:font-medium">
                                         Lupa password?
                                     </Link>
                                 </Field>
@@ -165,8 +158,8 @@ export default function LoginPage() {
                 </Button>
 
                 <p className="w-full text-center text-sm text-muted-foreground">
-                    Tidak punya akun?
-                    <Link to="/register" className="text-primary underline ml-1">Daftar sekarang!</Link>
+                    Tidak punya akun?{" "}
+                    <Link to="/signup" className="text-primary hover:underline hover:font-medium">Daftar sekarang!</Link>
                 </p>
             </div>
         </div>
