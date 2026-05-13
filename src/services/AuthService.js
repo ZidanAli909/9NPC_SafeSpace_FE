@@ -10,7 +10,7 @@ export const AuthService = {
         return response.data;
     },
     getSession: async () => {
-        const response = await api.get("/auth/session");
+        const response = await api.get("/auth/get-session");
         return response.data;
     }
 }

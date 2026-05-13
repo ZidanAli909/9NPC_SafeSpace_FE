@@ -20,7 +20,7 @@ import { SettingsPage } from './pages/public/profile/SettingsPage'
 import { ReportGuidePage } from './pages/public/faq/GuidePage'
 import { AuthProvider } from './contexts/AuthContext'
 import { ProfileProvider } from './contexts/ProfileContext'
-import { ReportScopeLayout } from './components/layout/Scopes'
+import { AdminScopeLayout, ReportScopeLayout } from './components/layout/Scopes'
 import { AdminRoute } from './components/routes/AdminRoute'
 import { RegisteredRoute } from './components/routes/RegisteredRoute'
 import { AdminProvider } from './contexts/AdminContext'
@@ -63,9 +63,11 @@ function App() {
             {/* Admin Routes */}
             <Route element={<AdminRoute />}>
               <Route path="/admin" element={<AdminLayout />}>
-                <Route index element={<DashboardPage />} />
-                <Route path="report">
-                  <Route index element={<ReportPage />} />
+                <Route element={<AdminScopeLayout />}>
+                  <Route index element={<DashboardPage />} />
+                  <Route path="report">
+                    <Route index element={<ReportPage />} />
+                  </Route>
                 </Route>
               </Route>
             </Route>

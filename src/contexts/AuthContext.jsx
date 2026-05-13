@@ -4,7 +4,10 @@ import React, { createContext, useState, useContext, useEffect, useCallback } fr
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   const [token, setToken] = useState(localStorage.getItem("token")); // Track token in state
   const [loadingAuth, setloadingAuth] = useState(true);
 
@@ -23,7 +26,10 @@ export const AuthProvider = ({ children }) => {
     }
     try {
       const response = await AuthService.getSession();
-      if (response.success) setUser(response.data?.user);
+      if (response.success) {
+        setUser(response.data?.user);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+      }
       else logout(); // 401, 403 = dead session
     } catch (error) {
       console.error("Session sync failed!", error);
@@ -37,7 +43,7 @@ export const AuthProvider = ({ children }) => {
 
     const heartbeat = setInterval(() => {
       checkSession();
-    }, 1 * 60 * 1000); // 1000 = 1 second
+    }, 10 * 60 * 1000); // 1000 = 1 second
 
     return () => clearInterval(heartbeat);
   }, [checkSession]);

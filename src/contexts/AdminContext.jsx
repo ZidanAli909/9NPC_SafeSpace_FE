@@ -5,49 +5,54 @@ import { createContext, useCallback, useContext, useEffect, useState } from "rea
 const AdminContext = createContext(null);
 
 export const AdminProvider = ({ children }) => {
-    const [admin, setAdmin] = useState(null);
-    const [loadingAdmin, setLoadingAdmin] = useState(true);
+    // For getReports
+    const [reports, setReports] = useState([]);
+    const [loadingReports, setLoadingReports] = useState(false);
 
-    const fetchAdminProfile = async () => {
-        const token = localStorage.getItem("token");
-
-        if (!token) {
-            setLoadingAdmin(false);
-            return;
-        }
+    const fetchReports = useCallback(async () => {
+        setLoadingReports(true);
         try {
-            const response = await AdminService.getAdminProfile();
-            if (response.success) {
-                setAdmin(response.data);
-            }
+            const response = await AdminService.getReports();
+            setReports(response.data);
         } catch (error) {
-            setAdmin(null);
-            adminLogout(); // Clean-up for extra measure
+            console.error("Terjadi kesalahan:", error);
+            setReports([]);
         } finally {
-            setLoadingAdmin(false);
+            setLoadingReports(false);
         }
-    };
-
-    useEffect(() => {
-        fetchAdminProfile();
     }, []);
 
-    const adminLogin = (data, token) => {
-        // localStorage.setItem("token", token); Login Page will do it.
-        setAdmin(data);
-    }
+    useEffect(() => {
+        fetchReports();
+    }, [fetchReports]);
 
-    const adminLogout = () => {
-        localStorage.removeItem("token");
-    }
+    // For getReport
+    const [report, setReport] = useState(null);
+    const [loadingReport, setLoadingReport] = useState(false);
 
+    const fetchReportById = useCallback(async (id) => {
+        setLoadingReport(true);
+        try {
+            const response = await AdminService.getReport(id);
+            setReport(response.data);
+            return response.data; // Immediate retrieval
+        } catch (error) {
+            console.error("Terjadi kesalahan:", error);
+            setReport(null);
+        } finally {
+            setLoadingReport(false);
+        }
+    }, []);
+
+    // Provider
     const value = {
-        admin,
-        isAdmin: !!admin,
-        loadingAdmin,
-        adminLogin,
-        adminLogout
-    }; 
+        reports,
+        loadingReports,
+        refreshReports: fetchReports,
+        report,
+        loadingReport,
+        fetchReportById,
+    }
 
     return (
         <AdminContext.Provider value={value}>

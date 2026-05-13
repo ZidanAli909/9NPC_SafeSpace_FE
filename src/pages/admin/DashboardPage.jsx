@@ -13,16 +13,16 @@ import { DashboardReportTableItem } from "@/components/admin/DashboardReportTabl
 import { ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
+import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles";
 
 export function DashboardPage() {
     const { profile } = useProfile();
-
-    console.log(profile);
+    // console.log(profile);
 
     return (
-        <div className="py-8 px-24 max-md:px-16 max-sm:px-8">
+        <div className={commonStyle_Page}>
 
-            <div className="mb-8">
+            <div className={commonStyle_Section}>
                 <p className="text-2xl font-semibold">Selamat pagi, Admin12345</p>
                 <p>Ada beberapa laporan baru yang menunggu direview hari ini...</p>
             </div>
@@ -44,7 +44,7 @@ export function DashboardPage() {
                     titleStyle="bg-yellow-100 text-yellow-800 border border-yellow-500"
                     title="Direview"
                     subtitle="perlu tindakan"
-                    count="10"
+                    count="?"
                 />
                 <DashboardTile
                     titleStyle="bg-green-100 text-green-800 border border-green-500"
