@@ -8,10 +8,13 @@ const ProfileContext = createContext(null);
 export const ProfileProvider = ({ children }) => {
     const { isAuthenticated, user } = useAuth();
     const [profile, setProfile] = useState(null);
-    const [loadingProfile, setLoadingProfile] = useState(false);
+    const [loadingProfile, setLoadingProfile] = useState(!!isAuthenticated);
 
     const fetchProfile = useCallback(async () => {
-        if (!isAuthenticated || !user) return;
+        if (!isAuthenticated || !user) {
+            setLoadingProfile(false);
+            return;
+        }
         setLoadingProfile(true);
         try {
             const role = user.user_metadata?.role;
@@ -29,7 +32,10 @@ export const ProfileProvider = ({ children }) => {
 
     useEffect(() => {
         if (isAuthenticated) fetchProfile();
-        else setProfile(null);
+        else {
+            setProfile(null);
+            setLoadingProfile(false);
+        }
     }, [isAuthenticated, fetchProfile]);
 
     const value = {

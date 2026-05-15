@@ -1,22 +1,61 @@
 import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+    Card,
+    CardAction,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
 } from "@/components/ui/card"
 import { DashboardTile } from "@/components/admin/DashboardTile";
 import { Button } from "@/components/ui/button";
-import { DashboardReportTableItem } from "@/components/admin/DashboardReportTable";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, File, Loader2 } from "lucide-react";
+import { Badge } from "@/components/ui/badge"
 import { Link } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
 import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles";
+import { useAdmin } from "@/contexts/AdminContext";
+
+function DashboardTable({
+    reports
+}) {
+    return (
+        <>
+            {reports.length === 0 ? (
+                <p className="text-center font-light">Tidak ada laporan...</p>
+            ) : (
+                reports.map((report) =>
+                    <div key={report.id} className="flex flex-row gap-4 items-center py-2 px-4 border-t">
+                        <div className="w-10 aspect-square flex justify-center items-center bg-secondary text-white rounded-md">
+                            <File className="text-secondary-foreground" />
+                        </div>
+
+                        <div className="flex-1">
+                            <p className="font-medium">{report.id}</p>
+
+                            <div className="flex flex-row gap-1 text-xs">
+                                <p>{report.incident}</p>
+                                <p>·</p>
+                                <p>{report.createdAt}</p>
+                                <p>·</p>
+                                <p>Anonim</p>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-row gap-2">
+                            <Badge variant="secondary">New</Badge>
+                            <Badge>Important</Badge>
+                        </div>
+                    </div>
+                )
+            )}
+        </>
+    )
+}
 
 export function DashboardPage() {
     const { profile } = useProfile();
+    const { reports, loadingReports } = useAdmin();
     // console.log(profile);
 
     return (
@@ -65,14 +104,20 @@ export function DashboardPage() {
                                     Lihat Semua
                                     <ChevronRight />
                                 </Link>
-                            }/>
+                            } />
                         </div>
                     </CardHeader>
                     <CardContent>
-                        <DashboardReportTableItem />
-                        <DashboardReportTableItem />
-                        <DashboardReportTableItem />
-                        <DashboardReportTableItem />
+                        {loadingReports ? (
+                            <Card className="w-32 mx-auto">
+                                <CardContent className="flex flex-col items-center gap-2 p-2">
+                                    <Loader2 className="animate-spin" />
+                                    <p>Loading...</p>
+                                </CardContent>
+                            </Card>
+                        ) : (
+                            <DashboardTable reports={reports} />
+                        )}
                     </CardContent>
                 </Card>
 

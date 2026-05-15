@@ -64,7 +64,7 @@ export function NavbarAdmin({
                     <DropdownMenuContent className="w-fit">
                         <DropdownMenuGroup>
                             <DropdownMenuLabel>{profile?.admin.email}</DropdownMenuLabel>
-                            <DropdownMenuItem className="text-sm px-4" onClick={() => handleNavigate("/profile")}>
+                            <DropdownMenuItem className="text-sm px-4" onClick={() => handleNavigate("/admin/profile")}>
                                 <User2 className="mr-2" />
                                 Profil
                             </DropdownMenuItem>

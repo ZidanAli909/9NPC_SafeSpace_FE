@@ -22,6 +22,7 @@ import safespace_logo from "../../assets/safespace_logo.svg"
 import { NavbarUser } from "./NavbarUser"
 import { useState } from "react"
 import { Separator } from "../ui/separator"
+import { NavbarAdmin } from "./NavbarAdmin"
 
 function NavigationAdmin() {
     return (
@@ -93,7 +94,7 @@ export function MobileNavigationDrawer({
                 {adminMode ? <NavigationAdmin /> : <NavigationPublic />}
                 <SheetFooter>
                     <Separator />
-                    <NavbarUser onNavigateAction={() => setOpen(false)} />
+                    {adminMode ? <NavbarAdmin onNavigateAction={() => setOpen(false)}/> : <NavbarUser onNavigateAction={() => setOpen(false)} />}
                 </SheetFooter>
             </SheetContent>
         </Sheet>

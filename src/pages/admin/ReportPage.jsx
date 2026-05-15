@@ -30,6 +30,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card"
 import { useAdmin } from "@/contexts/AdminContext"
 import { Loader2, Search, Trash } from "lucide-react"
+import { Link } from "react-router-dom"
 
 function ReportTable({
     reports
@@ -76,7 +77,7 @@ function ReportTable({
                                     <Badge>{report.status}</Badge>
                                 </TableCell>
                                 <TableCell className="flex flex-row gap-2">
-                                    <Button variant="outline" size="sm">
+                                    <Button variant="outline" size="sm" render={<Link to={"/admin/report/" + report.id} />}>
                                         Lihat Laporan
                                     </Button>
                                     <Button variant="destructive" size="sm">

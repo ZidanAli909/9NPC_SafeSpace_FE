@@ -24,6 +24,8 @@ import { AdminScopeLayout, ReportScopeLayout } from './components/layout/Scopes'
 import { AdminRoute } from './components/routes/AdminRoute'
 import { RegisteredRoute } from './components/routes/RegisteredRoute'
 import { AdminProvider } from './contexts/AdminContext'
+import { ReportDetailsPage } from './pages/admin/ReportDetailsPage'
+import { AdminProfileDetailsPage } from './pages/admin/AdminProfilePage'
 
 function App() {
   return (
@@ -67,7 +69,9 @@ function App() {
                   <Route index element={<DashboardPage />} />
                   <Route path="report">
                     <Route index element={<ReportPage />} />
+                    <Route path=":id" element={<ReportDetailsPage />} />
                   </Route>
+                  <Route path="profile" element={<AdminProfileDetailsPage />}/>
                 </Route>
               </Route>
             </Route>
