@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
     Pagination,
@@ -31,6 +31,8 @@ import { Card, CardContent } from "@/components/ui/card"
 import { useAdmin } from "@/contexts/AdminContext"
 import { Loader2, Search, Trash } from "lucide-react"
 import { Link } from "react-router-dom"
+import { LoadingCard } from "@/components/common/LoadingCard"
+import { cn, formatTimestamp } from "@/lib/utils"
 
 function ReportTable({
     reports
@@ -71,15 +73,18 @@ function ReportTable({
                         reports.map((report) =>
                             <TableRow key={report.id}>
                                 <TableCell className="font-medium">{report.id}</TableCell>
-                                <TableCell>{report.createdAt}</TableCell>
+                                <TableCell>{formatTimestamp(report.createdAt)}</TableCell>
                                 <TableCell>{report.incident}</TableCell>
                                 <TableCell>
                                     <Badge>{report.status}</Badge>
                                 </TableCell>
                                 <TableCell className="flex flex-row gap-2">
-                                    <Button variant="outline" size="sm" render={<Link to={"/admin/report/" + report.id} />}>
+                                    <Link
+                                        to={"/admin/report/" + report.id}
+                                        className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
+                                    >
                                         Lihat Laporan
-                                    </Button>
+                                    </Link>
                                     <Button variant="destructive" size="sm">
                                         <Trash />
                                     </Button>
@@ -130,12 +135,7 @@ export function ReportPage() {
 
             <div className="max-w-5xl mx-auto">
                 {loadingReports ? (
-                    <Card className="w-32 mx-auto">
-                        <CardContent className="flex flex-col items-center gap-2 p-2">
-                            <Loader2 className="animate-spin" />
-                            <p>Loading...</p>
-                        </CardContent>
-                    </Card>
+                    <LoadingCard />
                 ) : (
                     <ReportTable reports={reports} />
                 )}

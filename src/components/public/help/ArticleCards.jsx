@@ -17,7 +17,7 @@ export default function ArticleCard({ article }) {
         <Button
           size="sm"
           className="bg-[#1e3a5f] hover:bg-[#152d4a] text-white w-full mt-2 text-xs"
-          onClick={() => navigate(`/artikel/${article.slug}`)}
+          onClick={() => navigate(`/help/article/${article.slug}`)}
         >
           Baca Lebih Lanjut
         </Button>

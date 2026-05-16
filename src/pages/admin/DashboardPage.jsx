@@ -13,7 +13,7 @@ import {
     ItemTitle,
 } from "@/components/ui/item"
 import { DashboardTile } from "@/components/admin/DashboardTile";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { ChevronRight, File, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge"
 import { Link } from "react-router-dom";
@@ -21,6 +21,7 @@ import { useProfile } from "@/contexts/ProfileContext";
 import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles";
 import { useAdmin } from "@/contexts/AdminContext";
 import { DashboardIncidentsChart } from "@/components/admin/DashboardChartIncidents";
+import { cn, formatTimestamp } from "@/lib/utils";
 
 function DashboardTable({
     reports
@@ -28,10 +29,12 @@ function DashboardTable({
     return (
         <>
             {reports.length === 0 ? (
-                <p className="text-center font-light">Tidak ada laporan...</p>
+                <p className="text-center text-sm font-light text-muted-foreground">
+                    Tidak ada laporan...
+                </p>
             ) : (
                 reports.map((report) =>
-                    <Item render={
+                    <Item key={report.id} render={
                         <Link
                             to={`/admin/report/${report.id}`}
                             key={report.id}
@@ -39,24 +42,16 @@ function DashboardTable({
                             <ItemMedia className="w-10 aspect-square bg-secondary text-white rounded-md">
                                 <File className="text-secondary-foreground" />
                             </ItemMedia>
-
-                            {/* <div className="w-10 aspect-square flex justify-center items-center bg-secondary text-white rounded-md">
-                                
-                            </div> */}
-
                             <ItemContent>
                                 <ItemTitle>{report.id}</ItemTitle>
                                 <ItemDescription>
-                                <div className="flex flex-row gap-1 text-xs">
-                                    <p>{report.incident}</p>
-                                    <p>·</p>
-                                    <p>{report.createdAt}</p>
-                                    <p>·</p>
-                                    <p>Anonim</p>
-                                </div>
+                                    {report.incident}
+                                    {" · "}
+                                    {formatTimestamp(report.createdAt)}
+                                    {" · "}
+                                    Anonim
                                 </ItemDescription>
                             </ItemContent>
-
                             <div className="flex flex-row gap-2">
                                 <Badge variant="secondary">New</Badge>
                                 <Badge>Important</Badge>
@@ -119,12 +114,13 @@ export function DashboardPage() {
                     <CardHeader>
                         <div className="flex flex-row justify-between items-center pl-4">
                             <CardTitle>Riwayat Laporan</CardTitle>
-                            <Button render={
-                                <Link to="/admin/report">
-                                    Lihat Semua
-                                    <ChevronRight />
-                                </Link>
-                            } />
+                            <Link
+                                to="/admin/report"
+                                className={cn(buttonVariants({ variant: "default" }))}
+                            >
+                                Lihat Semua
+                                <ChevronRight />
+                            </Link>
                         </div>
                     </CardHeader>
                     <CardContent>

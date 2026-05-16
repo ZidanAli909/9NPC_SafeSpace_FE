@@ -11,19 +11,16 @@ import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Card, CardContent } from "@/components/ui/card"
 import { useReport } from "@/contexts/ReportContext"
 import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles"
 import { Download, Edit2, History, ImageOff, Loader2, MoreVertical, Phone, Plus, X } from "lucide-react"
 import { useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
-import { Separator } from "@/components/ui/separator"
+import { LoadingCard } from "@/components/common/LoadingCard"
+import { formatDate, formatTimestamp } from "@/lib/utils"
 
 function ReportHistoryDetailsDetail({
     report,
@@ -74,7 +71,7 @@ function ReportHistoryDetailsDetail({
                     <p className="font-medium text-lg">Informasi Umum</p>
                     <div className="text-sm grid grid-cols-4 max-md:grid-cols-2 gap-2 max-md:gap-1 p-4 max-md:p-2">
                         <p className="font-semibold">Tanggal Pelaporan</p>
-                        <p className="font-light">{report?.createdAt}</p>
+                        <p className="font-light">{formatTimestamp(report?.createdAt)}</p>
                         <p className="font-semibold">ID Laporan</p>
                         <p className="font-light">{report?.id}</p>
                     </div>
@@ -86,7 +83,7 @@ function ReportHistoryDetailsDetail({
                         <p className="font-semibold">Jenis Kejadian</p>
                         <p className="font-light">{report?.incident}</p>
                         <p className="font-semibold">Tanggal Kejadian</p>
-                        <p className="font-light">{report?.date}</p>
+                        <p className="font-light">{formatDate(report?.date)}</p>
                         <p className="font-semibold">Lokasi Kejadian</p>
                         <p className="font-light md:col-span-3">{report?.location}</p>
                         <p className="font-semibold">Deskripsi Kronologi</p>
@@ -102,7 +99,7 @@ function ReportHistoryDetailsDetail({
                         {report?.evidenceAssets.length > 0 ? report.evidenceAssets.map((evidence) => 
                             <div key={evidence} className="w-64 h-64 border rounded-md p-2 bg-background flex flex-col relative mr-12">
                                 <p className="text-xs">ID {evidence.id}</p>
-                                <p className="text-xs italic text-muted-foreground">Dibuat: {evidence.createdAt}</p>
+                                <p className="text-xs italic text-muted-foreground">Dibuat: {formatTimestamp(evidence.createdAt)}</p>
                                 <div className="rounded-sm bg-muted flex-1 overflow-clip text-muted-foreground">
                                     {evidence.signedUrl ?
                                     <img src={evidence.signedUrl} className="object-contain w-full h-full"/> :
@@ -162,12 +159,7 @@ export function ReportHistoryDetailsPage() {
             </div>
 
             {loadingReport ? (
-                <Card className="w-32 mx-auto">
-                    <CardContent className="flex flex-col items-center gap-2 p-2">
-                        <Loader2 className="animate-spin" />
-                        <p>Loading...</p>
-                    </CardContent>
-                </Card>
+                <LoadingCard />
             ) : (
                 <ReportHistoryDetailsDetail report={report} />
             )}

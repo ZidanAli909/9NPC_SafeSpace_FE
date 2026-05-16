@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,8 +11,6 @@ import {
 import safespace_logo from "../../assets/safespace_logo.svg";
 import { Link } from "react-router-dom";
 import { NavbarUser } from "./NavbarUser";
-import { Button } from "../ui/button";
-import { Menu } from "lucide-react";
 import { MobileNavigationDrawer } from "./NavbarMobile";
 import { NavbarAdmin } from "./NavbarAdmin";
 
@@ -35,15 +33,20 @@ function NavigationPublic() {
           />
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink
-            render={<Link to="/artikel">Bantuan</Link>}
-            className={navigationMenuTriggerStyle() + " px-4"}
-          />
+          <NavigationMenuTrigger>Bantuan</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <NavigationMenuLink render={<Link to="/help/article" />}>
+              Bantuan Artikel
+            </NavigationMenuLink>
+            <NavigationMenuLink render={<Link to="/help/legal" />}>
+              Bantuan Hukum
+            </NavigationMenuLink>
+          </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuTrigger>FAQ</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <NavigationMenuLink render={<Link to="/faq" />}>
+            <NavigationMenuLink render={<Link to="/faq/technical" />}>
               Pusat Bantuan Teknis
             </NavigationMenuLink>
             <NavigationMenuLink render={<Link to="/faq/guide" />}>
@@ -84,7 +87,10 @@ export function Navbar({ adminMode = false }) {
   return (
     <header className="bg-primary-foreground flex items-center justify-between p-4 px-8 border-b">
       {/* Logo Section */}
-      <Link to="/" className="text-2xl font-semibold flex items-center gap-2">
+      <Link
+        to={adminMode ? "/admin" : "/"}
+        className="text-2xl font-semibold flex items-center gap-2"
+      >
         <img
           src={safespace_logo}
           alt="Logo of Safespace"

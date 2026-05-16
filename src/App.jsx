@@ -40,13 +40,16 @@ function App() {
               <Route path="signup" element={<SignUpPage />} />
               <Route path="report" element={<ReportFormPage />} />
               <Route path="submitted" element={<SubmittedPage />} />
-              <Route path="artikel">
-                <Route index element={<ArtikelDukunganPage />} />
-                <Route path=":slug" element={<ReadArticlePage />} />
+              <Route path="help">
+                <Route path="article">
+                  <Route index element={<ArtikelDukunganPage />} />
+                  <Route path=":slug" element={<ReadArticlePage />} />
+                </Route>
+                <Route path="legal" element={<InfoBantuanHukumPage />} />
               </Route>
-              <Route path="hukum" element={<InfoBantuanHukumPage />} />
               <Route path="faq">
                 <Route index element={<FAQPage />} />
+                <Route path="technical" element={<FAQPage />} />
                 <Route path="privacy" element={<PrivacyPage />} />
                 <Route path="guide" element={<ReportGuidePage />} />
               </Route>

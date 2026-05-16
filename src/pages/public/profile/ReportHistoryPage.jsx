@@ -20,8 +20,8 @@ import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
 import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles"
 import { useReport } from "@/contexts/ReportContext"
-import { Card, CardContent } from "@/components/ui/card"
-import { Loader2 } from "lucide-react"
+import { LoadingCard } from "@/components/common/LoadingCard"
+import { formatTimestamp } from "@/lib/utils"
 
 function ReportHistoryTable({
     reports
@@ -43,18 +43,21 @@ function ReportHistoryTable({
                         <TableCell colSpan={5} className="font-light">Tidak ada laporan...</TableCell>
                     </TableRow>
                 ) : (
-                    reports.map((report) => 
+                    reports.map((report) =>
                         <TableRow key={report.id}>
                             <TableCell className="font-medium">{report.id}</TableCell>
-                            <TableCell>{report.createdAt}</TableCell>
+                            <TableCell>{formatTimestamp(report.createdAt)}</TableCell>
                             <TableCell>{report.incident}</TableCell>
                             <TableCell>
                                 <Badge>{report.status}</Badge>
                             </TableCell>
                             <TableCell className="flex flex-row gap-2">
-                                <Button variant="outline" size="sm" render={<Link to={"/profile/history/" + report.id} />}>
+                                <Link
+                                    to={"/profile/history/" + report.id}
+                                    className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
+                                >
                                     Lihat Laporan
-                                </Button>
+                                </Link>
                             </TableCell>
                         </TableRow>
                     )
@@ -89,12 +92,7 @@ export function ReportHistoryPage() {
 
             <div className="max-w-5xl mx-auto">
                 {loadingReports ? (
-                    <Card className="w-32 mx-auto">
-                        <CardContent className="flex flex-col items-center gap-2 p-2">
-                            <Loader2 className="animate-spin" />
-                            <p>Loading...</p>
-                        </CardContent>
-                    </Card>
+                    <LoadingCard />
                 ) : (
                     <ReportHistoryTable reports={reports} />
                 )}

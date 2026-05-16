@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -10,9 +9,9 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { Link, useNavigate } from "react-router-dom"
-import { History, Loader, LoaderCircle, LogOut, Settings, User2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { useNavigate } from "react-router-dom"
+import { Loader, LoaderCircle, LogOut, Settings, User2 } from "lucide-react"
 import LogoutAlertDialog from "./LogoutAlertDialog"
 import { useProfile } from "@/contexts/ProfileContext"
 
