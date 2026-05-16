@@ -84,12 +84,6 @@ function ReportDetailsDetail({
                             <Download className="mr-2" />
                             Download Laporan (PDF)
                         </DropdownMenuItem>
-                        {report?.status !== "CANCELLED" && (
-                            <DropdownMenuItem className="text-destructive">
-                                <X className="mr-2" />
-                                Batalkan Laporan
-                            </DropdownMenuItem>
-                        )}
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
