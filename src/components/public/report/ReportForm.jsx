@@ -1,36 +1,34 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ChevronLeft, CloudUpload, Calendar } from "lucide-react";
+import { ChevronLeft, CloudUpload } from "lucide-react";
 import { ReportService } from "@/services/ReportService";
+import { reportFormSchema, reportFormDefault } from "@/data/schemas/ReportSchema";
 
 export default function ReportForm() {
     const navigate = useNavigate();
-
-    const [formData, setFormData] = useState({
-        jenisKejadian: "",
-        tanggalKejadian: "",
-        lokasi: "",
-        deskripsiKejadian: "",
-        deskripsiPelaku: "",
-        uploadBukti: null,
-    });
-
     const [fileName, setFileName] = useState("");
+    const [uploadBukti, setUploadBukti] = useState(null);
 
-    function handleChange(e) {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+    } = useForm({
+        resolver: zodResolver(reportFormSchema),
+        defaultValues: reportFormDefault,
+    });
 
     function handleFileChange(e) {
         const file = e.target.files[0];
         if (file) {
             setFileName(file.name);
-            setFormData((prev) => ({ ...prev, uploadBukti: file }));
+            setUploadBukti(file);
         }
     }
 
@@ -39,13 +37,11 @@ export default function ReportForm() {
         const file = e.dataTransfer.files[0];
         if (file) {
             setFileName(file.name);
-            setFormData((prev) => ({ ...prev, uploadBukti: file }));
+            setUploadBukti(file);
         }
     }
 
-    async function handleSubmit(e) {
-        e.preventDefault()
-        
+    async function onSubmit(data) {
         const token = localStorage.getItem("token")
         if (!token) {
             alert("Kamu harus login dulu!")
@@ -55,17 +51,17 @@ export default function ReportForm() {
 
         try {
             let evidencePaths = [];
-            if (formData.uploadBukti) {
-                const path = await ReportService.uploadEvidence(formData.uploadBukti);
+            if (uploadBukti) {
+                const path = await ReportService.uploadEvidence(uploadBukti);
                 evidencePaths = [path];
             }
 
             const payload = {
-                incident: formData.jenisKejadian,
-                date: new Date(formData.tanggalKejadian).toISOString(),
-                location: formData.lokasi,
-                incidentDesc: formData.deskripsiKejadian,
-                perpetratorDesc: formData.deskripsiPelaku,
+                incident: data.jenisKejadian,
+                date: new Date(data.tanggalKejadian).toISOString(),
+                location: data.lokasi,
+                incidentDesc: data.deskripsiKejadian,
+                perpetratorDesc: data.deskripsiPelaku,
                 evidencePaths
             };
 
@@ -102,12 +98,13 @@ export default function ReportForm() {
                             Jenis Kejadian <span className="text-red-500">*</span>
                         </Label>
                         <Input
-                            name="jenisKejadian"
+                            {...register("jenisKejadian")}
                             placeholder="Kekerasan dll..."
-                            value={formData.jenisKejadian}
-                            onChange={handleChange}
                             className="rounded-lg border-[#00121D] h-8 text-sm"
                         />
+                        {errors.jenisKejadian && (
+                            <p className="text-red-500 text-xs">{errors.jenisKejadian.message}</p>
+                        )}
                     </div>
 
                     {/* Tanggal Kejadian + Lokasi */}
@@ -116,16 +113,14 @@ export default function ReportForm() {
                             <Label className="text-sm font-semibold text-slate-700">
                                 Tanggal Kejadian <span className="text-red-500">*</span>
                             </Label>
-                            <div className="relative">
-                                <Input
-                                    name="tanggalKejadian"
-                                    type="date"
-                                    placeholder="dd/mm/yyyy"
-                                    value={formData.tanggalKejadian}
-                                    onChange={handleChange}
-                                    className="rounded-lg border-[#00121D] h-8 text-sm"
-                                />
-                            </div>
+                            <Input
+                                {...register("tanggalKejadian")}
+                                type="date"
+                                className="rounded-lg border-[#00121D] h-8 text-sm"
+                            />
+                            {errors.tanggalKejadian && (
+                                <p className="text-red-500 text-xs">{errors.tanggalKejadian.message}</p>
+                            )}
                         </div>
 
                         <div className="flex flex-col gap-1">
@@ -133,12 +128,13 @@ export default function ReportForm() {
                                 Lokasi <span className="text-red-500">*</span>
                             </Label>
                             <Input
-                                name="lokasi"
+                                {...register("lokasi")}
                                 placeholder="Gedung/Area..."
-                                value={formData.lokasi}
-                                onChange={handleChange}
                                 className="rounded-lg border-[#00121D] h-8 text-sm"
                             />
+                            {errors.lokasi && (
+                                <p className="text-red-500 text-xs">{errors.lokasi.message}</p>
+                            )}
                         </div>
                     </div>
 
@@ -148,12 +144,13 @@ export default function ReportForm() {
                             Deskripsi Kejadian <span className="text-red-500">*</span>
                         </Label>
                         <Textarea
-                            name="deskripsiKejadian"
+                            {...register("deskripsiKejadian")}
                             placeholder="Ceritakan apa saja yang terjadi dengan sedetail mungkin..."
-                            value={formData.deskripsiKejadian}
-                            onChange={handleChange}
                             className="rounded-lg border-[#00121D] min-h-20 resize-none text-sm"
                         />
+                        {errors.deskripsiKejadian && (
+                            <p className="text-red-500 text-xs">{errors.deskripsiKejadian.message}</p>
+                        )}
                     </div>
 
                     {/* Deskripsi Pelaku */}
@@ -162,12 +159,13 @@ export default function ReportForm() {
                             Deskripsi Pelaku <span className="text-red-500">*</span>
                         </Label>
                         <Input
-                            name="deskripsiPelaku"
+                            {...register("deskripsiPelaku")}
                             placeholder="Ceritakan ciri-ciri pelaku dengan sedetail mungkin..."
-                            value={formData.deskripsiPelaku}
-                            onChange={handleChange}
                             className="rounded-lg border-[#00121D] h-8 text-sm"
                         />
+                        {errors.deskripsiPelaku && (
+                            <p className="text-red-500 text-xs">{errors.deskripsiPelaku.message}</p>
+                        )}
                     </div>
 
                     {/* Upload Bukti */}
@@ -198,7 +196,7 @@ export default function ReportForm() {
                                 type="file"
                                 className="hidden"
                                 onChange={handleFileChange}
-                                accept="image/*,.pdf,.doc,.docx"
+                                accept="image/jpeg,image/png,image/jpg,application/pdf,video/mp4,video/mkv"
                             />
                         </label>
                     </div>
@@ -206,10 +204,11 @@ export default function ReportForm() {
                     {/* Submit Button */}
                     <div className="flex justify-center mt-1">
                         <Button
-                            onClick={handleSubmit}
+                            onClick={handleSubmit(onSubmit)}
+                            disabled={isSubmitting}
                             className="bg-[#4E7489] hover:bg-[#1e3a5f] text-white px-8 py-2 text-sm rounded-lg"
                         >
-                            Kirim Laporan dengan Aman
+                            {isSubmitting ? "Mengirim..." : "Kirim Laporan dengan Aman"}
                         </Button>
                     </div>
                 </div>

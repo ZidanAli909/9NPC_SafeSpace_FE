@@ -28,6 +28,7 @@ import { ReportDetailsPage } from './pages/admin/ReportDetailsPage'
 import { AdminProfileDetailsPage } from './pages/admin/AdminProfilePage'
 import { ProfileEditPage } from './pages/public/profile/ProfileEditPage'
 
+
 function App() {
   return (
     <BrowserRouter>
