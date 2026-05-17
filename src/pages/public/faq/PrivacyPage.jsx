@@ -21,31 +21,31 @@ const items = [
     value: "faq1",
     trigger: "Apakah laporan saya dirahasiakan?",
     content:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni ex placeat sit impedit libero explicabo, minima eaque voluptas atque suscipit est incidunt eveniet eius veritatis, numquam sint excepturi officia laboriosam!",
+      "Ya. Semua laporan yang masuk ke SafeSpace bersifat rahasia. Hanya admin terverifikasi yang dapat mengakses data laporan untuk keperluan tindak lanjut. Identitas pelapor tidak akan pernah ditampilkan kepada pelaku atau publik.",
   },
   {
     value: "faq2",
     trigger: "Apakah saya bisa melapor secara anonim?",
     content:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni ex placeat sit impedit libero explicabo, minima eaque voluptas atque suscipit est incidunt eveniet eius veritatis, numquam sint excepturi officia laboriosam!",
+      "Bisa. Meskipun data akun wajib diisi untuk komunikasi dengan  admin, laporan yang Anda buat akan otomatis bersifat anonim. Nama dan identitas Anda tidak akan muncul di laporan.",
   },
   {
     value: "faq3",
     trigger: "Bagaimana SafeSpace melindungi data saya?",
     content:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni ex placeat sit impedit libero explicabo, minima eaque voluptas atque suscipit est incidunt eveniet eius veritatis, numquam sint excepturi officia laboriosam!",
+      "Data laporan dienkripsi saat dikirim dan disimpan. Kami menggunakan protokol keamanan standar industri. Hanya admin yang berwenang yang bisa mengakses laporan, itupun hanya untuk keperluan  verifikasi dan tindak lanjut.",
   },
   {
     value: "faq4",
     trigger: "Apa yang terjadi setelah saya mengirim laporan?",
     content:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni ex placeat sit impedit libero explicabo, minima eaque voluptas atque suscipit est incidunt eveniet eius veritatis, numquam sint excepturi officia laboriosam!",
+      "Laporan akan masuk ke dashboard admin. Admin akan mereview  kelengkapan data dan bukti dalam waktu maksimal 1x24 jam. Status laporan dapat Anda pantau melalui menu 'Status Laporan' di profil Anda.",
   },
   {
     value: "faq5",
     trigger: "Apakah laporan saya akan diteruskan ke polisi atau pihak kampus?",
     content:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni ex placeat sit impedit libero explicabo, minima eaque voluptas atque suscipit est incidunt eveniet eius veritatis, numquam sint excepturi officia laboriosam!",
+      "Tergantung pada jenis dan tingkat keparahan kekerasan. Admin akan berkoordinasi dengan Satgas PPKS kampus atau pihak berwenang jika diperlukan. Sebelum diteruskan, Anda akan dikonfirmasi terlebih dahulu (kecuali dalam keadaan darurat yang membutuhkan tindakan segera).",
   },
 ]
 

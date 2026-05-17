@@ -25,6 +25,7 @@ import { AdminRoute } from './components/routes/AdminRoute'
 import { RegisteredRoute } from './components/routes/RegisteredRoute'
 import { AdminProvider } from './contexts/AdminContext'
 
+
 function App() {
   return (
     <BrowserRouter>
