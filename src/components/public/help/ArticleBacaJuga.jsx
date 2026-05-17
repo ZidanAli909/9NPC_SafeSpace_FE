@@ -13,7 +13,7 @@ export default function ArticleBacaJuga({ articles }) {
               <BookOpen className="w-4 h-4 text-[#1e3a5f] mt-0.5 shrink-0" />
               <p className="text-sm font-semibold text-slate-800">{a.title}</p>
             </div>
-            <Link to={`/bantuan/artikel/${a.slug}`} className="text-xs text-[#2d6a9f] font-semibold ml-6 hover:underline">
+            <Link to={`/help/article/${a.slug}`} className="text-xs text-[#2d6a9f] font-semibold ml-6 hover:underline">
               Baca Sekarang
             </Link>
           </div>

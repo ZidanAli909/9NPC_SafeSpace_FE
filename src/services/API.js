@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const api = axios.create({
     baseURL: "https://safespacebackend.vercel.app/api",
+    withCredentials: true
 });
 
 api.interceptors.request.use((config) => {

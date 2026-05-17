@@ -164,7 +164,7 @@ export default function SignUpForm() {
                                                 size="icon-xs"
                                                 onClick={() => { setShowConfirmPassword(showConfirmPassword => !showConfirmPassword); }}
                                             >
-                                                {showPassword ? (<Eye />) : (<EyeClosed />)}
+                                                {showConfirmPassword ? (<Eye />) : (<EyeClosed />)}
                                             </InputGroupButton>
                                         </InputGroupAddon>
                                     </InputGroup>
