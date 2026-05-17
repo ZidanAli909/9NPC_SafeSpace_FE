@@ -13,51 +13,75 @@ import {
     AlertDescription,
     AlertTitle,
 } from "@/components/ui/alert"
+import {
+    Field,
+    FieldContent,
+    FieldDescription,
+    FieldError,
+    FieldGroup,
+    FieldLabel,
+    FieldLegend,
+    FieldSeparator,
+    FieldSet,
+    FieldTitle,
+} from "@/components/ui/field"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { Edit2, Image, Info, Lock, LucideKeyRound, Trash } from "lucide-react"
+import { Edit2, Image, Info, Loader2, Lock, LucideKeyRound, Trash } from "lucide-react"
 import { Link } from "react-router-dom"
 import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles"
 import { useProfile } from "@/contexts/ProfileContext"
 import { Skeleton } from "@/components/ui/skeleton"
+import { formatTimestamp } from "@/lib/utils"
+import { Input } from "@/components/ui/input"
+import { useEffect, useState } from "react"
+import { Controller, useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { editAdminProfileDefault, editAdminProfileSchema } from "@/data/schemas/AdminProfileSchema"
+import { ProfileService } from "@/services/ProfileService"
+import { toast } from "sonner"
 
 function DetailsProfileSkeleton() {
     return (
         <>
             <div className="mb-4">
                 <Skeleton className="h-5 w-full" />
-                <div className="text-sm grid grid-cols-4 max-lg:grid-cols-2 gap-2 p-4">
-                    <Skeleton className="h-5 w-full" />
-                    <Skeleton className="h-5 w-full lg:col-span-3" />
-                    <Skeleton className="h-5 w-full" />
-                    <Skeleton className="h-5 w-full lg:col-span-3" />
+                <div className="text-sm flex flex-col gap-2 p-4">
+                    <div className="flex flex-row">
+                        <Skeleton className="h-5 w-full" />
+                        <Skeleton className="h-5 w-full" />
+                    </div>
+                    <div className="flex flex-row">
+                        <Skeleton className="h-5 w-full" />
+                        <Skeleton className="h-5 w-full" />
+                    </div>
+                    <div className="flex flex-row">
+                        <Skeleton className="h-5 w-full" />
+                        <Skeleton className="h-5 w-full" />
+                    </div>
+                    <div className="flex flex-row">
+                        <Skeleton className="h-5 w-full" />
+                        <Skeleton className="h-5 w-full" />
+                    </div>
+                    <div className="flex flex-row">
+                        <Skeleton className="h-5 w-full" />
+                        <Skeleton className="h-5 w-full" />
+                    </div>
                 </div>
             </div>
 
             <div className="mb-4">
                 <Skeleton className="h-5 w-full" />
-                <div className="text-sm grid grid-cols-4 max-lg:grid-cols-2 gap-2 p-4">
-                    <Skeleton className="h-5 w-full" />
-                    <Skeleton className="h-5 w-full lg:col-span-3" />
-                    <Skeleton className="h-5 w-full" />
-                    <Skeleton className="h-5 w-full lg:col-span-3" />
-                    <Skeleton className="h-5 w-full" />
-                    <Skeleton className="h-5 w-full lg:col-span-3" />
-                    <Skeleton className="h-5 w-full" />
-                    <Skeleton className="h-5 w-full" />
-                    <Skeleton className="h-5 w-full" />
-                    <Skeleton className="h-5 w-full" />
-                    <Skeleton className="h-5 w-full" />
-                    <Skeleton className="h-5 w-full" />
-                    <Skeleton className="h-5 w-full" />
-                    <Skeleton className="h-5 w-full" />
+                <div className="text-sm flex flex-col gap-2 p-4">
+                    <div className="flex flex-row">
+                        <Skeleton className="h-5 w-full" />
+                        <Skeleton className="h-5 w-full" />
+                    </div>
+                    <div className="flex flex-row">
+                        <Skeleton className="h-5 w-full" />
+                        <Skeleton className="h-5 w-full" />
+                    </div>
                 </div>
-                <Skeleton className="h-8 w-48 mb-4" />
-            </div>
-
-            <div className="mb-4">
-                <Skeleton className="h-5 w-full mb-4" />
-                <Skeleton className="h-8 w-48" />
             </div>
         </>
     )
@@ -65,7 +89,71 @@ function DetailsProfileSkeleton() {
 
 function DetailsProfile({
     profile,
+    activity,
 }) {
+    const { loadingProfile, refreshProfile } = useProfile();
+    const [editMode, setEditMode] = useState(false);
+
+    const {
+        control,
+        handleSubmit,
+        setError,
+        reset,
+        formState: { errors, isSubmitting },
+    } = useForm({
+        resolver: zodResolver(editAdminProfileSchema),
+        defaultValues: editAdminProfileDefault
+    });
+
+    useEffect(() => {
+        if (profile) {
+            reset({
+                name: profile.name ?? editAdminProfileDefault.name,
+                unit: profile.unit ?? editAdminProfileDefault.unit,
+            })
+        }
+    }, [profile, reset]);
+
+    const handleSubmitChanges = async (data) => {
+        // console.log(data);
+        try {
+            const response = await ProfileService.updateAdminProfile(data);
+            toast.success("Data pribadi admin berhasil diubah!");
+            setEditMode(false);
+            // refreshProfile();
+        } catch (error) {
+            if (error.response) {
+                const { status, data } = error.response;
+                if (status === 422 && data.errors) {
+                    Object.entries(data.errors).forEach(([field, messages]) => {
+                        setError(field, {
+                            type: "server",
+                            message: Array.isArray(messages) ? messages[0] : messages, // Ambil error pertama jika lebih dari satu
+                        });
+                    });
+                } else if (status === 401) {
+                    toast.error("Sesi kamu sudah habis. Silahkan login ulang!");
+                } else if (status >= 500) {
+                    toast.error("Server sedang mengalami masalah. Silahkan coba lagi nanti!");
+                } else {
+                    toast.error("Terjadi suatu kesalahan. Silahkan coba lagi!");
+                }
+            } else { // Network error, timeout, dll.
+                toast.error("Tidak dapat terhubung ke server. Silahkan coba periksa koneksi internet!");
+            }
+            console.log("Error:", error);
+        }
+    };
+
+    const handleCancel = () => {
+        reset();
+        setEditMode(false);
+    };
+
+    const handleEdit = () => {
+        setEditMode(true);
+    };
+
     return (
         <>
             <div className="mb-4">
@@ -77,25 +165,90 @@ function DetailsProfile({
                     </div>
                     <div className="flex flex-row">
                         <p className="font-semibold basis-32">Tanggal Dibuat</p>
-                        <p className="font-light flex-1">{profile?.createdAt ?? "-"}</p>
-                    </div>
-                    <div className="flex flex-row">
-                        <p className="font-semibold basis-32">Nama</p>
-                        <p className="font-light flex-1">{profile?.name ?? "-"}</p>
+                        <p className="font-light flex-1">{formatTimestamp(profile?.createdAt) ?? "-"}</p>
                     </div>
                     <div className="flex flex-row">
                         <p className="font-semibold basis-32">Email</p>
                         <p className="font-light flex-1">{profile?.email ?? "-"}</p>
                     </div>
-                    <div className="flex flex-row">
-                        <p className="font-semibold basis-32">Unit</p>
-                        <p className="font-light flex-1">{profile?.unit ?? "-"}</p>
-                    </div>
+                    <form
+                        onSubmit={handleSubmit(handleSubmitChanges)}
+                        className={"flex flex-col gap-3 rounded-lg " + (editMode && "border p-4")}
+                    >
+                        <Controller
+                            name="name"
+                            control={control}
+                            render={({ field, fieldState }) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                    <FieldLabel htmlFor={field.name}>Nama</FieldLabel>
+                                    <Input
+                                        {...field}
+                                        aria-invalid={fieldState.invalid}
+                                        readOnly={!editMode}
+                                        id={field.name}
+                                        type="text"
+                                    />
+                                    {fieldState.invalid && (<FieldError errors={[fieldState.error]} />)}
+                                </Field>
+                            )}
+                        />
+                        <Controller
+                            name="unit"
+                            control={control}
+                            render={({ field, fieldState }) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                    <FieldLabel htmlFor={field.name}>Unit</FieldLabel>
+                                    <Input
+                                        {...field}
+                                        aria-invalid={fieldState.invalid}
+                                        readOnly={!editMode}
+                                        id={field.name}
+                                        type="text"
+                                    />
+                                    {fieldState.invalid && (<FieldError errors={[fieldState.error]} />)}
+                                </Field>
+                            )}
+                        />
+                        {errors.root &&
+                            <Alert variant="destructive" className="mt-8">
+                                <AlertCircle />
+                                <AlertTitle>Error!</AlertTitle>
+                                <AlertDescription>{errors.root.message}</AlertDescription>
+                            </Alert>
+                        }
+                        {editMode && (
+                            <div className="flex flex-row gap-4 justify-end">
+                                <Button
+                                    variant="default"
+                                    className="lg:h-9"
+                                    disabled={isSubmitting || loadingProfile}
+                                    type="submit"
+                                >
+                                    {isSubmitting && <Loader2 className="mr-1 animate-spin" />}
+                                    Simpan
+                                </Button>
+                                <Button
+                                    variant="secondary"
+                                    className="lg:h-9"
+                                    onClick={handleCancel}
+                                    disabled={isSubmitting}
+                                >
+                                    Batal
+                                </Button>
+                            </div>
+                        )}
+                    </form>
                 </div>
-                <Button variant="outline" className="mb-4 lg:h-9">
-                    <Edit2 className="mr-2" />
-                    Ubah Data Akun
-                </Button>
+                {!editMode && (
+                    <Button
+                        variant="outline"
+                        className="mb-4 lg:h-9"
+                        onClick={handleEdit}
+                    >
+                        <Edit2 className="mr-2" />
+                        Ubah Data Akun
+                    </Button>
+                )}
             </div>
 
             <div className="mb-4">
@@ -103,11 +256,11 @@ function DetailsProfile({
                 <div className="text-sm flex flex-col gap-2 p-4">
                     <div>
                         <p className="font-semibold mb-2">Terakhir Login</p>
-                        <p className="font-light">{profile?.id ?? "-"}</p>
+                        <p className="font-light">{formatTimestamp(activity?.lastLogin) ?? "-"}</p>
                     </div>
                     <div>
                         <p className="font-semibold mb-2">Laporan Tinjauan Minggu Ini</p>
-                        <p className="font-light">{profile?.createdAt ?? "-"}</p>
+                        <p className="font-light">{activity?.WeeklyReportCount + " laporan" ?? "-"}</p>
                     </div>
                 </div>
             </div>
@@ -147,13 +300,13 @@ export function AdminProfileDetailsPage() {
                         <AvatarImage src={profile?.profilePictureUrl} alt={"Foto profil " + profile?.name} className="bg-black" />
                         <AvatarFallback className="text-6xl">
                             {profile && profile.name != null
-                                        ? profile.name
-                                            .split(" ")
-                                            .map((n) => n[0])
-                                            .join("")
-                                            .substring(0, 2)
-                                            .toUpperCase()
-                                        : "?"}
+                                ? profile.name
+                                    .split(" ")
+                                    .map((n) => n[0])
+                                    .join("")
+                                    .substring(0, 2)
+                                    .toUpperCase()
+                                : "?"}
                         </AvatarFallback>
                     </Avatar>
 
@@ -171,7 +324,7 @@ export function AdminProfileDetailsPage() {
 
                 {/* Main Page */}
                 <div className="flex-1 border rounded-lg p-8 max-w-3xl">
-                    {!loadingProfile ? <DetailsProfile profile={profile.admin} /> : <DetailsProfileSkeleton />}
+                    {!loadingProfile ? <DetailsProfile profile={profile.admin} activity={profile.activity} /> : <DetailsProfileSkeleton />}
                 </div>
             </div>
         </div>

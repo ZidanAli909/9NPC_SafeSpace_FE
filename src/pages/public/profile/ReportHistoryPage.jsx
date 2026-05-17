@@ -16,12 +16,12 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Link } from "react-router-dom"
 import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles"
 import { useReport } from "@/contexts/ReportContext"
 import { LoadingCard } from "@/components/common/LoadingCard"
-import { formatTimestamp } from "@/lib/utils"
+import { cn, formatTimestamp } from "@/lib/utils"
 
 function ReportHistoryTable({
     reports
@@ -76,7 +76,7 @@ export function ReportHistoryPage() {
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
-                            <BreadcrumbLink render={<Link to="/profile" />}>Profile</BreadcrumbLink>
+                            <BreadcrumbLink render={<Link to="/profile" />}>Profil</BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>

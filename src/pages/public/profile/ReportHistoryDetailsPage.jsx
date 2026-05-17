@@ -144,7 +144,7 @@ export function ReportHistoryDetailsPage() {
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
-                            <BreadcrumbLink render={<Link to="/profile" />}>Profile</BreadcrumbLink>
+                            <BreadcrumbLink render={<Link to="/profile" />}>Profil</BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
@@ -152,7 +152,7 @@ export function ReportHistoryDetailsPage() {
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
-                            <BreadcrumbPage className="truncate">Detil Laporan {id}</BreadcrumbPage>
+                            <BreadcrumbPage className="truncate">Detil Laporan</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>

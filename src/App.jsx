@@ -26,6 +26,7 @@ import { RegisteredRoute } from './components/routes/RegisteredRoute'
 import { AdminProvider } from './contexts/AdminContext'
 import { ReportDetailsPage } from './pages/admin/ReportDetailsPage'
 import { AdminProfileDetailsPage } from './pages/admin/AdminProfilePage'
+import { ProfileEditPage } from './pages/public/profile/ProfileEditPage'
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
               <Route element={<RegisteredRoute />}>
                 <Route path="profile">
                   <Route index element={<ProfileDetailsPage />} />
+                  <Route path="edit" element={<ProfileEditPage />} />
                   <Route path="history" element={<ReportScopeLayout />}>
                     <Route index element={<ReportHistoryPage />} />
                     <Route path=":id" element={<ReportHistoryDetailsPage />} />
