@@ -19,7 +19,7 @@ export default function ReadArticlePage() {
         <button onClick={() => navigate(-1)} className="hover:text-[#1e3a5f]">
           <ChevronLeft className="w-4 h-4" />
         </button>
-        <Link to="/bantuan/artikel" className="hover:underline">Artikel Dukungan</Link>
+        <Link to="/help/article" className="hover:underline">Artikel Dukungan</Link>
         <span>/</span>
         <span className="text-slate-400">{article.category}</span>
         <span>/</span>

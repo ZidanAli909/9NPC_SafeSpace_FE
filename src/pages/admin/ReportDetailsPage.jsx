@@ -11,20 +11,54 @@ import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
     DropdownMenuContent,
+    DropdownMenuGroup,
     DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+import {
+    Alert,
+    AlertAction,
+    AlertDescription,
+    AlertTitle,
+} from "@/components/ui/alert"
+import { Card, CardContent } from "@/components/ui/card"
 import { useReport } from "@/contexts/ReportContext"
 import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles"
 import { Download, Edit2, History, ImageOff, Loader2, MoreVertical, Phone, Plus, X } from "lucide-react"
-import { useEffect } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Link, useParams } from "react-router-dom"
+import { Separator } from "@/components/ui/separator"
+import { useAdmin } from "@/contexts/AdminContext"
+import { reportStatus } from "@/data/ReportStatus"
 import { LoadingCard } from "@/components/common/LoadingCard"
 import { formatDate, formatTimestamp } from "@/lib/utils"
 
-function ReportHistoryDetailsDetail({
+function ReportDetailsDetail({
     report,
 }) {
+    const [status, setStatus] = useState(report?.status ?? "");
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleStatusChange = (newValue) => {
+        setStatus(newValue);
+        console.log("Status diubah di lokal menjadi:", newValue);
+    }
+
+    const handleSaveStatus = () => {
+        console.log("Mengirim status baru ke Backend:", status);
+        // TODO: Panggil fungsi mutasi API Anda di sini
+    }
+
     return (
         <>
             <div className={commonStyle_Section + " flex flex-row justify-between max-w-4xl mx-auto"}>
@@ -39,7 +73,7 @@ function ReportHistoryDetailsDetail({
 
                 {/* Dropdown Menu */}
                 <DropdownMenu>
-                    <DropdownMenuTrigger render={<Button variant="outline" size="lg"/>}>
+                    <DropdownMenuTrigger render={<Button variant="outline" size="lg" />}>
                         <MoreVertical />
                         <p className="max-md:hidden">Aksi</p>
                     </DropdownMenuTrigger>
@@ -52,16 +86,6 @@ function ReportHistoryDetailsDetail({
                             <Download className="mr-2" />
                             Download Laporan (PDF)
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <Phone className="mr-2" />
-                            Hubungi Admin
-                        </DropdownMenuItem>
-                        {report?.status !== "CANCELLED" && (
-                            <DropdownMenuItem className="text-destructive">
-                                <X className="mr-2" />
-                                Batalkan Laporan
-                            </DropdownMenuItem>
-                        )}
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
@@ -96,43 +120,63 @@ function ReportHistoryDetailsDetail({
                 <div className="mb-4 max-mod:mb-2">
                     <p className="font-medium text-lg mb-4">Bukti Kejadian</p>
                     <div className="rounded-lg border p-4 min-h-32 mb-2 bg-accent flex flex-row overflow-x-auto">
-                        {report?.evidenceAssets.length > 0 ? report.evidenceAssets.map((evidence) => 
-                            <div key={evidence} className="w-64 h-64 border rounded-md p-2 bg-background flex flex-col relative mr-12">
+                        {report?.evidenceAssets.length > 0 ? report.evidenceAssets.map((evidence) =>
+                            <div key={evidence} className="w-64 h-64 border rounded-md p-2 bg-background flex flex-col relative mr-4">
                                 <p className="text-xs">ID {evidence.id}</p>
                                 <p className="text-xs italic text-muted-foreground">Dibuat: {formatTimestamp(evidence.createdAt)}</p>
                                 <div className="rounded-sm bg-muted flex-1 overflow-clip text-muted-foreground">
                                     {evidence.signedUrl ?
-                                    <img src={evidence.signedUrl} className="object-contain w-full h-full"/> :
-                                    <ImageOff className="size-16 relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"/>}
+                                        <img src={evidence.signedUrl} className="object-contain w-full h-full" /> :
+                                        <ImageOff className="size-16 relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />}
                                 </div>
-                                <Button variant="outline" size="icon" className="absolute -right-10.5">
-                                    <Edit2 />
-                                </Button>
-                                <Button variant="outline" size="icon" className="absolute -right-10.5 top-12 text-destructive">
-                                    <X />
-                                </Button>
                             </div>
                         ) : (
                             <p className="text-sm italic text-muted-foreground">Tidak ada bukti...</p>
                         )}
                     </div>
-                    <Button variant="outline" className="lg:h-9">
-                        <Plus className="mr-2" />
-                        Tambahkan Bukti
-                    </Button>
                 </div>
 
-                <div>
-                    <p className="italic text-sm">*Proses ini membutuhkan waktu dan kesabaran. Kamu tidak sendirian. Tim pendamping siap membantu kapan pun.</p>
+                <div className="mb-4 max-mod:mb-2">
+                    <p className="font-medium text-lg mb-4">Status Kejadian</p>
+                    <div className="flex flex-row gap-4 max-sm:w-full">
+                        <Select
+                            key={report?.status} 
+                            value={status} 
+                            onValueChange={handleStatusChange}
+                        >
+                            <SelectTrigger className="w-xs max-sm:w-full">
+                                <SelectValue placeholder="Status pelaporan"/>
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    {reportStatus.map((status) => (
+                                        <SelectItem key={status.value} value={status.value} >
+                                            {status.label}
+                                        </SelectItem>
+                                    ))}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                        <Button onClick={handleSaveStatus} disabled={isLoading}>
+                            {isLoading && <Loader2 className="mr-2 animate-spin" />}
+                            Simpan
+                        </Button>
+                    </div>
+                    <Alert className="mt-4 w-fit max-sm:w-full">
+                        <AlertTitle>Heads up!</AlertTitle>
+                        <AlertDescription>
+                            You can add components and dependencies to your app using the cli.
+                        </AlertDescription>
+                    </Alert>
                 </div>
             </div>
         </>
     )
 }
 
-export function ReportHistoryDetailsPage() {
+export function ReportDetailsPage() {
     const { id } = useParams()
-    const { report, loadingReport, fetchReportById } = useReport();
+    const { report, loadingReport, fetchReportById } = useAdmin();
 
     useEffect(() => {
         if (id) fetchReportById(id);
@@ -144,15 +188,11 @@ export function ReportHistoryDetailsPage() {
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
-                            <BreadcrumbLink render={<Link to="/profile" />}>Profil</BreadcrumbLink>
+                            <BreadcrumbLink render={<Link to="/admin/report" />}>Laporan</BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
-                            <BreadcrumbLink render={<Link to="/profile/history" />}>Riwayat Laporan</BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage className="truncate">Detil Laporan</BreadcrumbPage>
+                            <BreadcrumbPage className="truncate">Detil Laporan {id}</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
@@ -161,7 +201,7 @@ export function ReportHistoryDetailsPage() {
             {loadingReport ? (
                 <LoadingCard />
             ) : (
-                <ReportHistoryDetailsDetail report={report} />
+                <ReportDetailsDetail report={report} />
             )}
         </div>
     )

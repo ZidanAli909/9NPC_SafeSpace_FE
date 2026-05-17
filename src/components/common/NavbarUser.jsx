@@ -10,8 +10,8 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { Link, useNavigate } from "react-router-dom"
+import { Button } from "@/components/ui/button"
+import { useNavigate } from "react-router-dom"
 import { History, Loader, LoaderCircle, LogOut, Settings, User2 } from "lucide-react"
 import { useAuth } from "@/contexts/AuthContext"
 import LogoutAlertDialog from "./LogoutAlertDialog"
