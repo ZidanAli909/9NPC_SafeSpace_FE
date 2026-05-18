@@ -34,7 +34,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card"
 import { useReport } from "@/contexts/ReportContext"
 import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles"
-import { CircleAlert, Download, History, ImageOff, Loader2, MoreVertical, Download, History, ImageOff, Loader2, MoreVertical } from "lucide-react"
+import { CircleAlert, ImageOff, Loader2, MoreVertical, Download, History } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { Separator } from "@/components/ui/separator"
