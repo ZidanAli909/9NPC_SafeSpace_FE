@@ -1,120 +1,89 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import LandingPage from './pages/public/LandingPage'
+import LoginPage from './pages/auth/LoginPage'
+import SignUpPage from './pages/auth/SignUpPage'
+import ReportFormPage from './pages/public/ReportFormPage'
+import SubmittedPage from "./pages/public/SubmittedPage"
+import ArtikelDukunganPage from "./pages/public/ArtikelDukunganPage";
+import ReadArticlePage from "./pages/public/ReadArticlePage";
+import InfoBantuanHukumPage from "./pages/public/InfoBantuanHukumPage";
+import { PublicLayout } from './components/layout/Public'
+import { AdminLayout } from './components/layout/Admin'
+import { DashboardPage } from './pages/admin/DashboardPage'
+import { ReportPage } from './pages/admin/ReportPage'
+import { FAQPage } from './pages/public/faq/FAQPage'
+import { PrivacyPage } from './pages/public/faq/PrivacyPage'
+import { ProfileDetailsPage } from './pages/public/profile/ProfileDetailsPage'
+import { ReportHistoryPage } from './pages/public/profile/ReportHistoryPage'
+import { ReportHistoryDetailsPage } from './pages/public/profile/ReportHistoryDetailsPage'
+import { SettingsPage } from './pages/public/profile/SettingsPage'
+import { ReportGuidePage } from './pages/public/faq/GuidePage'
+import { AuthProvider } from './contexts/AuthContext'
+import { ProfileProvider } from './contexts/ProfileContext'
+import { AdminScopeLayout, ReportScopeLayout } from './components/layout/Scopes'
+import { AdminRoute } from './components/routes/AdminRoute'
+import { RegisteredRoute } from './components/routes/RegisteredRoute'
+import { AdminProvider } from './contexts/AdminContext'
+import { ReportDetailsPage } from './pages/admin/ReportDetailsPage'
+import { AdminProfileDetailsPage } from './pages/admin/AdminProfilePage'
+import { ProfileEditPage } from './pages/public/profile/ProfileEditPage'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+    <BrowserRouter>
+      <AuthProvider>
+        <ProfileProvider>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<PublicLayout />}>
+              <Route index element={<LandingPage />} />
+              <Route path="login" element={<LoginPage />} />
+              <Route path="signup" element={<SignUpPage />} />
+              <Route path="report" element={<ReportFormPage />} />
+              <Route path="submitted" element={<SubmittedPage />} />
+              <Route path="help">
+                <Route path="article">
+                  <Route index element={<ArtikelDukunganPage />} />
+                  <Route path=":slug" element={<ReadArticlePage />} />
+                </Route>
+                <Route path="legal" element={<InfoBantuanHukumPage />} />
+              </Route>
+              <Route path="faq">
+                <Route index element={<FAQPage />} />
+                <Route path="technical" element={<FAQPage />} />
+                <Route path="privacy" element={<PrivacyPage />} />
+                <Route path="guide" element={<ReportGuidePage />} />
+              </Route>
+              {/* Registered-only Routes */}
+              <Route element={<RegisteredRoute />}>
+                <Route path="profile">
+                  <Route index element={<ProfileDetailsPage />} />
+                  <Route path="edit" element={<ProfileEditPage />} />
+                  <Route path="history" element={<ReportScopeLayout />}>
+                    <Route index element={<ReportHistoryPage />} />
+                    <Route path=":id" element={<ReportHistoryDetailsPage />} />
+                  </Route>
+                  <Route path="settings" element={<SettingsPage />} />
+                </Route>
+              </Route>
+            </Route>
+            {/* Admin Routes */}
+            <Route element={<AdminRoute />}>
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route element={<AdminScopeLayout />}>
+                  <Route index element={<DashboardPage />} />
+                  <Route path="report">
+                    <Route index element={<ReportPage />} />
+                    <Route path=":id" element={<ReportDetailsPage />} />
+                  </Route>
+                  <Route path="profile" element={<AdminProfileDetailsPage />}/>
+                </Route>
+              </Route>
+            </Route>
+          </Routes>
+        </ProfileProvider>
+      </AuthProvider>
+    </BrowserRouter>
   )
 }
 
