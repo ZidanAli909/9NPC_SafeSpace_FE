@@ -9,9 +9,8 @@ export const AuthService = {
         const response = await api.post("/auth/sign-up", payload);
         return response.data;
     },
-    getSession: async (token) => {
-        const headers = token ? { Authorization: `Bearer ${token}` } : {};
-        const response = await api.get("/auth/get-session", { headers });
+    getSession: async () => {
+        const response = await api.get("/auth/get-session");
         return response.data;
     }
 }
