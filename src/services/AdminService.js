@@ -20,4 +20,16 @@ export const AdminService = {
         const response = await api.patch(`/admin/report/${id}/status`, { status: dataStatus });
         return response.data;
     },
+
+    getReports: async (token) => {
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        const response = await api.get("/admin/report");
+        return response.data;
+    },
+    
+    getReport: async (id, token) => {
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        const response = await api.get(`/admin/report/${id}`);
+        return response.data;
+    },
 }

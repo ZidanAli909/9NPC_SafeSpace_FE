@@ -13,6 +13,7 @@ import {
     AlertTitle,
 } from "@/components/ui/alert"
 import { Button, buttonVariants } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import { Edit2, Image, Info, Lock, LucideKeyRound, Trash } from "lucide-react"
 import { Link } from "react-router-dom"
 import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles"

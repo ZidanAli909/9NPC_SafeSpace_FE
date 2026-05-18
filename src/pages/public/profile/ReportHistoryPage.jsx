@@ -34,7 +34,7 @@ function ReportHistoryTable({
                     <TableHead className="w-48">Tanggal Laporan</TableHead>
                     <TableHead>Jenis Laporan</TableHead>
                     <TableHead>Status</TableHead>
-                    <TableHead className="w-48">Detil</TableHead>
+                    <TableHead className="w-48">Detail</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>

@@ -34,7 +34,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card"
 import { useReport } from "@/contexts/ReportContext"
 import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles"
-import { CircleAlert, Download, Edit2, History, ImageOff, Loader2, MoreVertical, Phone, Plus, X } from "lucide-react"
+import { CircleAlert, Download, History, ImageOff, Loader2, MoreVertical, Download, History, ImageOff, Loader2, MoreVertical } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { Separator } from "@/components/ui/separator"
@@ -118,7 +118,7 @@ function ReportDetailsDetail({
                 </div>
 
                 <div className="mb-4 max-mod:mb-2">
-                    <p className="font-medium text-lg">Detil Kejadian </p>
+                    <p className="font-medium text-lg">Detail Kejadian </p>
                     <div className="text-sm grid grid-cols-4 max-md:grid-cols-2 gap-2 max-md:gap-1 p-4 max-md:p-2">
                         <p className="font-semibold">Jenis Kejadian</p>
                         <p className="font-light">{report?.incident}</p>
@@ -208,7 +208,7 @@ export function ReportDetailsPage() {
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
-                            <BreadcrumbPage className="truncate">Detil Laporan {id}</BreadcrumbPage>
+                            <BreadcrumbPage className="truncate">Detail Laporan {id}</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>

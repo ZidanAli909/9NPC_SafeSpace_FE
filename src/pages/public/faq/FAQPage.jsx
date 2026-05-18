@@ -20,31 +20,31 @@ const items = [
     value: "faq1",
     trigger: "Saya lupa password. Bagaimana cara meresetnya?",
     content:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni ex placeat sit impedit libero explicabo, minima eaque voluptas atque suscipit est incidunt eveniet eius veritatis, numquam sint excepturi officia laboriosam!",
+      "Klik tautan 'Lupa Password' di halaman login. Masukkan alamat  email yang kamu gunakan saat mendaftar. Kami akan mengirimkan tautan  reset password ke email tersebut. Tautan berlaku selama 30 menit. Jika  tidak menerima email, cek folder Spam atau hubungi admin melalui halaman Kontak.",
   },
   {
     value: "faq2",
     trigger: "Saya sudah login, tapi tidak bisa mengakses halaman Lapor. Kenapa?",
     content:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni ex placeat sit impedit libero explicabo, minima eaque voluptas atque suscipit est incidunt eveniet eius veritatis, numquam sint excepturi officia laboriosam!",
+      "Pastikan akun kamu sudah terverifikasi melalui email yang kami  kirim saat pendaftaran. Jika belum, silakan cek email (termasuk folder  Spam) dan klik tautan verifikasi. Jika sudah terverifikasi namun masih  tidak bisa, coba logout lalu login kembali. Jika masalah berlanjut,  hubungi tim teknis di support@safespace.id.",
   },
   {
     value: "faq3",
     trigger: "Unggahan bukti (foto/video/dokumen) selalu gagal. Apa yang harus saya lakukan?",
     content:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni ex placeat sit impedit libero explicabo, minima eaque voluptas atque suscipit est incidunt eveniet eius veritatis, numquam sint excepturi officia laboriosam!",
+      "Pastikan ukuran file tidak melebihi batas maksimal: foto maks 10 MB per file, video maks 50 mb per file, dokumen (PDF/Word) maks 5 MB per file, audio maks 10 MB per file. Periksa juga koneksi internetmu. Coba gunakan browser Chrome atau Firefox versi terbaru. Jika masih gagal, coba kompres file terlebih dahulu atau unggah satu per satu.",
   },
   {
     value: "faq4",
     trigger: "Saya tidak menerima notifikasi status laporan padahal sudah berubah. Kenapa?",
     content:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni ex placeat sit impedit libero explicabo, minima eaque voluptas atque suscipit est incidunt eveniet eius veritatis, numquam sint excepturi officia laboriosam!",
+      "Notifikasi dikirim melalui email ke alamat yang kamu daftarkan. Cek folder Spam atau Promosi (jika pakai Gmail). Pastikan email support@safespace.id sudah masuk dalam daftar kontak aman. Kamu juga bisa mengecek status laporan secara manual melalui menu 'Status Laporan' di dashboard atau  profilmu. Jika tetap tidak ada, hubungi admin untuk memastikan alamat  emailmu benar.",
   },
   {
     value: "faq5",
     trigger: "Apakah saya bisa mengedit atau membatalkan laporan yang sudah terkirim?",
     content:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni ex placeat sit impedit libero explicabo, minima eaque voluptas atque suscipit est incidunt eveniet eius veritatis, numquam sint excepturi officia laboriosam!",
+      "Laporan yang sudah terkirim tidak bisa diedit langsung. Namun jika status laporan masih 'Diterima' atau 'Sedang Direview', kamu dapat  menghubungi admin melalui halaman Kontak untuk meminta perubahan atau  pembatalan. Jika status sudah 'Diproses' atau lebih lanjut, perubahan  tidak dapat dilakukan karena sudah masuk koordinasi dengan pihak  kampus/polisi.",
   },
 ]
 

@@ -337,14 +337,14 @@ export function AdminProfileDetailsPage() {
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
-                            <BreadcrumbPage>Detil Profil</BreadcrumbPage>
+                            <BreadcrumbPage>Detail Profil</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
             </div>
 
             <div className={commonStyle_Section + " max-w-4xl mx-auto"}>
-                <p className="text-2xl font-semibold mb-4">Detil Profil</p>
+                <p className="text-2xl font-semibold mb-4">Detail Profil</p>
             </div>
 
             <div className="flex max-md:flex-col flex-row gap-4 max-w-4xl mx-auto">
