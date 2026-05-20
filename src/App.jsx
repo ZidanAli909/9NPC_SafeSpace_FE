@@ -27,6 +27,7 @@ import LegalPage from './pages/public/help/LegalPage'
 import ArticleIndexPage from './pages/public/help/ArticleIndexPage'
 import ArticleReadPage from './pages/public/help/ArticleReadPage'
 import ReportSubmittedPage from './pages/public/report/ReportSubmittedPage'
+import { FirstTimeSetupPage } from './pages/public/SetupAccountPage'
 
 function App() {
   return (
@@ -39,6 +40,9 @@ function App() {
               <Route index element={<LandingPage />} />
               <Route path="login" element={<LoginPage />} />
               <Route path="signup" element={<SignUpPage />} />
+              {/* <Route path="forget-password" element={<SubmittedPage />} /> */}
+              {/* <Route path="reset-password" element={<SubmittedPage />} /> */}
+              <Route path="setup" element={<FirstTimeSetupPage />} />
               <Route path="report">
                 <Route index element={<ReportFormPage />} />
                 <Route path="submitted" element={<ReportSubmittedPage />} />
