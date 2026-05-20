@@ -78,6 +78,8 @@ export default function LoginPage() {
 
     return (
         <div className="py-8 px-24 max-md:px-16 max-sm:px-8 bg-[#ddeef7]">
+            <title>Safespace | Log In</title>
+
             <div className="max-w-md mx-auto p-8 bg-background rounded-2xl shadow-sm">
                 <h1 className="text-2xl font-semibold text-primary mb-6">
                     Login ke SafeSpace

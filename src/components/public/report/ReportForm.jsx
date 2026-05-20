@@ -66,7 +66,7 @@ export default function ReportForm() {
             };
 
             const response = await ReportService.createReport(payload);
-            if (response.success) navigate("/submitted");
+            if (response.success) navigate("/report/submitted");
         } catch (error) {
             console.error(error);
             alert("Gagal mengirim laporan.");

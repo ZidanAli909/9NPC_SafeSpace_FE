@@ -7,7 +7,7 @@ import { legalFAQ } from "@/data/articles";
 import hukumBg from "@/assets/safespace_hukumhero.png";
 
 
-export default function InfoBantuanHukumPage() {
+export default function LegalPage() {
   const [search, setSearch] = useState("");
 
   const filtered = legalFAQ.filter((item) =>
@@ -16,6 +16,8 @@ export default function InfoBantuanHukumPage() {
 
   return (
     <div>
+      <title>Safespace | Legal Help</title>
+
       <BantuanHero
         title="Ruang Pulih: Panduan Hukum untuk Korban Kekerasan"
         description="Kamu berhak mendapatkan keadilan. Proses hukum mungkin terdengar menakutkan, tapi kami di sini untuk membantumu memahami langkah-langkahnya. Bagian ini berisi informasi tentang apa yang perlu disiapkan jika kamu ingin melapor secara resmi, serta perlindungan hukum yang tersedia untukmu."

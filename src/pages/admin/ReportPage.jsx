@@ -129,6 +129,8 @@ export function ReportPage() {
 
     return (
         <div className="py-8 px-24 max-md:px-16 max-sm:px-8">
+            <title>Safespace | Reports</title>
+
             <div className="mb-8">
                 <p className="text-2xl font-semibold">Daftar Laporan</p>
             </div>

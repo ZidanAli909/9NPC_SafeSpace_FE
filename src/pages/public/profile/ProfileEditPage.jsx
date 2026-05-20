@@ -93,6 +93,8 @@ export function ProfileEditPage() {
 
     return (
         <div className={commonStyle_Page}>
+            <title>Safespace | Edit Profile</title>
+
             <div className={commonStyle_Section}>
                 <Breadcrumb>
                     <BreadcrumbList>
