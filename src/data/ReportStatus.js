@@ -8,10 +8,9 @@ export const reportStatus = [
     { value: "CANCELLED", label: "Dibatalkan" },
 ]
 
-// RECEIVED
-// PROCESS
-// REVIEW
-// ASSISTANCE
-// REJECTED
-// DONE
-// CANCELLED
+export const categories = [
+    { value: "KEKERASAN_SEKSUAL", label: "Kekerasan Seksual" },
+    { value: "KEKERASAN_FISIK", label: "Kekerasan Fisik" },
+    { value: "KEKERASAN_VERBAL", label: "Kekerasan Verbal" },
+    { value: "LAINNYA", label: "Lainnya" },
+]

@@ -6,8 +6,24 @@ export const AdminService = {
         return response.data;
     },
 
+    getDashboardStats: async () => {
+        const response = await api.get("/admin/dashboard/stats");
+        return response.data;
+    },
+
+    getDashboardCategories: async () => {
+        const response = await api.get("/admin/dashboard/categories");
+        return response.data;
+    },
+
+    getDashboardReports: async () => {
+        const response = await api.get("/admin/report/recent");
+        return response.data;
+    },
+
     getReports: async () => {
-        const response = await api.get("/admin/report");
+        const response = await api.get("/admin/reports");
+        // const response = await api.get("/admin/report");
         return response.data;
     },
     

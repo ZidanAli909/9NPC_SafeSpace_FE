@@ -13,38 +13,88 @@ import {
 import {
     InputGroup,
     InputGroupAddon,
-    InputGroupButton,
     InputGroupInput,
-    InputGroupText,
-    InputGroupTextarea,
 } from "@/components/ui/input-group"
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { Card, CardContent } from "@/components/ui/card"
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 import { useAdmin } from "@/contexts/AdminContext"
-import { Loader2, Search, Trash } from "lucide-react"
+import { Eraser, Search, Trash } from "lucide-react"
 import { Link } from "react-router-dom"
 import { LoadingCard } from "@/components/common/LoadingCard"
 import { cn, formatTimestamp } from "@/lib/utils"
+import { categories, reportStatus } from "@/data/ReportStatus"
 
 function ReportTable({
     reports
 }) {
     return (
         <div>
-            <div className="flex flex-row justify-between mb-4">
-                <div>
-                    <p>Filters disini...</p>
+            <div className="p-2 flex max-md:flex-col flex-row justify-between gap-2 mb-4 border rounded-xl">
+                <div className="flex max-md:flex-col flex-row gap-2">
+                    <Button variant="outline">
+                        <Eraser/>
+                        <p className="ml-2 md:hidden">Hapus Filter</p>
+                    </Button>
+                    <Select items={reportStatus}>
+                        <SelectTrigger className="max-md:w-full w-24 lg:w-32">
+                            <SelectValue placeholder="Status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                {reportStatus.map((item) => (
+                                    <SelectItem key={item.value} value={item.value}>
+                                        {item.label}
+                                    </SelectItem>
+                                ))}
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                    <Select items={categories}>
+                        <SelectTrigger className="max-md:w-full  w-24 lg:w-43">
+                            <SelectValue placeholder="Kategori" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                {categories.map((item) => (
+                                    <SelectItem key={item.value} value={item.value}>
+                                        {item.label}
+                                    </SelectItem>
+                                ))}
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                    <Select>
+                        <SelectTrigger className="max-md:w-full w-24 lg:w-32">
+                            <SelectValue placeholder="Urutan" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectItem key="asc" value="asc">
+                                    Ascending
+                                </SelectItem>
+                                <SelectItem key="desc" value="desc">
+                                    Descending
+                                </SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
                 </div>
 
-                <InputGroup className="w-xs">
+                <InputGroup className="max-md:w-full w-64">
                     <InputGroupInput placeholder="Cari.." />
                     <InputGroupAddon>
                         <Search />
@@ -110,9 +160,6 @@ function ReportTable({
                     </PaginationItem>
                     <PaginationItem>
                         <PaginationLink href="#">3</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationEllipsis />
                     </PaginationItem>
                     <PaginationItem>
                         <PaginationNext href="#" />

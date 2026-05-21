@@ -6,7 +6,6 @@ import {
 } from "@/components/ui/card"
 import {
     Item,
-    ItemActions,
     ItemContent,
     ItemDescription,
     ItemMedia,
@@ -38,6 +37,7 @@ function DashboardTable({
                         <Link
                             to={`/admin/report/${report.id}`}
                             key={report.id}
+                            className="mb-1"
                         >
                             <ItemMedia className="w-10 aspect-square bg-secondary text-white rounded-md">
                                 <File className="text-secondary-foreground" />
@@ -77,7 +77,7 @@ export function DashboardPage() {
         <div className={commonStyle_Page}>
 
             <div className={commonStyle_Section}>
-                <p className="text-2xl font-semibold">Selamat pagi, Admin12345</p>
+                <p className="text-2xl font-semibold">Selamat pagi, {profile?.admin.name ?? "Admin"}</p>
                 <p>Ada beberapa laporan baru yang menunggu direview hari ini...</p>
             </div>
 
