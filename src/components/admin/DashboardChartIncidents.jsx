@@ -1,6 +1,5 @@
-import { useMemo } from "react";
-import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from "../ui/chart";
-import { Cell, Legend, Pie, PieChart, Tooltip } from "recharts";
+import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip } from "../ui/chart";
+import { Pie, PieChart } from "recharts";
 
 // Warna chart harus eksplisit HSL/HEX
 const COLORS = [
@@ -16,14 +15,14 @@ const COLORS = [
 
 const RADIAN = Math.PI / 180;
 
-const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, payload }) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
     return percent > 0.05 ? (
         <text x={x} y={y} fill="white" textAnchor="middle" dominantBaseline="central" fontSize={12} fontWeight={600}>
-            {`${percent.toFixed(0)}%`}
+            {`${payload.percentage}%`}
         </text>
     ) : null;
 };
@@ -31,11 +30,12 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 export function DashboardIncidentsChart({
     categories = [], // [{ key, label, count, percentage }]
 }) {
-     const chartData = categories
-        .filter((cat) => cat.count > 0) // skip kategori dengan jumlah nol
+    const chartData = categories
+        .filter((cat) => cat.count > 0) // skip kategori dengan jumlah nol 
         .map((cat, index) => ({
             name: cat.label,
             value: cat.count,
+            percentage: cat.percentage,
             fill: COLORS[index % COLORS.length],
         }));
 
@@ -62,17 +62,18 @@ export function DashboardIncidentsChart({
                     label={renderCustomizedLabel}
                     dataKey="value"
                 />
-                {/* <Tooltip
-                    formatter={(value, name) => [`${value} laporan`, name]}
-                    contentStyle={{
-                        borderRadius: "8px",
-                        fontSize: "13px",
+                <ChartTooltip
+                    content={({ active, payload }) => {
+                        if (!active || !payload?.length) return null;
+                        const { name, value, percentage } = payload[0].payload;
+                        return (
+                            <div className="rounded-lg border bg-background px-3 py-2 text-sm shadow-md">
+                                <p className="font-medium">{name}</p>
+                                <p className="text-muted-foreground">{value} laporan · {percentage}%</p>
+                            </div>
+                        );
                     }}
-                /> */}
-                {/* <Legend
-                    formatter={(value) => <span style={{ fontSize: "13px" }}>{value}</span>}
-                /> */}
-                <ChartTooltip content={<ChartTooltipContent />}/>
+                />
                 <ChartLegend content={<ChartLegendContent />}/>
             </PieChart>
         </ChartContainer>

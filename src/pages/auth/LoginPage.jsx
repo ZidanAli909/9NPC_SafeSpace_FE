@@ -94,7 +94,7 @@ export default function LoginPage() {
                 else navigate("/");
             }
         }
-        setIsLoggingIn(false);
+        // setIsLoggingIn(false);
     }, [profile, loadingProfile, isLoggingIn, navigate]);
 
     return (
