@@ -1,28 +1,26 @@
-import { AdminService } from "@/services/AdminService";
+import { ReportService } from "@/services/ReportService";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
-const AdminReportsContext = createContext(null);
+const ReportsContext = createContext(null);
 
-export const AdminReportsProvider = ({ children }) => {
+export const ReportsProvider = ({ children }) => {
     const [reports, setReports] = useState([]);
     // Pagination
-    const [pagination, setPagination] = useState({
-        total: 0,
-        totalPages: 1,
-        hasNext: false,
-        hasPrev: false,
-    });
-    // Queries
-    const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(10);
-    const [filters, setFilters] = useState({
-        search: "",
-        status: "",
-        category: "",
-        sortOrder: "desc",
-    });
-    // Other
-    const [loadingReports, setLoadingReports] = useState(false);
+        const [pagination, setPagination] = useState({
+            total: 0,
+            totalPages: 1,
+            hasNext: false,
+            hasPrev: false,
+        });
+        // Queries
+        const [page, setPage] = useState(1);
+        const [limit, setLimit] = useState(10);
+        const [filters, setFilters] = useState({
+            search: "",
+            category: "",
+        });
+        // Other
+        const [loadingReports, setLoadingReports] = useState(false);
 
     const fetchReports = useCallback(async () => {
         setLoadingReports(true);
@@ -30,7 +28,7 @@ export const AdminReportsProvider = ({ children }) => {
             const params = Object.fromEntries(
                 Object.entries({ page, limit, ...filters }).filter(([_, v]) => v !== "") // Query kosong akan menjadi ""
             ); 
-            const response = await AdminService.getReports(params);
+            const response = await ReportService.readAllUserReports(params);
             setReports(response.data);
             setPagination(response.pagination);
         } catch (error) {
@@ -58,7 +56,7 @@ export const AdminReportsProvider = ({ children }) => {
     }, []);
 
     const resetFilters = useCallback(() => {
-        setFilters({ search: "", status: "", category: "", sortOrder: "desc" });
+        setFilters({ search: "", category: "" });
     }, []);
 
     // Provider
@@ -75,20 +73,19 @@ export const AdminReportsProvider = ({ children }) => {
         setLimit,
         filters,
         updateFilters,
-        resetFilters,
+        resetFilters
     }
-
     return (
-        <AdminReportsContext.Provider value={value}>
+        <ReportsContext.Provider value={value}>
             {children}
-        </AdminReportsContext.Provider>
+        </ReportsContext.Provider>
     );
-}
+};
 
-export const useAdminReports = () => {
-    const context = useContext(AdminReportsContext);
+export const useReports = () => {
+    const context = useContext(ReportsContext);
     if (!context) {
-        throw new Error("useAdminReports must be used within a AdminReportsProvider");
+        throw new Error("useReport must be used within a ReportProvider");
     }
     return context;
-}
+};

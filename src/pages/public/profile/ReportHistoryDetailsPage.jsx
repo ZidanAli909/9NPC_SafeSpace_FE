@@ -27,7 +27,7 @@ import { Button } from "@/components/ui/button"
 import { useEffect } from "react"
 
 function ReportHistoryDetailsDetail({ report }) {
-    const { fetchReportById } = useReport()
+    const { refreshReport } = useReport()
 
     function handleDownloadPDF() {
         const doc = new jsPDF()
@@ -167,11 +167,11 @@ function ReportHistoryDetailsDetail({ report }) {
 
 export function ReportHistoryDetailsPage() {
     const { id } = useParams()
-    const { report, loadingReport, fetchReportById } = useReport()
+    const { report, loadingReport, refreshReport } = useReport()
 
     useEffect(() => {
-        if (id) fetchReportById(id)
-    }, [id, fetchReportById])
+        if (id) refreshReport(id)
+    }, [id, refreshReport])
 
     return (
         <div className={commonStyle_Page}>

@@ -57,6 +57,7 @@ function ReportTable() {
         (value) => updateFilters({ search: value }),
         500
     )
+    
     return (
         <div>
             <div className="p-2 flex max-md:flex-col flex-row justify-between gap-2 mb-4 border rounded-xl">

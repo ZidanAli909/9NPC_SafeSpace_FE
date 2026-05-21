@@ -4,8 +4,17 @@ import { AdminProvider } from '@/contexts/AdminContext';
 import { AdminDashboardProvider } from '@/contexts/AdminDashboardContext';
 import { AdminReportsProvider } from '@/contexts/AdminReportsContext';
 import { AdminReportProvider } from '@/contexts/AdminReportContext';
+import { ReportsProvider } from '@/contexts/ReportsContext';
 
-export const ReportScopeLayout = () => {
+export const ReportsProviderLayout = () => {
+  return (
+    <ReportsProvider>
+      <Outlet /> 
+    </ReportsProvider>
+  );
+};
+
+export const ReportProviderLayout = () => {
   return (
     <ReportProvider>
       <Outlet /> 
@@ -13,13 +22,13 @@ export const ReportScopeLayout = () => {
   );
 };
 
-export const AdminScopeLayout = () => {
-  return (
-    <AdminProvider>
-      <Outlet /> 
-    </AdminProvider>
-  );
-};
+// export const AdminScopeLayout = () => {
+//   return (
+//     <AdminProvider>
+//       <Outlet /> 
+//     </AdminProvider>
+//   );
+// };
 
 export const AdminDashboardProviderLayout = () => {
   return (

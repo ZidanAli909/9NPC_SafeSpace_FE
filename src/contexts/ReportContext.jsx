@@ -4,28 +4,6 @@ import { createContext, useCallback, useContext, useEffect, useState } from "rea
 const ReportContext = createContext(null);
 
 export const ReportProvider = ({ children }) => {
-    // For readAllUserReports
-    const [reports, setReports] = useState([]);
-    const [loadingReports, setLoadingReports] = useState(false);
-
-    const fetchReports = useCallback(async () => {
-        setLoadingReports(true);
-        try {
-            const response = await ReportService.readAllUserReports();
-            setReports(response.data);
-        } catch (error) {
-            console.error("Terjadi kesalahan:", error);
-            setReports([]);
-        } finally {
-            setLoadingReports(false);
-        }
-    }, []);
-
-    useEffect(() => {
-        fetchReports();
-    }, [fetchReports]);
-
-    // For readUserReport
     const [report, setReport] = useState(null);
     const [loadingReport, setLoadingReport] = useState(false);
 
@@ -45,12 +23,9 @@ export const ReportProvider = ({ children }) => {
 
     // Provider
     const value = {
-        reports,
-        loadingReports,
-        refreshReports: fetchReports,
         report,
         loadingReport,
-        fetchReportById,
+        refreshReport: fetchReportById,
     }
     return (
         <ReportContext.Provider value={value}>
