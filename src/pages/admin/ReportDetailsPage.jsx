@@ -200,6 +200,8 @@ export function ReportDetailsPage() {
 
     return (
         <div className={commonStyle_Page}>
+            <title>Safespace | Report: {report?.id ?? "Details"}</title>
+
             <div className={commonStyle_Section}>
                 <Breadcrumb>
                     <BreadcrumbList>

@@ -27,7 +27,6 @@ import { Button } from "@/components/ui/button"
 import { useEffect } from "react"
 
 function ReportHistoryDetailsDetail({ report }) {
-    const navigate = useNavigate()
     const { fetchReportById } = useReport()
 
     function handleDownloadPDF() {
@@ -176,6 +175,8 @@ export function ReportHistoryDetailsPage() {
 
     return (
         <div className={commonStyle_Page}>
+            <title>Safespace | Report Details</title>
+
             <div className={commonStyle_Section}>
                 <Breadcrumb>
                     <BreadcrumbList>

@@ -47,6 +47,8 @@ function GuideStepsCardTemplate({
 export function ReportGuidePage() {
     return (
         <div className={commonStyle_Page}>
+            <title>Safespace | FAQ Guide</title>
+
             <div className={commonStyle_Section}>
                 <Breadcrumb>
                     <BreadcrumbList>

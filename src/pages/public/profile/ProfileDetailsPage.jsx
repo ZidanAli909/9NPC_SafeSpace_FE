@@ -186,6 +186,8 @@ export function ProfileDetailsPage() {
 
     return (
         <div className={commonStyle_Page}>
+            <title>Safespace | Profile</title>
+
             <div className={commonStyle_Section}>
                 <Breadcrumb>
                     <BreadcrumbList>

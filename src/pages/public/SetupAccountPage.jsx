@@ -1,22 +1,8 @@
 import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import {
     Field,
-    FieldContent,
-    FieldDescription,
     FieldError,
     FieldGroup,
     FieldLabel,
-    FieldLegend,
-    FieldSeparator,
-    FieldSet,
-    FieldTitle,
 } from "@/components/ui/field"
 import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles"
 import { useProfile } from "@/contexts/ProfileContext";
@@ -32,8 +18,8 @@ import { ProfileService } from "@/services/ProfileService";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { toast } from "sonner";
 
-export function ProfileEditPage() {
-    const { profile, loadingProfile, refreshProfile } = useProfile();
+export function FirstTimeSetupPage() {
+    const { profile, loadingProfile } = useProfile();
     const navigate = useNavigate();
 
     const {
@@ -64,9 +50,9 @@ export function ProfileEditPage() {
         // console.log(data);
         try {
             const response = await ProfileService.updateProfile(data);
-            toast.success("Data pribadi berhasil diubah!");
+            toast.success("Data pribadi berhasil disetel! Selamat datang di Safespace!");
             // refreshProfile();
-            navigate("/profile");
+            navigate("/");
         } catch (error) {
             if (error.response) {
                 const { status, data } = error.response;
@@ -93,24 +79,15 @@ export function ProfileEditPage() {
 
     return (
         <div className={commonStyle_Page}>
-            <title>Safespace | Edit Profile</title>
-
-            <div className={commonStyle_Section}>
-                <Breadcrumb>
-                    <BreadcrumbList>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink render={<Link to="/profile" />}>Profil</BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage>Ubah Data Pribadi</BreadcrumbPage>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb>
-            </div>
+            <title>Safespace | Setup Account</title>
 
             <div className={commonStyle_Section + " max-w-4xl mx-auto"}>
-                <p className="text-2xl font-semibold mb-4">Ubah Data Pribadi</p>
+                <p className="text-2xl font-semibold mb-2">
+                    Selamat Datang di Safespace...
+                </p>
+                <p className="text-sm">
+                    Sebelum menggunakan Safespace, harap setel akun Anda terlebih dahulu supaya kamu bisa menggunakan fitur-fitur dengan baik!
+                </p>
             </div>
 
             <div className="max-w-4xl mx-auto p-8 border rounded-lg">
@@ -260,16 +237,8 @@ export function ProfileEditPage() {
                         form="editUserProfile"
                         disabled={isSubmitting || loadingProfile}
                     >
-                        Simpan
+                        Setel
                         {isSubmitting && (<Loader2 className="animate-spin ml-1" />)}
-                    </Button>
-                    <Button
-                        size="lg"
-                        variant="secondary"
-                        onClick={() => navigate("/profile")}
-                        disabled={isSubmitting}
-                    >
-                        Batal
                     </Button>
                 </div>
             </div>
