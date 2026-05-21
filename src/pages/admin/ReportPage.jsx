@@ -36,7 +36,7 @@ import { Eraser, Search, Trash } from "lucide-react"
 import { Link } from "react-router-dom"
 import { LoadingCard } from "@/components/common/LoadingCard"
 import { cn, formatTimestamp } from "@/lib/utils"
-import { categories, reportStatus } from "@/data/ReportStatus"
+import { categories, reportStatus } from "@/data/CommonSelectValues"
 
 function ReportTable({
     reports
@@ -45,10 +45,6 @@ function ReportTable({
         <div>
             <div className="p-2 flex max-md:flex-col flex-row justify-between gap-2 mb-4 border rounded-xl">
                 <div className="flex max-md:flex-col flex-row gap-2">
-                    <Button variant="outline">
-                        <Eraser/>
-                        <p className="ml-2 md:hidden">Hapus Filter</p>
-                    </Button>
                     <Select items={reportStatus}>
                         <SelectTrigger className="max-md:w-full w-24 lg:w-32">
                             <SelectValue placeholder="Status" />
@@ -92,6 +88,10 @@ function ReportTable({
                             </SelectGroup>
                         </SelectContent>
                     </Select>
+                    <Button variant="outline">
+                        <Eraser/>
+                        <p className="ml-2 md:hidden">Hapus Filter</p>
+                    </Button>
                 </div>
 
                 <InputGroup className="max-md:w-full w-64">
