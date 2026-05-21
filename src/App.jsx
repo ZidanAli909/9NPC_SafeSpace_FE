@@ -17,7 +17,7 @@ import { SettingsPage } from './pages/public/profile/SettingsPage'
 import { ReportGuidePage } from './pages/public/faq/FAQGuidePage'
 import { AuthProvider } from './contexts/AuthContext'
 import { ProfileProvider } from './contexts/ProfileContext'
-import { AdminScopeLayout, ReportScopeLayout } from './components/layout/Scopes'
+import { AdminDashboardProviderLayout, AdminReportProviderLayout, AdminReportsProviderLayout, AdminScopeLayout, ReportScopeLayout } from './components/layout/Scopes'
 import { AdminRoute } from './components/routes/AdminRoute'
 import { RegisteredRoute } from './components/routes/RegisteredRoute'
 import { ReportDetailsPage } from './pages/admin/ReportDetailsPage'
@@ -76,14 +76,18 @@ function App() {
             {/* Admin Routes */}
             <Route element={<AdminRoute />}>
               <Route path="/admin" element={<AdminLayout />}>
-                <Route element={<AdminScopeLayout />}>
+                <Route element={<AdminDashboardProviderLayout />}>
                   <Route index element={<DashboardPage />} />
-                  <Route path="report">
+                </Route>
+                <Route path="report">
+                  <Route element={<AdminReportsProviderLayout />}>
                     <Route index element={<ReportPage />} />
+                  </Route>
+                  <Route element={<AdminReportProviderLayout />}>
                     <Route path=":id" element={<ReportDetailsPage />} />
                   </Route>
-                  <Route path="profile" element={<AdminProfileDetailsPage />}/>
                 </Route>
+                <Route path="profile" element={<AdminProfileDetailsPage />} />
               </Route>
             </Route>
           </Routes>

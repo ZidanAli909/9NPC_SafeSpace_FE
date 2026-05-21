@@ -17,14 +17,13 @@ export const AdminService = {
     },
 
     getDashboardReports: async () => {
-        const response = await api.get("/admin/report/recent");
+        const response = await api.get("/admin/reports/recent");
         return response.data;
     },
 
-    getReports: async () => {
-        const response = await api.get("/admin/reports");
-        // const response = await api.get("/admin/report");
-        return response.data;
+    getReports: async (params = {}) => {
+        const response = await api.get("/admin/reports", { params });
+        return response.data; // Needs data and pagination
     },
     
     getReport: async (id) => {
@@ -34,18 +33,6 @@ export const AdminService = {
 
     updateReportStatus: async (id, dataStatus) => {
         const response = await api.patch(`/admin/report/${id}/status`, { status: dataStatus });
-        return response.data;
-    },
-
-    getReports: async (token) => {
-        const headers = token ? { Authorization: `Bearer ${token}` } : {};
-        const response = await api.get("/admin/report");
-        return response.data;
-    },
-    
-    getReport: async (id, token) => {
-        const headers = token ? { Authorization: `Bearer ${token}` } : {};
-        const response = await api.get(`/admin/report/${id}`);
         return response.data;
     },
 }

@@ -12,15 +12,15 @@ import {
     ItemTitle,
 } from "@/components/ui/item"
 import { DashboardTile } from "@/components/admin/DashboardTile";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { ChevronRight, File, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge"
 import { Link } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
 import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles";
-import { useAdmin } from "@/contexts/AdminContext";
 import { DashboardIncidentsChart } from "@/components/admin/DashboardChartIncidents";
 import { cn, formatTimestamp } from "@/lib/utils";
+import { useAdminDashboard } from "@/contexts/AdminDashboardContext";
 
 function DashboardTable({
     reports
@@ -43,18 +43,18 @@ function DashboardTable({
                                 <File className="text-secondary-foreground" />
                             </ItemMedia>
                             <ItemContent>
-                                <ItemTitle>{report.id}</ItemTitle>
+                                <ItemTitle>{report.reportCode}</ItemTitle>
                                 <ItemDescription>
                                     {report.incident}
                                     {" · "}
-                                    {formatTimestamp(report.createdAt)}
+                                    {formatTimestamp(report.submittedAt)}
                                     {" · "}
-                                    Anonim
+                                    {report.reporterDisplay}
                                 </ItemDescription>
                             </ItemContent>
                             <div className="flex flex-row gap-2">
-                                <Badge variant="secondary">New</Badge>
-                                <Badge>Important</Badge>
+                                {/* <Badge variant="secondary">New</Badge> */}
+                                <Badge>{report.statusLabel}</Badge>
                             </div>
                         </Link>
                     } variant="outline" className="min-h-17" />
@@ -66,12 +66,9 @@ function DashboardTable({
 
 export function DashboardPage() {
     const { profile } = useProfile();
-    const { reports, loadingReports } = useAdmin();
-    // console.log(profile);
-
-    // console.log(reports);
-    const reportArray = reports ?? []; // Data diformat khusus untuk chart
-    // console.log(reportArray);
+    const { recentReports, categories, stats, loadingDashboard } = useAdminDashboard();
+    // console.log(recentReports);
+    // console.log(categories);
 
     return (
         <div className={commonStyle_Page}>
@@ -85,26 +82,26 @@ export function DashboardPage() {
                 <DashboardTile
                     titleStyle="bg-red-100 text-red-800 border border-red-500"
                     title="Total Laporan"
-                    subtitle="sejak platform aktif"
-                    count={profile?.report.totalReports}
+                    subtitle={stats?.totalLaporan.label}
+                    count={stats?.totalLaporan.count}
                 />
                 <DashboardTile
                     titleStyle="bg-blue-100 text-blue-800 border border-blue-500"
                     title="Laporan Baru"
-                    subtitle="minggu ini"
-                    count={profile?.activity.WeeklyReportCount}
+                    subtitle={"laporan dalam " + stats?.laporanBaru.sinceHours + " jam terakhir"}
+                    count={stats?.laporanBaru.count}
                 />
                 <DashboardTile
                     titleStyle="bg-yellow-100 text-yellow-800 border border-yellow-500"
                     title="Direview"
                     subtitle="perlu tindakan"
-                    count={profile?.report.totalReports - profile?.report.totalFinishedReports}
+                    count={stats?.direview.count}
                 />
                 <DashboardTile
                     titleStyle="bg-green-100 text-green-800 border border-green-500"
                     title="Selesai"
-                    subtitle="penyelesaian ?%"
-                    count={profile?.report.totalFinishedReports}
+                    subtitle={"penyelesaian " + stats?.selesai.completionRate + "%"}
+                    count={stats?.selesai.count}
                 />
             </div>
 
@@ -124,13 +121,13 @@ export function DashboardPage() {
                         </div>
                     </CardHeader>
                     <CardContent>
-                        {loadingReports ? (
+                        {loadingDashboard ? (
                             <div className="mx-auto w-fit font-light text-sm text-muted-foreground flex flex-row items-center gap-2 p-4">
                                 <Loader2 className="animate-spin" />
                                 Loading...
                             </div>
                         ) : (
-                            <DashboardTable reports={reports} />
+                            <DashboardTable reports={recentReports} />
                         )}
                     </CardContent>
                 </Card>
@@ -139,16 +136,16 @@ export function DashboardPage() {
                     <CardHeader>
                         <CardTitle className="py-1">Kategori Laporan</CardTitle>
                     </CardHeader>
-                    {loadingReports &&
+                    {loadingDashboard &&
                         <CardContent>
                             <div className="mx-auto w-fit font-light text-sm text-muted-foreground flex flex-row items-center gap-2 p-4">
                                 <Loader2 className="animate-spin" />
                                 Loading...
                             </div>
                         </CardContent>}
-                    {!loadingReports && reportArray.length > 0 &&
+                    {!loadingDashboard && categories.total > 0 &&
                         <CardContent>
-                            <DashboardIncidentsChart reportArray={reportArray} />
+                            <DashboardIncidentsChart categories={categories.categories} />
                         </CardContent>}
                 </Card>
             </div>

@@ -5,37 +5,77 @@ const AdminReportsContext = createContext(null);
 
 export const AdminReportsProvider = ({ children }) => {
     const [reports, setReports] = useState([]);
+    // Pagination
+    const [pagination, setPagination] = useState({
+        total: 0,
+        totalPages: 1,
+        hasNext: false,
+        hasPrev: false,
+    });
+    // Queries
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
     const [filters, setFilters] = useState({
-        page: 1,
-        limit: 10,
         search: "",
         status: "",
         category: "",
         sortOrder: "desc",
     });
+    // Other
     const [loadingReports, setLoadingReports] = useState(false);
 
     const fetchReports = useCallback(async () => {
         setLoadingReports(true);
         try {
-            const response = await AdminService.getReports();
+            const params = Object.fromEntries(
+                Object.entries({ page, limit, ...filters }).filter(([_, v]) => v !== "") // Query kosong akan menjadi ""
+            ); 
+            const response = await AdminService.getReports(params);
             setReports(response.data);
+            setPagination(response.pagination);
         } catch (error) {
             console.error("Terjadi kesalahan:", error);
             setReports([]);
+            setPagination({ total: 0, totalPages: 1, hasNext: false, hasPrev: false });
         } finally {
             setLoadingReports(false);
         }
-    }, []);
+    }, [page, limit, filters]);
 
+    // Fetching
     useEffect(() => {
         fetchReports();
     }, [fetchReports]);
 
+    // Filters changed
+    useEffect(() => {
+        setPage(1);
+    }, [filters]);
+
+    // Helpers
+    const updateFilters = useCallback((newFilters) => {
+        setFilters(prev => ({ ...prev, ...newFilters }));
+    }, []);
+
+    const resetFilters = useCallback(() => {
+        setFilters({ search: "", status: "", category: "", sortOrder: "desc" });
+    }, []);
+
     // Provider
     const value = {
+        // Data
         reports,
         loadingReports,
+        pagination,
+        // Queries
+        page,
+        limit,
+        setPage,
+        setLimit,
+        filters,
+        updateFilters,
+        resetFilters,
+        // Manual refresh
         refreshReports: fetchReports,
     }
 

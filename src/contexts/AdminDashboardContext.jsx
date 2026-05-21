@@ -1,10 +1,10 @@
 import { AdminService } from "@/services/AdminService";
-import { createContext, useCallback, useContext, useEffect } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
 const AdminDashboardContext = createContext(null);
 
 export const AdminDashboardProvider = ({ children }) => {
-    const [recentReports, setRecentReports] = useState([]); // Recent reports
+    const [recentReports, setRecentReports] = useState([]);
     const [categories, setCategories] = useState([]);
     const [stats, setStats] = useState(null);
     const [loadingDashboard, setLoadingDashboard] = useState(false);
@@ -23,7 +23,7 @@ export const AdminDashboardProvider = ({ children }) => {
         } finally {
             setLoadingDashboard(false);
         }
-    });
+    }, []);
 
     useEffect(() => {
         fetchDashboard();

@@ -31,19 +31,16 @@ import {
     AlertDescription,
     AlertTitle,
 } from "@/components/ui/alert"
-import { Card, CardContent } from "@/components/ui/card"
-import { useReport } from "@/contexts/ReportContext"
 import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles"
 import { CircleAlert, ImageOff, Loader2, MoreVertical, Download, History } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { Link, useParams } from "react-router-dom"
-import { Separator } from "@/components/ui/separator"
-import { useAdmin } from "@/contexts/AdminContext"
 import { reportStatus } from "@/data/CommonSelectValues"
 import { LoadingCard } from "@/components/common/LoadingCard"
 import { formatDate, formatTimestamp } from "@/lib/utils"
 import { AdminService } from "@/services/AdminService"
 import { toast } from "sonner"
+import { useAdminReport } from "@/contexts/AdminReportContext"
 
 function ReportDetailsDetail({
     report,
@@ -192,11 +189,11 @@ function ReportDetailsDetail({
 
 export function ReportDetailsPage() {
     const { id } = useParams()
-    const { report, loadingReport, fetchReportById } = useAdmin();
+    const { report, loadingReport, refreshReport } = useAdminReport();
 
     useEffect(() => {
-        if (id) fetchReportById(id);
-    }, [id, fetchReportById]);
+        if (id) refreshReport(id);
+    }, [id, refreshReport]);
 
     return (
         <div className={commonStyle_Page}>
@@ -221,7 +218,7 @@ export function ReportDetailsPage() {
             ) : (
                 <ReportDetailsDetail
                     report={report}
-                    onRefresh={() => fetchReportById(id)}
+                    onRefresh={() => refreshReport(id)}
                 />
             )}
         </div>
