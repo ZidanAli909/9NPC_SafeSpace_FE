@@ -169,14 +169,10 @@ function DetailsProfile({
 
             <div className="mb-4">
                 <p className="font-medium text-lg mb-4">Password</p>
-                <Button
-                    variant="secondary"
-                    className="lg:h-9"
-                     onClick={() => toast.info("Maaf, fitur ini belum tersedia!")}
-                >
+                <Link to="/profile/password" className={cn(buttonVariants({ variant: "secondary" }), "mb-4 lg:h-9")}>
                     <LucideKeyRound className="mr-2" />
                     Ganti Password
-                </Button>
+                </Link>
             </div>
         </>
     )

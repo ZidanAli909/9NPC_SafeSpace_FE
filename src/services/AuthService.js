@@ -12,5 +12,9 @@ export const AuthService = {
     getSession: async () => {
         const response = await api.get("/auth/get-session");
         return response.data;
+    },
+    updatePassword: async (payload) => {
+        const response = await api.post("/auth/update-password", payload);
+        return response.data;
     }
 }

@@ -78,7 +78,7 @@ function ReportDetailsDetail({
 
                 {/* Title and Status Badge */}
                 <div>
-                    <p className="text-2xl font-semibold mb-2">Laporan {report?.id}</p>
+                    <p className="text-2xl font-semibold mb-2">Laporan {report?.reportCode}</p>
                     <div className="flex flex-row gap-4">
                         <Badge>{report?.status}</Badge>
                     </div>
@@ -91,11 +91,11 @@ function ReportDetailsDetail({
                         <p className="max-md:hidden">Aksi</p>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-fit">
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast.info("Maaf, fitur ini belum tersedia!")}>
                             <History className="mr-2" />
                             Riwayat Status Laporan
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast.info("Maaf, fitur ini belum tersedia!")}>
                             <Download className="mr-2" />
                             Download Laporan (PDF)
                         </DropdownMenuItem>
@@ -207,7 +207,7 @@ export function ReportDetailsPage() {
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
-                            <BreadcrumbPage className="truncate">Detail Laporan {id}</BreadcrumbPage>
+                            <BreadcrumbPage className="truncate">Detail Laporan {report?.reportCode}</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>

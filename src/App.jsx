@@ -28,6 +28,7 @@ import ArticleReadPage from './pages/public/help/ArticleReadPage'
 import ReportSubmittedPage from './pages/public/report/ReportSubmittedPage'
 import { FirstTimeSetupPage } from './pages/public/SetupAccountPage'
 import { MissingPage } from './pages/public/MissingPage'
+import { ProfilePasswordPage } from './pages/public/profile/ProfilePasswordPage'
 
 function App() {
   return (
@@ -65,6 +66,7 @@ function App() {
                 <Route path="profile">
                   <Route index element={<ProfileDetailsPage />} />
                   <Route path="edit" element={<ProfileEditPage />} />
+                  <Route path="password" element={<ProfilePasswordPage />} />
                   <Route path="history" >
                     <Route element={<ReportsProviderLayout/>}>
                       <Route index element={<ReportHistoryPage />} />

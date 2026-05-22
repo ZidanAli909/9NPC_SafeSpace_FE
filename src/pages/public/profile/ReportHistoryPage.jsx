@@ -25,6 +25,7 @@ import {
     SelectContent,
     SelectGroup,
     SelectItem,
+    SelectLabel,
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
@@ -81,6 +82,7 @@ function ReportHistoryTable() {
                             <SelectValue placeholder="Kategori" />
                         </SelectTrigger>
                         <SelectContent><SelectGroup>
+                            <SelectLabel>Kategori</SelectLabel>
                             {categories.map((item) => (
                                 <SelectItem key={item.value} value={item.value}>
                                     {item.label}
@@ -111,7 +113,7 @@ function ReportHistoryTable() {
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="w-32">ID Laporan</TableHead>
+                        <TableHead className="w-32">Kode Laporan</TableHead>
                         <TableHead className="w-48">Tanggal Laporan</TableHead>
                         <TableHead>Jenis Laporan</TableHead>
                         <TableHead>Status</TableHead>
@@ -139,7 +141,7 @@ function ReportHistoryTable() {
                         ) : (
                             reports.map((report) =>
                                 <TableRow key={report.id}>
-                                    <TableCell className="font-medium">{report.id}</TableCell>
+                                    <TableCell className="font-medium">{report.reportCode}</TableCell>
                                     <TableCell>{formatTimestamp(report.createdAt)}</TableCell>
                                     <TableCell>{report.incident}</TableCell>
                                     <TableCell>

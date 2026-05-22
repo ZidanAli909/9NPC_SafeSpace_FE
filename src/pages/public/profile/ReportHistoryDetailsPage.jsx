@@ -34,6 +34,7 @@ function ReportHistoryDetailsDetail({ report }) {
         doc.setFontSize(16)
         doc.text("Laporan SafeSpace", 20, 20)
         doc.setFontSize(12)
+        doc.text(`Kode Laporan: ${report?.reportCode}`, 20, 40)
         doc.text(`ID Laporan: ${report?.id}`, 20, 35)
         doc.text(`Status: ${report?.status}`, 20, 45)
         doc.text(`Tanggal Pelaporan: ${formatTimestamp(report?.createdAt)}`, 20, 55)
@@ -67,7 +68,7 @@ function ReportHistoryDetailsDetail({ report }) {
         <>
             <div className={commonStyle_Section + " flex flex-row justify-between max-w-4xl mx-auto"}>
                 <div>
-                    <p className="text-2xl font-semibold mb-2">Laporan {report?.id}</p>
+                    <p className="text-2xl font-semibold mb-2">Laporan {report?.reportCode}</p>
                     <div className="flex flex-row gap-4">
                         <Badge>{report?.status}</Badge>
                     </div>
@@ -182,7 +183,7 @@ export function ReportHistoryDetailsPage() {
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
-                            <BreadcrumbPage className="truncate">Detail Laporan</BreadcrumbPage>
+                            <BreadcrumbPage className="truncate">Detail Laporan {report?.reportCode} </BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>

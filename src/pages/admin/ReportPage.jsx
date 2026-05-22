@@ -27,13 +27,14 @@ import {
     SelectContent,
     SelectGroup,
     SelectItem,
+    SelectLabel,
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
 import { Eraser, Loader2, Search, Trash } from "lucide-react"
 import { Link } from "react-router-dom"
 import { cn, formatTimestamp } from "@/lib/utils"
-import { categories, reportStatus } from "@/data/CommonSelectValues"
+import { categories, reportStatus, sortOptions } from "@/data/CommonSelectValues"
 import { useAdminReports } from "@/contexts/AdminReportsContext"
 import { useDebouncedCallback } from "use-debounce"
 import { AnimatedEllipsis } from "@/components/common/AnimatedEllipsis"
@@ -72,6 +73,7 @@ function ReportTable() {
                             <SelectValue placeholder="Status" />
                         </SelectTrigger>
                         <SelectContent><SelectGroup>
+                            <SelectLabel>Status</SelectLabel>
                             {reportStatus.map((item) => (
                                 <SelectItem key={item.value} value={item.value}>
                                     {item.label}
@@ -89,6 +91,7 @@ function ReportTable() {
                             <SelectValue placeholder="Kategori" />
                         </SelectTrigger>
                         <SelectContent><SelectGroup>
+                            <SelectLabel>Kategori</SelectLabel>
                             {categories.map((item) => (
                                 <SelectItem key={item.value} value={item.value}>
                                     {item.label}
@@ -98,6 +101,7 @@ function ReportTable() {
                     </Select>
                     <Select
                         id="order"
+                        items={sortOptions}
                         value={filters.sortOrder}
                         onValueChange={(value) => updateFilters({ sortOrder: value })}
                     >
@@ -105,12 +109,12 @@ function ReportTable() {
                             <SelectValue placeholder="Urutan" />
                         </SelectTrigger>
                         <SelectContent><SelectGroup>
-                            <SelectItem key="asc" value="asc">
-                                Ascending
-                            </SelectItem>
-                            <SelectItem key="desc" value="desc">
-                                Descending
-                            </SelectItem>
+                            <SelectLabel>Sortir</SelectLabel>
+                            {sortOptions.map((item) => (
+                                <SelectItem key={item.value} value={item.value}>
+                                    {item.label}
+                                </SelectItem>
+                            ))}
                         </SelectGroup></SelectContent>
                     </Select>
                     <Button
@@ -136,7 +140,7 @@ function ReportTable() {
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="w-32">ID Laporan</TableHead>
+                        <TableHead className="w-32">Kode Laporan</TableHead>
                         <TableHead className="w-48">Tanggal Laporan</TableHead>
                         <TableHead>Jenis Laporan</TableHead>
                         <TableHead>Status</TableHead>
@@ -164,7 +168,7 @@ function ReportTable() {
                         ) : (
                             reports.map((report) =>
                                 <TableRow key={report.id}>
-                                    <TableCell className="font-medium">{report.id}</TableCell>
+                                    <TableCell className="font-medium">{report.reportCode}</TableCell>
                                     <TableCell>{formatTimestamp(report.createdAt)}</TableCell>
                                     <TableCell>{report.incident}</TableCell>
                                     <TableCell>

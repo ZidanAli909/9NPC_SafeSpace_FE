@@ -14,3 +14,8 @@ export const categories = [
     { value: "KEKERASAN_VERBAL", label: "Kekerasan Verbal" },
     { value: "LAINNYA", label: "Lainnya" },
 ]
+
+export const sortOptions = [
+  { value: "desc", label: "Descending" },
+  { value: "asc", label: "Ascending" }
+]
