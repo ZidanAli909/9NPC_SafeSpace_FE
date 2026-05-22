@@ -50,7 +50,7 @@ function ReportHistoryDetailsDetail({ report }) {
     }
 
     function handleHubungiAdmin() {
-        window.open("mailto:safespace@upnvj.ac.id?subject=Pertanyaan%20Laporan%20" + report?.id)
+        window.open("mailto:support@safespace.id?subject=Pertanyaan%20Laporan%20" + report?.id)
     }
 
     async function handleBatalkan() {
