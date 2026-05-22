@@ -28,6 +28,7 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useProfile } from "@/contexts/ProfileContext";
+import { toast } from "sonner";
 
 export default function LoginPage() {
     const { login, isAuthenticated } = useAuth();
@@ -161,7 +162,9 @@ export default function LoginPage() {
                                     {fieldState.invalid && (
                                         <FieldError errors={[fieldState.error]} />
                                     )}
-                                    <Link to="/signup" className="text-sm text-primary hover:underline hover:font-medium">
+                                    <Link
+                                        onClick={() => toast.info("Maaf, fitur ini belum tersedia!")}
+                                        className="text-sm text-primary hover:underline hover:font-medium">
                                         Lupa password?
                                     </Link>
                                 </Field>

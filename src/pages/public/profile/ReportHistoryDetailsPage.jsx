@@ -57,7 +57,7 @@ function ReportHistoryDetailsDetail({ report }) {
         try {
             await ReportService.cancelReport(report?.id)
             toast.success("Laporan berhasil dibatalkan!")
-            fetchReportById(report?.id)
+            refreshReport(report?.id)
         } catch (error) {
             toast.error("Gagal membatalkan laporan!")
         }
@@ -79,7 +79,7 @@ function ReportHistoryDetailsDetail({ report }) {
                         <p className="max-md:hidden">Aksi</p>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-fit">
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast.info("Maaf, fitur ini belum tersedia!")}>
                             <History className="mr-2" />
                             Riwayat Status Laporan
                         </DropdownMenuItem>
@@ -132,7 +132,7 @@ function ReportHistoryDetailsDetail({ report }) {
                     <p className="font-medium text-lg mb-4">Bukti Kejadian</p>
                     <div className="rounded-lg border p-4 min-h-32 mb-2 bg-accent flex flex-row overflow-x-auto">
                         {report?.evidenceAssets.length > 0 ? report.evidenceAssets.map((evidence) =>
-                            <div key={evidence.id} className="w-64 h-64 border rounded-md p-2 bg-background flex flex-col relative mr-12">
+                            <div key={evidence.id} className="w-64 h-64 border rounded-md p-2 bg-background flex flex-col relative mr-4">
                                 <p className="text-xs">ID {evidence.id}</p>
                                 <p className="text-xs italic text-muted-foreground">Dibuat: {formatTimestamp(evidence.createdAt)}</p>
                                 <div className="rounded-sm bg-muted flex-1 overflow-clip text-muted-foreground">
@@ -140,18 +140,12 @@ function ReportHistoryDetailsDetail({ report }) {
                                         <img src={evidence.signedUrl} className="object-contain w-full h-full" /> :
                                         <ImageOff className="size-16 relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />}
                                 </div>
-                                <Button variant="outline" size="icon" className="absolute -right-10.5">
-                                    <Edit2 />
-                                </Button>
-                                <Button variant="outline" size="icon" className="absolute -right-10.5 top-12 text-destructive">
-                                    <X />
-                                </Button>
                             </div>
                         ) : (
                             <p className="text-sm italic text-muted-foreground">Tidak ada bukti...</p>
                         )}
                     </div>
-                    <Button variant="outline" className="lg:h-9">
+                    <Button variant="outline" className="lg:h-9" onClick={() => toast.info("Maaf, fitur ini belum tersedia!")}>
                         <Plus className="mr-2" />
                         Tambahkan Bukti
                     </Button>

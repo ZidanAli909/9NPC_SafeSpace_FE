@@ -160,7 +160,7 @@ function DetailsProfile({
                 </Link>
                 <Alert className="bg-secondary text-secondary-foreground">
                     <Info />
-                    <AlertTitle>Notice</AlertTitle>
+                    <AlertTitle>Informasi</AlertTitle>
                     <AlertDescription>
                         Data akun wajib diisi untuk keperluan internal admin dan  komunikasi dengan Anda. Laporan yang dibuat akan otomatis bersifat  anonim. Identitas Anda tidak akan pernah kami bocorkan.
                     </AlertDescription>
@@ -172,6 +172,7 @@ function DetailsProfile({
                 <Button
                     variant="secondary"
                     className="lg:h-9"
+                     onClick={() => toast.info("Maaf, fitur ini belum tersedia!")}
                 >
                     <LucideKeyRound className="mr-2" />
                     Ganti Password

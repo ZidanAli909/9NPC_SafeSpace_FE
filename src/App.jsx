@@ -27,6 +27,7 @@ import ArticleIndexPage from './pages/public/help/ArticleIndexPage'
 import ArticleReadPage from './pages/public/help/ArticleReadPage'
 import ReportSubmittedPage from './pages/public/report/ReportSubmittedPage'
 import { FirstTimeSetupPage } from './pages/public/SetupAccountPage'
+import { MissingPage } from './pages/public/MissingPage'
 
 function App() {
   return (
@@ -75,6 +76,8 @@ function App() {
                   <Route path="settings" element={<SettingsPage />} />
                 </Route>
               </Route>
+              {/* Missing Page */}
+              <Route path="*" element={<MissingPage />} />
             </Route>
             {/* Admin Routes */}
             <Route element={<AdminRoute />}>
