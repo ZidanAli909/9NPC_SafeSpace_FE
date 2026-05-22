@@ -29,6 +29,7 @@ import ArticleReadPage from './pages/public/help/ArticleReadPage'
 import ReportSubmittedPage from './pages/public/report/ReportSubmittedPage'
 import { FirstTimeSetupPage } from './pages/public/SetupAccountPage'
 
+
 function App() {
   return (
     <BrowserRouter>
