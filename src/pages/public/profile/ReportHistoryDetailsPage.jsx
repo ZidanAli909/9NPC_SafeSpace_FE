@@ -4,6 +4,7 @@ import { ReportService } from "@/services/ReportService"
 import { toast } from "sonner"
 import { useNavigate } from "react-router-dom"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -13,6 +14,7 @@ import {
 import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles"
 import { Download, Edit2, History, ImageOff, MoreVertical, Phone, Plus, X } from "lucide-react"
 import { formatDate, formatTimestamp } from "@/lib/utils"
+import { useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
 import { LoadingCard } from "@/components/common/LoadingCard"
 import {
@@ -23,8 +25,6 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { Button } from "@/components/ui/button"
-import { useEffect } from "react"
 
 function ReportHistoryDetailsDetail({ report }) {
     const { refreshReport } = useReport()
@@ -49,7 +49,7 @@ function ReportHistoryDetailsDetail({ report }) {
     }
 
     function handleHubungiAdmin() {
-        window.open("mailto:safespace@upnvj.ac.id?subject=Pertanyaan%20Laporan%20" + report?.id)
+        window.open("mailto:support@safespace.id?subject=Pertanyaan%20Laporan%20" + report?.id)
     }
 
     async function handleBatalkan() {
@@ -176,7 +176,6 @@ export function ReportHistoryDetailsPage() {
     return (
         <div className={commonStyle_Page}>
             <title>Safespace | Report Details</title>
-
             <div className={commonStyle_Section}>
                 <Breadcrumb>
                     <BreadcrumbList>
