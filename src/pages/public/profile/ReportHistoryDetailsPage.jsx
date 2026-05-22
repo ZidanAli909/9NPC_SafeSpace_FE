@@ -4,6 +4,7 @@ import { ReportService } from "@/services/ReportService"
 import { toast } from "sonner"
 import { useNavigate } from "react-router-dom"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -13,6 +14,7 @@ import {
 import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles"
 import { Download, Edit2, History, ImageOff, MoreVertical, Phone, Plus, X } from "lucide-react"
 import { formatDate, formatTimestamp } from "@/lib/utils"
+import { useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
 import { LoadingCard } from "@/components/common/LoadingCard"
 import {
@@ -23,18 +25,16 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { Button } from "@/components/ui/button"
-import { useEffect } from "react"
 
 function ReportHistoryDetailsDetail({ report }) {
-    const navigate = useNavigate()
-    const { fetchReportById } = useReport()
+    const { refreshReport } = useReport()
 
     function handleDownloadPDF() {
         const doc = new jsPDF()
         doc.setFontSize(16)
         doc.text("Laporan SafeSpace", 20, 20)
         doc.setFontSize(12)
+        doc.text(`Kode Laporan: ${report?.reportCode}`, 20, 40)
         doc.text(`ID Laporan: ${report?.id}`, 20, 35)
         doc.text(`Status: ${report?.status}`, 20, 45)
         doc.text(`Tanggal Pelaporan: ${formatTimestamp(report?.createdAt)}`, 20, 55)
@@ -50,7 +50,7 @@ function ReportHistoryDetailsDetail({ report }) {
     }
 
     function handleHubungiAdmin() {
-        window.open("mailto:safespace@upnvj.ac.id?subject=Pertanyaan%20Laporan%20" + report?.id)
+        window.open("mailto:support@safespace.id?subject=Pertanyaan%20Laporan%20" + report?.id)
     }
 
     async function handleBatalkan() {
@@ -58,7 +58,7 @@ function ReportHistoryDetailsDetail({ report }) {
         try {
             await ReportService.cancelReport(report?.id)
             toast.success("Laporan berhasil dibatalkan!")
-            fetchReportById(report?.id)
+            refreshReport(report?.id)
         } catch (error) {
             toast.error("Gagal membatalkan laporan!")
         }
@@ -68,7 +68,7 @@ function ReportHistoryDetailsDetail({ report }) {
         <>
             <div className={commonStyle_Section + " flex flex-row justify-between max-w-4xl mx-auto"}>
                 <div>
-                    <p className="text-2xl font-semibold mb-2">Laporan {report?.id}</p>
+                    <p className="text-2xl font-semibold mb-2">Laporan {report?.reportCode}</p>
                     <div className="flex flex-row gap-4">
                         <Badge>{report?.status}</Badge>
                     </div>
@@ -80,7 +80,7 @@ function ReportHistoryDetailsDetail({ report }) {
                         <p className="max-md:hidden">Aksi</p>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-fit">
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast.info("Maaf, fitur ini belum tersedia!")}>
                             <History className="mr-2" />
                             Riwayat Status Laporan
                         </DropdownMenuItem>
@@ -133,7 +133,7 @@ function ReportHistoryDetailsDetail({ report }) {
                     <p className="font-medium text-lg mb-4">Bukti Kejadian</p>
                     <div className="rounded-lg border p-4 min-h-32 mb-2 bg-accent flex flex-row overflow-x-auto">
                         {report?.evidenceAssets.length > 0 ? report.evidenceAssets.map((evidence) =>
-                            <div key={evidence.id} className="w-64 h-64 border rounded-md p-2 bg-background flex flex-col relative mr-12">
+                            <div key={evidence.id} className="w-64 h-64 border rounded-md p-2 bg-background flex flex-col relative mr-4">
                                 <p className="text-xs">ID {evidence.id}</p>
                                 <p className="text-xs italic text-muted-foreground">Dibuat: {formatTimestamp(evidence.createdAt)}</p>
                                 <div className="rounded-sm bg-muted flex-1 overflow-clip text-muted-foreground">
@@ -141,18 +141,12 @@ function ReportHistoryDetailsDetail({ report }) {
                                         <img src={evidence.signedUrl} className="object-contain w-full h-full" /> :
                                         <ImageOff className="size-16 relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />}
                                 </div>
-                                <Button variant="outline" size="icon" className="absolute -right-10.5">
-                                    <Edit2 />
-                                </Button>
-                                <Button variant="outline" size="icon" className="absolute -right-10.5 top-12 text-destructive">
-                                    <X />
-                                </Button>
                             </div>
                         ) : (
                             <p className="text-sm italic text-muted-foreground">Tidak ada bukti...</p>
                         )}
                     </div>
-                    <Button variant="outline" className="lg:h-9">
+                    <Button variant="outline" className="lg:h-9" onClick={() => toast.info("Maaf, fitur ini belum tersedia!")}>
                         <Plus className="mr-2" />
                         Tambahkan Bukti
                     </Button>
@@ -168,14 +162,15 @@ function ReportHistoryDetailsDetail({ report }) {
 
 export function ReportHistoryDetailsPage() {
     const { id } = useParams()
-    const { report, loadingReport, fetchReportById } = useReport()
+    const { report, loadingReport, refreshReport } = useReport()
 
     useEffect(() => {
-        if (id) fetchReportById(id)
-    }, [id, fetchReportById])
+        if (id) refreshReport(id)
+    }, [id, refreshReport])
 
     return (
         <div className={commonStyle_Page}>
+            <title>Safespace | Report Details</title>
             <div className={commonStyle_Section}>
                 <Breadcrumb>
                     <BreadcrumbList>
@@ -188,7 +183,7 @@ export function ReportHistoryDetailsPage() {
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
-                            <BreadcrumbPage className="truncate">Detail Laporan</BreadcrumbPage>
+                            <BreadcrumbPage className="truncate">Detail Laporan {report?.reportCode} </BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>

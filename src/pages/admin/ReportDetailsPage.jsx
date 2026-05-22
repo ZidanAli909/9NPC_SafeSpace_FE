@@ -31,19 +31,16 @@ import {
     AlertDescription,
     AlertTitle,
 } from "@/components/ui/alert"
-import { Card, CardContent } from "@/components/ui/card"
-import { useReport } from "@/contexts/ReportContext"
 import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles"
 import { CircleAlert, ImageOff, Loader2, MoreVertical, Download, History } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { Link, useParams } from "react-router-dom"
-import { Separator } from "@/components/ui/separator"
-import { useAdmin } from "@/contexts/AdminContext"
-import { reportStatus } from "@/data/ReportStatus"
+import { reportStatus } from "@/data/CommonSelectValues"
 import { LoadingCard } from "@/components/common/LoadingCard"
 import { formatDate, formatTimestamp } from "@/lib/utils"
 import { AdminService } from "@/services/AdminService"
 import { toast } from "sonner"
+import { useAdminReport } from "@/contexts/AdminReportContext"
 
 function ReportDetailsDetail({
     report,
@@ -81,7 +78,7 @@ function ReportDetailsDetail({
 
                 {/* Title and Status Badge */}
                 <div>
-                    <p className="text-2xl font-semibold mb-2">Laporan {report?.id}</p>
+                    <p className="text-2xl font-semibold mb-2">Laporan {report?.reportCode}</p>
                     <div className="flex flex-row gap-4">
                         <Badge>{report?.status}</Badge>
                     </div>
@@ -94,11 +91,11 @@ function ReportDetailsDetail({
                         <p className="max-md:hidden">Aksi</p>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-fit">
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast.info("Maaf, fitur ini belum tersedia!")}>
                             <History className="mr-2" />
                             Riwayat Status Laporan
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast.info("Maaf, fitur ini belum tersedia!")}>
                             <Download className="mr-2" />
                             Download Laporan (PDF)
                         </DropdownMenuItem>
@@ -192,14 +189,16 @@ function ReportDetailsDetail({
 
 export function ReportDetailsPage() {
     const { id } = useParams()
-    const { report, loadingReport, fetchReportById } = useAdmin();
+    const { report, loadingReport, refreshReport } = useAdminReport();
 
     useEffect(() => {
-        if (id) fetchReportById(id);
-    }, [id, fetchReportById]);
+        if (id) refreshReport(id);
+    }, [id, refreshReport]);
 
     return (
         <div className={commonStyle_Page}>
+            <title>Safespace | Report: {report?.id ?? "Details"}</title>
+
             <div className={commonStyle_Section}>
                 <Breadcrumb>
                     <BreadcrumbList>
@@ -208,7 +207,7 @@ export function ReportDetailsPage() {
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
-                            <BreadcrumbPage className="truncate">Detail Laporan {id}</BreadcrumbPage>
+                            <BreadcrumbPage className="truncate">Detail Laporan {report?.reportCode}</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
@@ -219,7 +218,7 @@ export function ReportDetailsPage() {
             ) : (
                 <ReportDetailsDetail
                     report={report}
-                    onRefresh={() => fetchReportById(id)}
+                    onRefresh={() => refreshReport(id)}
                 />
             )}
         </div>

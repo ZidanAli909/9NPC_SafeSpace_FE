@@ -160,7 +160,7 @@ function DetailsProfile({
                 </Link>
                 <Alert className="bg-secondary text-secondary-foreground">
                     <Info />
-                    <AlertTitle>Notice</AlertTitle>
+                    <AlertTitle>Informasi</AlertTitle>
                     <AlertDescription>
                         Data akun wajib diisi untuk keperluan internal admin dan  komunikasi dengan Anda. Laporan yang dibuat akan otomatis bersifat  anonim. Identitas Anda tidak akan pernah kami bocorkan.
                     </AlertDescription>
@@ -169,13 +169,10 @@ function DetailsProfile({
 
             <div className="mb-4">
                 <p className="font-medium text-lg mb-4">Password</p>
-                <Button
-                    variant="secondary"
-                    className="lg:h-9"
-                >
+                <Link to="/profile/password" className={cn(buttonVariants({ variant: "secondary" }), "mb-4 lg:h-9")}>
                     <LucideKeyRound className="mr-2" />
                     Ganti Password
-                </Button>
+                </Link>
             </div>
         </>
     )
@@ -186,6 +183,8 @@ export function ProfileDetailsPage() {
 
     return (
         <div className={commonStyle_Page}>
+            <title>Safespace | Profile</title>
+
             <div className={commonStyle_Section}>
                 <Breadcrumb>
                     <BreadcrumbList>

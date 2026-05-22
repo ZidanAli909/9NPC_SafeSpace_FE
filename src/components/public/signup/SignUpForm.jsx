@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
     Field,
     FieldError,
@@ -19,14 +18,14 @@ import {
     AlertDescription,
     AlertTitle,
 } from "@/components/ui/alert"
-import { Separator } from "@/components/ui/separator";
-import { AlertCircle, Eye, EyeClosed, EyeOff, LoaderCircle } from "lucide-react";
+import { AlertCircle, Eye, EyeClosed, LoaderCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { AuthService } from "@/services/AuthService";
 import { useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerFormDefault, registerFormSchema } from "@/data/schemas/AuthSchema";
+import { toast } from "sonner";
 
 export default function SignUpForm() {
     const navigate = useNavigate()
@@ -76,6 +75,7 @@ export default function SignUpForm() {
     function handleGoogleSignUp() {
         // TODO: handle Google OAuth
         console.log("Continue with Google");
+        toast.info("Maaf, fitur ini belum tersedia!");
     }
 
     return (

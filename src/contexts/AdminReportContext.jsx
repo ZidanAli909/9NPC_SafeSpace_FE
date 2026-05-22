@@ -1,16 +1,17 @@
-import { ReportService } from "@/services/ReportService";
+import { AdminService } from "@/services/AdminService";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
-const ReportContext = createContext(null);
+// NOTE: Admin is a mix of AuthContext and ProfileContext!
+const AdminReportContext = createContext(null);
 
-export const ReportProvider = ({ children }) => {
+export const AdminReportProvider = ({ children }) => {
     const [report, setReport] = useState(null);
     const [loadingReport, setLoadingReport] = useState(false);
 
     const fetchReportById = useCallback(async (id) => {
         setLoadingReport(true);
         try {
-            const response = await ReportService.readUserReport(id);
+            const response = await AdminService.getReport(id);
             setReport(response.data);
             return response.data; // Immediate retrieval
         } catch (error) {
@@ -27,17 +28,18 @@ export const ReportProvider = ({ children }) => {
         loadingReport,
         refreshReport: fetchReportById,
     }
-    return (
-        <ReportContext.Provider value={value}>
-            {children}
-        </ReportContext.Provider>
-    );
-};
 
-export const useReport = () => {
-    const context = useContext(ReportContext);
+    return (
+        <AdminReportContext.Provider value={value}>
+            {children}
+        </AdminReportContext.Provider>
+    );
+}
+
+export const useAdminReport = () => {
+    const context = useContext(AdminReportContext);
     if (!context) {
-        throw new Error("useReport must be used within a ReportProvider");
+        throw new Error("useAdminReport must be used within a AdminReportProvider");
     }
     return context;
-};
+}

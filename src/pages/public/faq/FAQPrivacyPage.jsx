@@ -52,6 +52,8 @@ const items = [
 export function PrivacyPage() {
     return (
         <div className={commonStyle_Page}>
+            <title>Safespace | FAQ Privacy</title>
+
             <div className={commonStyle_Section}>
                 <Breadcrumb>
                     <BreadcrumbList>

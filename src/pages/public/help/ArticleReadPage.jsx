@@ -4,7 +4,7 @@ import ArticleContent from "@/components/public/help/ArticleContent";
 import ArticleBacaJuga from "@/components/public/help/ArticleBacaJuga";
 import { articles } from "@/data/articles";
 
-export default function ReadArticlePage() {
+export default function ArticleReadPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const article = articles.find((a) => a.slug === slug);
@@ -14,6 +14,8 @@ export default function ReadArticlePage() {
 
   return (
     <div>
+      <title>Safespace | Article:{" "}{article?.title ?? "Reading"}</title>
+
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 px-6 pt-6 pb-2 text-xs text-slate-500">
         <button onClick={() => navigate(-1)} className="hover:text-[#1e3a5f]">

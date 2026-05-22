@@ -1,8 +1,19 @@
 import { Outlet } from 'react-router-dom';
 import { ReportProvider } from '@/contexts/ReportContext';
-import { AdminProvider } from '@/contexts/AdminContext';
+import { AdminDashboardProvider } from '@/contexts/AdminDashboardContext';
+import { AdminReportsProvider } from '@/contexts/AdminReportsContext';
+import { AdminReportProvider } from '@/contexts/AdminReportContext';
+import { ReportsProvider } from '@/contexts/ReportsContext';
 
-export const ReportScopeLayout = () => {
+export const ReportsProviderLayout = () => {
+  return (
+    <ReportsProvider>
+      <Outlet /> 
+    </ReportsProvider>
+  );
+};
+
+export const ReportProviderLayout = () => {
   return (
     <ReportProvider>
       <Outlet /> 
@@ -10,10 +21,26 @@ export const ReportScopeLayout = () => {
   );
 };
 
-export const AdminScopeLayout = () => {
+export const AdminDashboardProviderLayout = () => {
   return (
-    <AdminProvider>
+    <AdminDashboardProvider>
       <Outlet /> 
-    </AdminProvider>
+    </AdminDashboardProvider>
+  );
+};
+
+export const AdminReportsProviderLayout = () => {
+  return (
+    <AdminReportsProvider>
+      <Outlet /> 
+    </AdminReportsProvider>
+  );
+};
+
+export const AdminReportProviderLayout = () => {
+  return (
+    <AdminReportProvider>
+      <Outlet /> 
+    </AdminReportProvider>
   );
 };

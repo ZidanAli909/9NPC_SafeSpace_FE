@@ -13,6 +13,8 @@ import { ChevronRight, LogOut } from "lucide-react"
 export function SettingsPage() {
     return (
         <div className={commonStyle_Page}>
+            <title>Safespace | Settings</title>
+
             <div className={commonStyle_Section}>
                 <Breadcrumb>
                     <BreadcrumbList>
@@ -72,8 +74,12 @@ export function SettingsPage() {
                     <div className={commonStyle_Section}>
                         <p className="text-2xl font-semibold mb-4">Notifikasi</p>
                     </div>
-
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae perspiciatis unde, neque hic dolorum facere dolore minima voluptates nulla voluptatibus veniam a recusandae, numquam necessitatibus corrupti officiis ad quod voluptas?
+                    <p className="mb-4">
+                        Mohon maaf, fitur pengaturan belum tersedia dan saat ini masih dalam tahap pengembangan.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae perspiciatis unde, neque hic dolorum facere dolore minima voluptates nulla voluptatibus veniam a recusandae, numquam necessitatibus corrupti officiis ad quod voluptas?
+                    </p>
                 </div>
             </div>
         </div>
