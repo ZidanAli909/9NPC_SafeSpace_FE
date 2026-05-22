@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/breadcrumb"
 import {
     Alert,
-    AlertAction,
     AlertDescription,
     AlertTitle,
 } from "@/components/ui/alert"
@@ -22,6 +21,9 @@ import { useProfile } from "@/contexts/ProfileContext"
 import { Skeleton } from "@/components/ui/skeleton"
 import { cn, formatTimestamp } from "@/lib/utils"
 import { toast } from "sonner"
+import { useState } from "react"
+import { ProfilePictureUploadDialog } from "@/components/public/profile/ProfilePictureUploadDialog"
+import { ProfilePictureDeleteDialog } from "@/components/public/profile/ProfilePictureDeleteDialog"
 
 function DetailsProfileSkeleton() {
     return (
@@ -61,6 +63,60 @@ function DetailsProfileSkeleton() {
                 <Skeleton className="h-5 w-full mb-4" />
                 <Skeleton className="h-8 w-48" />
             </div>
+        </>
+    )
+}
+
+function ProfilePicture({
+    profile,
+}) {
+    const { refreshProfile } = useProfile();
+    const [isUploadOpen, setIsUploadOpen] = useState(false);
+    const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+    
+    return (
+        <>
+            <Avatar className="w-32 h-32 md:mx-auto">
+                <AvatarImage src={profile?.profilePictureUrl} alt={"Foto profil " + profile?.name} className="bg-black" />
+                <AvatarFallback className="text-6xl">
+                    {profile && profile.name != null
+                        ? profile.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")
+                            .substring(0, 2)
+                            .toUpperCase()
+                        : "?"}
+                </AvatarFallback>
+            </Avatar>
+
+            <div className="flex flex-col gap-4 max-lg:gap-2 lg:mx-auto">
+                <Button
+                    variant="outline"
+                    className="lg:h-9"
+                    onClick={() => setIsUploadOpen(true)}
+                >
+                    <Image />
+                    Ganti Foto Profil
+                </Button>
+                <Button
+                    variant="outline"
+                    className="lg:h-9 text-destructive"
+                    onClick={() => setIsDeleteOpen(true)}
+                >
+                    <Trash />
+                    Hapus Foto Profil
+                </Button>
+            </div>
+
+            <ProfilePictureUploadDialog
+                open={isUploadOpen}
+                onOpenChange={setIsUploadOpen}
+            />
+            <ProfilePictureDeleteDialog
+                open={isDeleteOpen}
+                onOpenChange={setIsDeleteOpen}
+            />
         </>
     )
 }
@@ -130,6 +186,8 @@ export function ProfileDetailsPage() {
 
     return (
         <div className={commonStyle_Page}>
+            <title>Safespace | Profile</title>
+
             <div className={commonStyle_Section}>
                 <Breadcrumb>
                     <BreadcrumbList>
@@ -153,30 +211,7 @@ export function ProfileDetailsPage() {
                 {/* Side Page */}
                 {/* TODO: Responsive */}
                 <div className="md:basis-48 lg:basis-64 flex flex-col max-md:flex-row gap-8 max-md:mx-auto items-center md:pt-4">
-                    <Avatar className="w-32 h-32 md:mx-auto">
-                        <AvatarImage src={profile?.profilePictureUrl} alt={"Foto profil " + profile?.name} className="bg-black" />
-                        <AvatarFallback className="text-6xl">
-                            {profile && profile.name != null
-                                        ? profile.name
-                                            .split(" ")
-                                            .map((n) => n[0])
-                                            .join("")
-                                            .substring(0, 2)
-                                            .toUpperCase()
-                                        : "?"}
-                        </AvatarFallback>
-                    </Avatar>
-
-                    <div className="flex flex-col gap-4 max-lg:gap-2 lg:mx-auto">
-                        <Button variant="outline" className="lg:h-9">
-                            <Image />
-                            Ganti Foto Profil
-                        </Button>
-                        <Button variant="outline" className="lg:h-9 text-destructive">
-                            <Trash />
-                            Hapus Foto Profil
-                        </Button>
-                    </div>
+                    <ProfilePicture profile={profile} />
                 </div>
 
                 {/* Main Page */}

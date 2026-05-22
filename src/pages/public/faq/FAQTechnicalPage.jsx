@@ -50,7 +50,9 @@ const items = [
 
 export function FAQPage() {
     return (
-        <div  className={commonStyle_Page}>
+        <div className={commonStyle_Page}>
+            <title>Safespace | FAQ Technical</title>
+
             <div className={commonStyle_Section}>
                 <Breadcrumb>
                     <BreadcrumbList>

@@ -2,31 +2,32 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import LandingPage from './pages/public/LandingPage'
 import LoginPage from './pages/auth/LoginPage'
 import SignUpPage from './pages/auth/SignUpPage'
-import ReportFormPage from './pages/public/ReportFormPage'
-import SubmittedPage from "./pages/public/SubmittedPage"
-import ArtikelDukunganPage from "./pages/public/ArtikelDukunganPage";
-import ReadArticlePage from "./pages/public/ReadArticlePage";
-import InfoBantuanHukumPage from "./pages/public/InfoBantuanHukumPage";
+import ReportFormPage from './pages/public/report/ReportFormPage'
+import SubmittedPage from "./pages/public/report/ReportSubmittedPage"
 import { PublicLayout } from './components/layout/Public'
 import { AdminLayout } from './components/layout/Admin'
 import { DashboardPage } from './pages/admin/DashboardPage'
 import { ReportPage } from './pages/admin/ReportPage'
-import { FAQPage } from './pages/public/faq/FAQPage'
-import { PrivacyPage } from './pages/public/faq/PrivacyPage'
+import { FAQPage } from './pages/public/faq/FAQTechnicalPage'
+import { PrivacyPage } from './pages/public/faq/FAQPrivacyPage'
 import { ProfileDetailsPage } from './pages/public/profile/ProfileDetailsPage'
 import { ReportHistoryPage } from './pages/public/profile/ReportHistoryPage'
 import { ReportHistoryDetailsPage } from './pages/public/profile/ReportHistoryDetailsPage'
 import { SettingsPage } from './pages/public/profile/SettingsPage'
-import { ReportGuidePage } from './pages/public/faq/GuidePage'
+import { ReportGuidePage } from './pages/public/faq/FAQGuidePage'
 import { AuthProvider } from './contexts/AuthContext'
 import { ProfileProvider } from './contexts/ProfileContext'
 import { AdminScopeLayout, ReportScopeLayout } from './components/layout/Scopes'
 import { AdminRoute } from './components/routes/AdminRoute'
 import { RegisteredRoute } from './components/routes/RegisteredRoute'
-import { AdminProvider } from './contexts/AdminContext'
 import { ReportDetailsPage } from './pages/admin/ReportDetailsPage'
 import { AdminProfileDetailsPage } from './pages/admin/AdminProfilePage'
 import { ProfileEditPage } from './pages/public/profile/ProfileEditPage'
+import LegalPage from './pages/public/help/LegalPage'
+import ArticleIndexPage from './pages/public/help/ArticleIndexPage'
+import ArticleReadPage from './pages/public/help/ArticleReadPage'
+import ReportSubmittedPage from './pages/public/report/ReportSubmittedPage'
+import { FirstTimeSetupPage } from './pages/public/SetupAccountPage'
 
 
 function App() {
@@ -40,14 +41,19 @@ function App() {
               <Route index element={<LandingPage />} />
               <Route path="login" element={<LoginPage />} />
               <Route path="signup" element={<SignUpPage />} />
-              <Route path="report" element={<ReportFormPage />} />
-              <Route path="submitted" element={<SubmittedPage />} />
+              {/* <Route path="forget-password" element={<SubmittedPage />} /> */}
+              {/* <Route path="reset-password" element={<SubmittedPage />} /> */}
+              <Route path="setup" element={<FirstTimeSetupPage />} />
+              <Route path="report">
+                <Route index element={<ReportFormPage />} />
+                <Route path="submitted" element={<ReportSubmittedPage />} />
+              </Route>
               <Route path="help">
                 <Route path="article">
-                  <Route index element={<ArtikelDukunganPage />} />
-                  <Route path=":slug" element={<ReadArticlePage />} />
+                  <Route index element={<ArticleIndexPage />} />
+                  <Route path=":slug" element={<ArticleReadPage />} />
                 </Route>
-                <Route path="legal" element={<InfoBantuanHukumPage />} />
+                <Route path="legal" element={<LegalPage />} />
               </Route>
               <Route path="faq">
                 <Route index element={<FAQPage />} />

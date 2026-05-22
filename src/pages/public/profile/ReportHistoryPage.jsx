@@ -72,6 +72,8 @@ export function ReportHistoryPage() {
 
     return (
         <div className={commonStyle_Page}>
+            <title>Safespace | Report History</title>
+
             <div className={commonStyle_Section}>
                 <Breadcrumb>
                     <BreadcrumbList>

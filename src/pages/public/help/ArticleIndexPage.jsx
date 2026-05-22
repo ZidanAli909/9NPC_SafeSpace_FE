@@ -7,7 +7,7 @@ import { articles, categories } from "@/data/articles";
 import bantuanBg from "@/assets/safespace_artikelhero.png";
 
 
-export default function ArtikelDukunganPage() {
+export default function ArticleIndexPage() {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("Semua");
 
@@ -19,6 +19,8 @@ export default function ArtikelDukunganPage() {
 
   return (
     <div>
+      <title>Safespace | Article Support</title>
+
       <BantuanHero
         title="Ruang Pulih: Artikel Dukungan Mental untuk Korban Kekerasan"
         description="Kamu tidak sendirian. Kumpulan artikel ini ditulis untuk membantumu memahami apa yang kamu rasakan, merawat luka batin, dan menemukan kembali kekuatanmu. Semua informasi disusun oleh psikolog dan relawan pendamping korban."

@@ -176,6 +176,7 @@ export function ReportHistoryDetailsPage() {
 
     return (
         <div className={commonStyle_Page}>
+            <title>Safespace | Report Details</title>
             <div className={commonStyle_Section}>
                 <Breadcrumb>
                     <BreadcrumbList>

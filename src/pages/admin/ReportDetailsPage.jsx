@@ -34,7 +34,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card"
 import { useReport } from "@/contexts/ReportContext"
 import { commonStyle_Page, commonStyle_Section } from "@/lib/commonStyles"
-import { Download, Edit2, History, ImageOff, Loader2, MoreVertical, Phone, Plus, X } from "lucide-react"
+import { CircleAlert, ImageOff, Loader2, MoreVertical, Download, History } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { Separator } from "@/components/ui/separator"
@@ -42,21 +42,37 @@ import { useAdmin } from "@/contexts/AdminContext"
 import { reportStatus } from "@/data/ReportStatus"
 import { LoadingCard } from "@/components/common/LoadingCard"
 import { formatDate, formatTimestamp } from "@/lib/utils"
+import { AdminService } from "@/services/AdminService"
+import { toast } from "sonner"
 
 function ReportDetailsDetail({
     report,
+    onRefresh
 }) {
     const [status, setStatus] = useState(report?.status ?? "");
+    const [errorStatus, setErrorStatus] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
     const handleStatusChange = (newValue) => {
         setStatus(newValue);
-        console.log("Status diubah di lokal menjadi:", newValue);
+        // console.log("Status diubah di lokal menjadi:", newValue);
     }
 
-    const handleSaveStatus = () => {
-        console.log("Mengirim status baru ke Backend:", status);
-        // TODO: Panggil fungsi mutasi API Anda di sini
+    const handleSaveStatus = async () => {
+        setIsLoading(true);
+        setErrorStatus(null);
+        // console.log("Status: ", status);
+        try {
+            const response = await AdminService.updateReportStatus(report?.id, status);
+            toast.success(response.message);
+            onRefresh();
+        } catch (error) {
+            console.log("Terjadi kesalahan dalam mengubah status: ", error);
+            toast.error("Terjadi kesalahan dalam mengubah status.");
+            setErrorStatus(error.message);
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     return (
@@ -143,6 +159,7 @@ function ReportDetailsDetail({
                             key={report?.status} 
                             value={status} 
                             onValueChange={handleStatusChange}
+                            disabled={isLoading}
                         >
                             <SelectTrigger className="w-xs max-sm:w-full">
                                 <SelectValue placeholder="Status pelaporan"/>
@@ -162,12 +179,11 @@ function ReportDetailsDetail({
                             Simpan
                         </Button>
                     </div>
-                    <Alert className="mt-4 w-fit max-sm:w-full">
-                        <AlertTitle>Heads up!</AlertTitle>
-                        <AlertDescription>
-                            You can add components and dependencies to your app using the cli.
-                        </AlertDescription>
-                    </Alert>
+                    {errorStatus && <Alert className="mt-4 w-fit max-sm:w-full text-destructive">
+                        <CircleAlert />
+                        <AlertTitle>Error!</AlertTitle>
+                        <AlertDescription>{errorStatus}</AlertDescription>
+                    </Alert>}
                 </div>
             </div>
         </>
@@ -184,6 +200,8 @@ export function ReportDetailsPage() {
 
     return (
         <div className={commonStyle_Page}>
+            <title>Safespace | Report: {report?.id ?? "Details"}</title>
+
             <div className={commonStyle_Section}>
                 <Breadcrumb>
                     <BreadcrumbList>
@@ -201,7 +219,10 @@ export function ReportDetailsPage() {
             {loadingReport ? (
                 <LoadingCard />
             ) : (
-                <ReportDetailsDetail report={report} />
+                <ReportDetailsDetail
+                    report={report}
+                    onRefresh={() => fetchReportById(id)}
+                />
             )}
         </div>
     )

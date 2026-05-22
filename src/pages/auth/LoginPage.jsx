@@ -24,15 +24,18 @@ import { loginFormDefault, loginFormSchema } from "@/data/schemas/AuthSchema";
 import { AuthService } from "@/services/AuthService";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, Eye, EyeClosed, LoaderCircle } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import { useProfile } from "@/contexts/ProfileContext";
 
 export default function LoginPage() {
+    const { login, isAuthenticated } = useAuth();
+    const { profile, loadingProfile, role } = useProfile();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const { login, refreshSession } = useAuth();
+    const [isLoggingIn, setIsLoggingIn] = useState(isAuthenticated);
 
     const {
         control,
@@ -50,12 +53,13 @@ export default function LoginPage() {
         try {
             const response = await AuthService.login(data);
             const token = response.data?.token;
-            const userData = response.data?.user; // Juga untuk cek role
+            const userData = response.data?.user;
             // console.log(response);
+            setIsLoggingIn(true);
             login(userData, token);
-            if (response.data?.user.user_metadata.role === "ADMIN") navigate("/admin");
-            else navigate("/");
+            // Redirecting sekarang ada di useEffect!
         } catch (error) {
+            setIsLoggingIn(false);
             if (error.response) { // Ada status code (400, 401, 500, dsb.)
                 const status = error.response.status;
                 const message = error.response.data?.message || "Terjadi kesalahan pada server";
@@ -66,7 +70,7 @@ export default function LoginPage() {
                 } else {
                     setError("root", { message });
                 }
-            } else { // Network error?
+            } else { // Network error, dsb?
                 setError("root", { message: "Koneksi gagal. Periksa internet Anda." });
             }
         } finally {
@@ -74,10 +78,29 @@ export default function LoginPage() {
         }
     }
 
-    refreshSession();
+    useEffect(() => {
+        if (loadingProfile || !isLoggingIn) return; // Ignore jika masih loading
+        if (profile) {
+            if (role === "ADMIN") {
+                navigate("/admin");
+            } else {
+                const isFirstTime = !profile.name ||
+                    !profile.phoneNumber ||
+                    !profile.nim ||
+                    !profile.faculty ||
+                    !profile.department ||
+                    !profile.enrollmentYear;
+                if (isFirstTime) navigate("/setup");
+                else navigate("/");
+            }
+        }
+        setIsLoggingIn(false);
+    }, [profile, loadingProfile, isLoggingIn, navigate]);
 
     return (
         <div className="py-8 px-24 max-md:px-16 max-sm:px-8 bg-[#ddeef7]">
+            <title>Safespace | Log In</title>
+
             <div className="max-w-md mx-auto p-8 bg-background rounded-2xl shadow-sm">
                 <h1 className="text-2xl font-semibold text-primary mb-6">
                     Login ke SafeSpace
@@ -99,6 +122,7 @@ export default function LoginPage() {
                                         type="text"
                                         aria-invalid={fieldState.invalid}
                                         placeholder="johndoe@mail.com"
+                                        disabled={loading || isLoggingIn}
                                     />
                                     {fieldState.invalid && (
                                         <FieldError errors={[fieldState.error]} />
@@ -121,6 +145,7 @@ export default function LoginPage() {
                                             type={showPassword ? "text" : "password"}
                                             aria-invalid={fieldState.invalid}
                                             placeholder="••••••••"
+                                            disabled={loading || isLoggingIn}
                                         />
                                         <InputGroupAddon align="inline-end">
                                             <InputGroupButton
@@ -143,18 +168,24 @@ export default function LoginPage() {
                             )}
                         />
                     </FieldGroup>
-                    {errors.root && 
+                    {errors.root &&
                         <Alert variant="destructive" className="mt-4">
-                            <AlertCircle/>
+                            <AlertCircle />
                             <AlertTitle>Error!</AlertTitle>
                             <AlertDescription>{errors.root.message}</AlertDescription>
                         </Alert>
                     }
                 </form>
 
-                <Button form="login" type="submit" disabled={loading} size="lg" className="w-full mb-4">
+                <Button
+                    form="login"
+                    type="submit"
+                    disabled={loading || isLoggingIn}
+                    size="lg"
+                    className="w-full mb-4"
+                >
                     Login
-                    {loading && <LoaderCircle className="animate-spin" />}
+                    {loading || isLoggingIn && <LoaderCircle className="animate-spin" />}
                 </Button>
 
                 <p className="w-full text-center text-sm text-muted-foreground">
