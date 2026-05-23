@@ -3,7 +3,6 @@ import LandingPage from './pages/public/LandingPage'
 import LoginPage from './pages/auth/LoginPage'
 import SignUpPage from './pages/auth/SignUpPage'
 import ReportFormPage from './pages/public/report/ReportFormPage'
-import SubmittedPage from "./pages/public/report/ReportSubmittedPage"
 import { PublicLayout } from './components/layout/Public'
 import { AdminLayout } from './components/layout/Admin'
 import { DashboardPage } from './pages/admin/DashboardPage'
@@ -17,7 +16,7 @@ import { SettingsPage } from './pages/public/profile/SettingsPage'
 import { ReportGuidePage } from './pages/public/faq/FAQGuidePage'
 import { AuthProvider } from './contexts/AuthContext'
 import { ProfileProvider } from './contexts/ProfileContext'
-import { AdminScopeLayout, ReportScopeLayout } from './components/layout/Scopes'
+import { AdminDashboardProviderLayout, AdminReportProviderLayout, AdminReportsProviderLayout, ReportProviderLayout, ReportsProviderLayout } from './components/layout/Scopes'
 import { AdminRoute } from './components/routes/AdminRoute'
 import { RegisteredRoute } from './components/routes/RegisteredRoute'
 import { ReportDetailsPage } from './pages/admin/ReportDetailsPage'
@@ -28,6 +27,8 @@ import ArticleIndexPage from './pages/public/help/ArticleIndexPage'
 import ArticleReadPage from './pages/public/help/ArticleReadPage'
 import ReportSubmittedPage from './pages/public/report/ReportSubmittedPage'
 import { FirstTimeSetupPage } from './pages/public/SetupAccountPage'
+import { MissingPage } from './pages/public/MissingPage'
+import { ProfilePasswordPage } from './pages/public/profile/ProfilePasswordPage'
 
 
 function App() {
@@ -66,25 +67,36 @@ function App() {
                 <Route path="profile">
                   <Route index element={<ProfileDetailsPage />} />
                   <Route path="edit" element={<ProfileEditPage />} />
-                  <Route path="history" element={<ReportScopeLayout />}>
-                    <Route index element={<ReportHistoryPage />} />
-                    <Route path=":id" element={<ReportHistoryDetailsPage />} />
+                  <Route path="password" element={<ProfilePasswordPage />} />
+                  <Route path="history" >
+                    <Route element={<ReportsProviderLayout/>}>
+                      <Route index element={<ReportHistoryPage />} />
+                    </Route>
+                    <Route element={<ReportProviderLayout/>}>
+                      <Route path=":id" element={<ReportHistoryDetailsPage />} />
+                    </Route>
                   </Route>
                   <Route path="settings" element={<SettingsPage />} />
                 </Route>
               </Route>
+              {/* Missing Page */}
+              <Route path="*" element={<MissingPage />} />
             </Route>
             {/* Admin Routes */}
             <Route element={<AdminRoute />}>
               <Route path="/admin" element={<AdminLayout />}>
-                <Route element={<AdminScopeLayout />}>
+                <Route element={<AdminDashboardProviderLayout />}>
                   <Route index element={<DashboardPage />} />
-                  <Route path="report">
+                </Route>
+                <Route path="report">
+                  <Route element={<AdminReportsProviderLayout />}>
                     <Route index element={<ReportPage />} />
+                  </Route>
+                  <Route element={<AdminReportProviderLayout />}>
                     <Route path=":id" element={<ReportDetailsPage />} />
                   </Route>
-                  <Route path="profile" element={<AdminProfileDetailsPage />}/>
                 </Route>
+                <Route path="profile" element={<AdminProfileDetailsPage />} />
               </Route>
             </Route>
           </Routes>

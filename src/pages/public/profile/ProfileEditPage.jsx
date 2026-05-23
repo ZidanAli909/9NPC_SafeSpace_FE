@@ -45,6 +45,7 @@ export function ProfileEditPage() {
     } = useForm({
         resolver: zodResolver(editUserProfileSchema),
         defaultValues: editUserProfileDefault,
+        mode: "onChange",
     });
 
     useEffect(() => {
@@ -70,7 +71,7 @@ export function ProfileEditPage() {
         } catch (error) {
             if (error.response) {
                 const { status, data } = error.response;
-                if (status === 422 && data.errors) {
+                if (status === 400 && data.errors) {
                     Object.entries(data.errors).forEach(([field, messages]) => {
                         setError(field, {
                             type: "server",
@@ -78,7 +79,7 @@ export function ProfileEditPage() {
                         });
                     });
                 } else if (status === 401) {
-                    toast.error("Sesi kamu sudah habis. Silahkan login ulang!");
+                    toast.error("Sesi sudah habis. Silahkan login ulang!");
                 } else if (status >= 500) {
                     toast.error("Server sedang mengalami masalah. Silahkan coba lagi nanti!");
                 } else {

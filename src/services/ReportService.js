@@ -23,8 +23,8 @@ export const ReportService = {
         return response.data;
     },
 
-    readAllUserReports: async () => {
-        const response = await api.get("/report");
+    readAllUserReports: async (params = {}) => {
+        const response = await api.get("/report", { params });
         return response.data;
     },
 
