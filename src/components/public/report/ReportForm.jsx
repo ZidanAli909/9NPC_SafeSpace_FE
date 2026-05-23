@@ -53,6 +53,7 @@ export default function ReportForm() {
             let evidencePaths = [];
             if (uploadBukti) {
                 const path = await ReportService.uploadEvidence(uploadBukti);
+                console.log("path:", path)
                 evidencePaths = [path];
             }
 

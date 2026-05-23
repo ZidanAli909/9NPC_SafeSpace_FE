@@ -23,8 +23,7 @@ export default function LoginForm() {
                 localStorage.setItem("token", data.data.token)
                 localStorage.setItem("user", JSON.stringify(data.data.user))
                 
-                window.location.href = "/"
-            }
+                navigate("/") }
         } catch (error) {
             setError("Email atau password salah!")
         }

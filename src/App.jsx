@@ -30,6 +30,7 @@ import { FirstTimeSetupPage } from './pages/public/SetupAccountPage'
 import { MissingPage } from './pages/public/MissingPage'
 import { ProfilePasswordPage } from './pages/public/profile/ProfilePasswordPage'
 
+
 function App() {
   return (
     <BrowserRouter>
