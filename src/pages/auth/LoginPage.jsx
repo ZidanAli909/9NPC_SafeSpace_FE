@@ -64,10 +64,10 @@ export default function LoginPage() {
             if (error.response) { // Ada status code (400, 401, 500, dsb.)
                 const status = error.response.status;
                 const message = error.response.data?.message || "Terjadi kesalahan pada server";
-                if (status === 401) { // Unauthorized
-                    setError("root", { message: "Email atau password salah." });
-                } else if (status === 422) { // Validation errors (mapped)
-                    setError("email", { message: "Email tidak valid." });
+                if (status === 400) { // Validation errors (mapped)
+                    setError("email");
+                    setError("password");
+                    setError("root", { message: "Email atau password salah. Silahkan cek ulang!" });
                 } else {
                     setError("root", { message });
                 }
