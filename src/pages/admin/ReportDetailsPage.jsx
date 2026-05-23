@@ -66,7 +66,13 @@ function ReportDetailsDetail({
         } catch (error) {
             console.log("Terjadi kesalahan dalam mengubah status: ", error);
             toast.error("Terjadi kesalahan dalam mengubah status.");
-            setErrorStatus(error.message);
+            if (error.response) { // Ada status code (400, 401, 500, dsb.)
+                // const status = error.response.status;
+                const message = error.response.data?.message || "Terjadi kesalahan pada server";
+                setErrorStatus(message);
+            } else { // Network error, dsb?
+                setErrorStatus("Koneksi gagal. Periksa internet Anda.");
+            }
         } finally {
             setIsLoading(false);
         }

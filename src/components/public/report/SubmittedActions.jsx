@@ -11,7 +11,7 @@ export default function SubmittedActions() {
                     Back to Home Page
                 </Button>
             </Link>
-            <Link to="/status">
+            <Link to="/profile/history">
                 <Button className="bg-[#4E7489] hover:bg-[#1e3a5f] text-white px-6 py-5">
                     Lihat Status Pelaporan
                 </Button>
