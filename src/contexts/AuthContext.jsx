@@ -1,5 +1,6 @@
 import { AuthService } from "@/services/AuthService";
 import React, { createContext, useState, useContext, useEffect, useCallback } from "react";
+import { toast } from "sonner";
 
 const AuthContext = createContext(null);
 
@@ -10,6 +11,8 @@ export const AuthProvider = ({ children }) => {
   });
   const [token, setToken] = useState(localStorage.getItem("token")); // Track token in state
   const [loadingAuth, setloadingAuth] = useState(true);
+
+  const heartbeatDelay = 5 * 60 * 1000; // 1000 = 1 second
 
   const logout = useCallback(() => {
     localStorage.removeItem("user");
@@ -26,13 +29,17 @@ export const AuthProvider = ({ children }) => {
     }
     try {
       const response = await AuthService.getSession(currentToken);
-      if (response.success) {
-        setUser(response.data?.user);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-      }
-      else logout(); // 401, 403 = dead session
+      setUser(response.data?.user);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
     } catch (error) {
-      console.error("Session sync failed!", error);
+      const status = error?.response?.status;
+      // console.log(status);
+      if (status === 401 || status === 403) {
+        logout();
+        toast.error("Sesi sudah habis! Silahkan login ulang!");
+      } else {
+        console.error("Session sync failed!", error);
+      }
     } finally {
       setloadingAuth(false);
     }
@@ -43,7 +50,7 @@ export const AuthProvider = ({ children }) => {
 
     const heartbeat = setInterval(() => {
       checkSession();
-    }, 10 * 60 * 1000); // 1000 = 1 second
+    }, heartbeatDelay);
 
     return () => clearInterval(heartbeat);
   }, [checkSession]);
