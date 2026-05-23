@@ -55,17 +55,21 @@ export default function SignUpForm() {
             }
         } catch (error) {
             if (error.response) { // Ada status code (400, 401, 500, dsb.)
-                const status = error.response.status;
-                const message = error.response.data?.message || "Terjadi kesalahan pada server";
-                if (status === 401) { // Unauthorized
-                    setError("root", { message: "Pastikan anda mengisi formulir dengan benar!" });
-                } else if (status === 422) { // Validation errors (mapped)
-                    setError("email", { message: "Tidak bisa registrasi. Email mungkin sudah terdaftar." });
+                const { status, data } = error.response;
+                if (status === 400 && data.errors) {
+                    Object.entries(data.errors).forEach(([field, messages]) => {
+                        setError(field, {
+                            type: "server",
+                            message: Array.isArray(messages) ? messages[0] : messages, // Ambil error pertama jika lebih dari satu
+                        });
+                    });
+                } else if (status >= 500) {
+                    toast.error("Server sedang mengalami masalah. Silahkan coba lagi nanti!");
                 } else {
-                    setError("root", { message });
+                    toast.error("Terjadi suatu kesalahan. Silahkan coba lagi!");
                 }
             } else { // Network error?
-                setError("root", { message: "Koneksi gagal. Periksa internet Anda." });
+                toast.error("Tidak dapat terhubung ke server. Silahkan coba periksa koneksi internet!");
             }
         } finally {
             setLoading(false);
