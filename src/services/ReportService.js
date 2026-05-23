@@ -9,13 +9,13 @@ export const ReportService = {
             fileType: file.type
         });
 
-        const { uploadUrl, filePath } = signedUrlRes.data.data;
+        const { uploadUrl, path } = signedUrlRes.data.data;
 
         await axios.put(uploadUrl, file, {
             headers: { "Content-Type": file.type }
         });
 
-        return filePath;
+        return path;
     },
 
     createReport: async (reportData) => {
